@@ -7,6 +7,8 @@ import NotFound from "@/pages/not-found";
 import PublicProfile from "@/pages/public/index";
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/index";
+import DashboardLogin from "@/pages/dashboard/login";
+import UserDashboard from "@/pages/dashboard/index";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,8 @@ function Router() {
       <Route path="/" component={PublicProfile} />
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin" component={AdminDashboard} />
+      <Route path="/dashboard/login" component={DashboardLogin} />
+      <Route path="/dashboard" component={UserDashboard} />
       <Route component={NotFound} />
     </Switch>
   );

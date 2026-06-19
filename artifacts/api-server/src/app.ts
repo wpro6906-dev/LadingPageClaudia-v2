@@ -10,6 +10,7 @@ const app: Express = express();
 
 const SESSION_SECRET = process.env.SESSION_SECRET || "claudia-alzate-secret-key";
 const sessions = new Map<string, { adminId: number; username: string }>();
+const userSessions = new Map<string, { username: string }>();
 
 app.use(
   pinoHttp({
@@ -43,6 +44,15 @@ app.use((req: any, _res, next) => {
   } else {
     req.session = null;
   }
+
+  const userToken = req.cookies?.["user-session"];
+  if (userToken && userSessions.has(userToken)) {
+    req.userSession = userSessions.get(userToken);
+    req._userSessionToken = userToken;
+  } else {
+    req.userSession = null;
+  }
+
   next();
 });
 
@@ -58,6 +68,19 @@ app.use((req: any, res: any, next) => {
       const token = crypto.randomBytes(32).toString("hex");
       sessions.set(token, req.session);
       res.cookie("session", token, {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+    }
+
+    if (req.userSession === null && req._userSessionToken) {
+      userSessions.delete(req._userSessionToken);
+      res.clearCookie("user-session");
+    } else if (req.userSession && !req._userSessionToken) {
+      const token = crypto.randomBytes(32).toString("hex");
+      userSessions.set(token, req.userSession);
+      res.cookie("user-session", token, {
         httpOnly: true,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
