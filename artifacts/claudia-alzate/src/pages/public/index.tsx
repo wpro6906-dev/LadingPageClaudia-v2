@@ -118,20 +118,21 @@ export default function PublicProfile() {
 
   return (
     <div className="min-h-[100dvh] bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
-      {/* Mobile background */}
+      {/* Mobile background — cover + top positioning + lighter overlay */}
       <div className="absolute inset-0 lg:hidden -z-10 overflow-hidden">
         {profile?.backgroundUrl ? (
           <>
             <div 
-              className="absolute inset-0 scale-105"
+              className="absolute inset-0"
               style={{
                 backgroundImage: `url(${profile.backgroundUrl})`,
-                backgroundSize: `${(vc.bgZoom || 1) * 100}%`,
-                backgroundPosition: vc.bgPosition || "center",
+                backgroundSize: "cover",
+                backgroundPosition: "top center",
+                backgroundRepeat: "no-repeat",
                 filter: `blur(${vc.bgBlur || 0}px)`
               }}
             />
-            <div className="absolute inset-0 bg-black" style={{ opacity: vc.bgOverlay ?? 0.7 }} />
+            <div className="absolute inset-0 bg-black" style={{ opacity: Math.max(0.3, (vc.bgOverlay ?? 0.7) - 0.22) }} />
           </>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0806] to-background" />
@@ -139,7 +140,7 @@ export default function PublicProfile() {
       </div>
 
       {/* Left Column / Mobile Header */}
-      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center p-8 lg:p-12 z-10 
+      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-8 pb-5 lg:p-12 z-10 
         lg:border-r border-primary/20 shrink-0 lg:h-[100dvh] overflow-hidden">
         
         {/* Desktop left column background */}
@@ -186,7 +187,7 @@ export default function PublicProfile() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-8 rounded-full relative z-10"
+          className="mb-5 lg:mb-8 rounded-full relative z-10"
         >
           <div className="absolute inset-0 rounded-full border border-primary/10 animate-pulse shadow-[0_0_20px_rgba(212,175,55,0.15)] scale-[1.05]"></div>
           <div className="w-28 h-28 lg:w-36 lg:h-36 overflow-hidden rounded-full border border-primary/40 bg-black/60 p-1 backdrop-blur-sm relative z-10">
@@ -195,7 +196,7 @@ export default function PublicProfile() {
         </motion.div>
 
         {/* Identity */}
-        <div className="flex flex-col items-center mb-3 z-10">
+        <div className="flex flex-col items-center mb-1.5 lg:mb-3 z-10">
           <motion.span 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -220,7 +221,7 @@ export default function PublicProfile() {
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-xs font-sans uppercase mb-6 text-center tracking-[0.4em] z-10"
+          className="text-xs font-sans uppercase mb-3.5 lg:mb-6 text-center tracking-[0.4em] z-10"
           style={{ color: vc.subtitleColor, fontFamily: "'Montserrat', sans-serif" }}
         >
           {vc.subtitleText}
@@ -231,7 +232,7 @@ export default function PublicProfile() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-row items-center gap-3 mb-6 z-10 w-full max-w-[160px]"
+            className="flex flex-row items-center gap-3 mb-3.5 lg:mb-6 z-10 w-full max-w-[160px]"
           >
             <div className="flex-1 max-w-[60px] h-px bg-primary opacity-50" />
             <DecoratorIcon className="w-3 h-3" style={{ color: vc.decoratorColor }} />
@@ -239,7 +240,7 @@ export default function PublicProfile() {
           </motion.div>
         )}
         
-        <div className="flex flex-col items-center gap-2 z-10">
+        <div className="flex flex-col items-center gap-1.5 lg:gap-2 z-10">
           <motion.p 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -268,7 +269,7 @@ export default function PublicProfile() {
       </div>
 
       {/* Right Column / Mobile Links */}
-      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center p-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto bg-background/50 relative z-10">
+      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-4 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto bg-background/50 relative z-10">
         <main className="w-full max-w-md mx-auto flex flex-col flex-1 lg:flex-none justify-center">
           
           {/* Links */}
@@ -276,7 +277,7 @@ export default function PublicProfile() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="w-full space-y-4 mb-16 lg:mb-0"
+            className="w-full space-y-3 lg:space-y-4 mb-8 lg:mb-0"
           >
             {isLinksLoading ? (
               Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="w-full h-20 rounded-xl bg-card/40" />)
