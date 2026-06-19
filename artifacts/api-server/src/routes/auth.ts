@@ -5,6 +5,8 @@ import { z } from "zod";
 
 const router = Router();
 
+const USER_CREDENTIALS = { username: "claudyalzate", password: "claudy321" };
+
 const loginSchema = z.object({
   username: z.string().min(1),
   password: z.string().min(1),
@@ -29,13 +31,22 @@ router.post("/auth/login", async (req, res) => {
     return res.status(400).json({ error: "Invalid input" });
   }
   const { username, password } = parsed.data;
+
+  // Check user credentials first (claudyalzate)
+  if (username === USER_CREDENTIALS.username && password === USER_CREDENTIALS.password) {
+    (req as any).userSession = { username };
+    req.log.info({ username }, "User logged in via unified login");
+    return res.json({ username, role: "user" });
+  }
+
+  // Check admin credentials
   const [admin] = await db.select().from(adminTable).where(eq(adminTable.username, username));
   if (!admin || admin.password !== password) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
   (req as any).session = { adminId: admin.id, username: admin.username };
   req.log.info({ adminId: admin.id }, "Admin logged in");
-  return res.json({ username: admin.username });
+  return res.json({ username: admin.username, role: "admin" });
 });
 
 router.post("/auth/logout", (req, res) => {
