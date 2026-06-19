@@ -24,6 +24,9 @@ interface VisualConfig {
   bgBlur?: number;
   bgZoom?: number;
   bgPosition?: string;
+  mobileBgPosition?: string;
+  mobileBgZoom?: number;
+  mobileBgOverlay?: number;
   gradientTop?: boolean;
   gradientBottom?: boolean;
   showDecorLines?: boolean;
@@ -42,6 +45,7 @@ function getVC(profile: any): Required<VisualConfig> {
     tagline1: "Te ayudo a encontrar más que una casa,", tagline2: "tu próximo hogar.",
     tagline1Color: "#FFFFFF", tagline2Color: "#D4B483",
     bgOverlay: 0.7, bgBlur: 0, bgZoom: 1, bgPosition: "center",
+    mobileBgPosition: "60% center", mobileBgZoom: 1.15, mobileBgOverlay: 0.52,
     gradientTop: true, gradientBottom: true, showDecorLines: true, showGlow: true,
     nameLetterSpacing: "0.05em", showArrowOnButtons: true, showAccentBarOnButtons: true
   };
@@ -118,7 +122,7 @@ export default function PublicProfile() {
 
   return (
     <div className="min-h-[100dvh] bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
-      {/* Mobile background — cover + top positioning + lighter overlay */}
+      {/* Mobile background — independent composition optimised for portrait screens */}
       <div className="absolute inset-0 lg:hidden -z-10 overflow-hidden">
         {profile?.backgroundUrl ? (
           <>
@@ -126,13 +130,17 @@ export default function PublicProfile() {
               className="absolute inset-0"
               style={{
                 backgroundImage: `url(${profile.backgroundUrl})`,
-                backgroundSize: "cover",
-                backgroundPosition: "top center",
+                backgroundSize: `${(vc.mobileBgZoom || 1.15) * 100}%`,
+                backgroundPosition: vc.mobileBgPosition || "60% center",
                 backgroundRepeat: "no-repeat",
                 filter: `blur(${vc.bgBlur || 0}px)`
               }}
             />
-            <div className="absolute inset-0 bg-black" style={{ opacity: Math.max(0.3, (vc.bgOverlay ?? 0.7) - 0.22) }} />
+            <div className="absolute inset-0 bg-black" style={{ opacity: vc.mobileBgOverlay ?? 0.52 }} />
+            {/* Strong gradient at top so text stays readable */}
+            <div className="absolute inset-x-0 top-0 h-[55%] bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
+            {/* Soft gradient at bottom leading into links area */}
+            <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-background/90 to-transparent" />
           </>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0806] to-background" />
@@ -140,7 +148,7 @@ export default function PublicProfile() {
       </div>
 
       {/* Left Column / Mobile Header */}
-      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-8 pb-5 lg:p-12 z-10 
+      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
         lg:border-r border-primary/20 shrink-0 lg:h-[100dvh] overflow-hidden">
         
         {/* Desktop left column background */}
@@ -187,21 +195,21 @@ export default function PublicProfile() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-5 lg:mb-8 rounded-full relative z-10"
+          className="mb-3 lg:mb-8 rounded-full relative z-10"
         >
           <div className="absolute inset-0 rounded-full border border-primary/10 animate-pulse shadow-[0_0_20px_rgba(212,175,55,0.15)] scale-[1.05]"></div>
-          <div className="w-28 h-28 lg:w-36 lg:h-36 overflow-hidden rounded-full border border-primary/40 bg-black/60 p-1 backdrop-blur-sm relative z-10">
+          <div className="w-20 h-20 lg:w-36 lg:h-36 overflow-hidden rounded-full border border-primary/40 bg-black/60 p-1 backdrop-blur-sm relative z-10">
             <img src={profile?.logoUrl || logoPath} alt="Logo" className="w-full h-full object-cover rounded-full" />
           </div>
         </motion.div>
 
         {/* Identity */}
-        <div className="flex flex-col items-center mb-1.5 lg:mb-3 z-10">
+        <div className="flex flex-col items-center mb-1 lg:mb-3 z-10">
           <motion.span 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl lg:text-6xl font-serif text-center font-light"
+            className="text-3xl lg:text-6xl font-serif text-center font-light"
             style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: "'Playfair Display', serif" }}
           >
             {vc.firstName}
@@ -210,7 +218,7 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-4xl lg:text-6xl font-serif text-center font-medium"
+            className="text-3xl lg:text-6xl font-serif text-center font-medium"
             style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: "'Playfair Display', serif" }}
           >
             {vc.lastName}
@@ -221,7 +229,7 @@ export default function PublicProfile() {
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-xs font-sans uppercase mb-3.5 lg:mb-6 text-center tracking-[0.4em] z-10"
+          className="text-xs font-sans uppercase mb-2 lg:mb-6 text-center tracking-[0.4em] z-10"
           style={{ color: vc.subtitleColor, fontFamily: "'Montserrat', sans-serif" }}
         >
           {vc.subtitleText}
@@ -232,7 +240,7 @@ export default function PublicProfile() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-row items-center gap-3 mb-3.5 lg:mb-6 z-10 w-full max-w-[160px]"
+            className="flex flex-row items-center gap-3 mb-2 lg:mb-6 z-10 w-full max-w-[160px]"
           >
             <div className="flex-1 max-w-[60px] h-px bg-primary opacity-50" />
             <DecoratorIcon className="w-3 h-3" style={{ color: vc.decoratorColor }} />
@@ -240,12 +248,12 @@ export default function PublicProfile() {
           </motion.div>
         )}
         
-        <div className="flex flex-col items-center gap-1.5 lg:gap-2 z-10">
+        <div className="flex flex-col items-center gap-1 lg:gap-2 z-10">
           <motion.p 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="font-sans text-sm opacity-80 text-center"
+            className="font-sans text-xs lg:text-sm opacity-80 text-center"
             style={{ color: vc.tagline1Color }}
           >
             {vc.tagline1}
@@ -254,7 +262,7 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-xl lg:text-2xl font-semibold text-center"
+            className="text-lg lg:text-2xl font-semibold text-center"
             style={{ color: vc.tagline2Color, fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic" }}
           >
             {vc.tagline2}
@@ -269,7 +277,7 @@ export default function PublicProfile() {
       </div>
 
       {/* Right Column / Mobile Links */}
-      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-4 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto bg-background/50 relative z-10">
+      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto bg-background/50 relative z-10">
         <main className="w-full max-w-md mx-auto flex flex-col flex-1 lg:flex-none justify-center">
           
           {/* Links */}
