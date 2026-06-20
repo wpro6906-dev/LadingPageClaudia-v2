@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { db, linksTable } from "@workspace/db";
 import { eq, asc } from "drizzle-orm";
-import { requireAuth } from "./auth";
+import { requireAnyAuth } from "./auth";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.get("/links", async (req, res) => {
   return res.json(links);
 });
 
-router.post("/links", requireAuth, async (req, res) => {
+router.post("/links", requireAnyAuth, async (req, res) => {
   const body = req.body as any;
   const allLinks = await db.select().from(linksTable).orderBy(asc(linksTable.order));
   const maxOrder = allLinks.length > 0 ? Math.max(...allLinks.map((l) => l.order)) + 1 : 0;
@@ -34,7 +34,7 @@ router.post("/links", requireAuth, async (req, res) => {
   return res.status(201).json(created);
 });
 
-router.patch("/links/reorder", requireAuth, async (req, res) => {
+router.patch("/links/reorder", requireAnyAuth, async (req, res) => {
   const { ids } = req.body as { ids: number[] };
   if (!Array.isArray(ids)) {
     return res.status(400).json({ error: "ids must be an array" });
@@ -45,7 +45,7 @@ router.patch("/links/reorder", requireAuth, async (req, res) => {
   return res.json({ ok: true });
 });
 
-router.patch("/links/:id", requireAuth, async (req, res) => {
+router.patch("/links/:id", requireAnyAuth, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const body = req.body as any;
   const allowed = ["title", "description", "url", "icon", "active", "order"];
@@ -61,7 +61,7 @@ router.patch("/links/:id", requireAuth, async (req, res) => {
   return res.json(updated);
 });
 
-router.delete("/links/:id", requireAuth, async (req, res) => {
+router.delete("/links/:id", requireAnyAuth, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const [deleted] = await db.delete(linksTable).where(eq(linksTable.id, id)).returning();
   if (!deleted) return res.status(404).json({ error: "Link not found" });

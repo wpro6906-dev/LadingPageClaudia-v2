@@ -25,6 +25,13 @@ function requireAuth(req: any, res: any, next: any) {
   next();
 }
 
+function requireAnyAuth(req: any, res: any, next: any) {
+  if (req.session?.adminId || req.userSession?.username) {
+    return next();
+  }
+  return res.status(401).json({ error: "Not authenticated" });
+}
+
 router.post("/auth/login", async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) {
@@ -79,5 +86,5 @@ router.patch("/auth/credentials", requireAuth, async (req, res) => {
   return res.json({ ok: true });
 });
 
-export { requireAuth };
+export { requireAuth, requireAnyAuth };
 export default router;

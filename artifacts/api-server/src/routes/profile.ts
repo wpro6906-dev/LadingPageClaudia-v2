@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db, profileTable, DEFAULT_VISUAL_CONFIG } from "@workspace/db";
-import { requireAuth } from "./auth";
+import { requireAnyAuth } from "./auth";
 
 const router = Router();
 
@@ -40,7 +40,7 @@ router.get("/profile", async (req, res) => {
   return res.json(serializeProfile(profile));
 });
 
-router.patch("/profile", requireAuth, async (req, res) => {
+router.patch("/profile", requireAnyAuth, async (req, res) => {
   const body = req.body as Record<string, unknown>;
 
   // Build updates using Drizzle's JS property names (camelCase), NOT SQL column names
