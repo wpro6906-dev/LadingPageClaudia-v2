@@ -4,7 +4,7 @@ import logoPath from "@assets/image_1781908878316.png";
 import { getIconComponent, ChevronRight } from "@/components/ui/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
-import { Home, MapPin, Star, Key, Building2 } from "lucide-react";
+import { Home, MapPin, Star, Key, Building2, Phone, Mail } from "lucide-react";
 
 interface VisualConfig {
   firstName?: string;
@@ -34,6 +34,9 @@ interface VisualConfig {
   nameLetterSpacing?: string;
   showArrowOnButtons?: boolean;
   showAccentBarOnButtons?: boolean;
+  badgeText?: string;
+  badgeIcon?: string;
+  badgeColor?: string;
 }
 
 function getVC(profile: any): Required<VisualConfig> {
@@ -47,7 +50,8 @@ function getVC(profile: any): Required<VisualConfig> {
     bgOverlay: 0.7, bgBlur: 0, bgZoom: 1, bgPosition: "center",
     mobileBgPosition: "60% center", mobileBgZoom: 1.15, mobileBgOverlay: 0.52,
     gradientTop: true, gradientBottom: true, showDecorLines: true, showGlow: true,
-    nameLetterSpacing: "0.05em", showArrowOnButtons: true, showAccentBarOnButtons: true
+    nameLetterSpacing: "0.05em", showArrowOnButtons: true, showAccentBarOnButtons: true,
+    badgeText: "", badgeIcon: "mappin", badgeColor: "#D4B483"
   };
   return { ...defaults, ...(profile?.visualConfig || {}) };
 }
@@ -101,6 +105,14 @@ export default function PublicProfile() {
 
   const vc = getVC(profile);
   
+  const BadgeIcon = (() => {
+    const n = vc.badgeIcon?.toLowerCase();
+    if (n === "phone") return Phone;
+    if (n === "mail") return Mail;
+    if (n === "building2" || n === "building") return Building2;
+    return MapPin;
+  })();
+
   const DecoratorIcon = (() => {
     const name = vc.decoratorIcon?.toLowerCase();
     if (name === "mappin") return MapPin;
@@ -306,8 +318,25 @@ export default function PublicProfile() {
           </motion.p>
         </div>
 
-        <div className="hidden lg:block absolute bottom-8 left-0 right-0 text-center z-10">
-           <p className="text-[10px] text-muted-foreground/60 font-sans tracking-widest uppercase">
+        {/* Desktop bottom bar: badge left + copyright center */}
+        <div className="hidden lg:flex absolute bottom-8 left-0 right-0 items-end justify-center z-10 px-8">
+          {vc.badgeText && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+              className="absolute left-8 flex items-center gap-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-full px-3 py-1.5"
+            >
+              <BadgeIcon className="w-3 h-3 shrink-0" style={{ color: vc.badgeColor }} />
+              <span
+                className="text-[11px] font-sans font-medium"
+                style={{ color: vc.badgeColor, fontFamily: "'Montserrat', sans-serif" }}
+              >
+                {vc.badgeText}
+              </span>
+            </motion.div>
+          )}
+          <p className="text-[10px] text-muted-foreground/60 font-sans tracking-widest uppercase">
             © {new Date().getFullYear()} {vc.firstName} {vc.lastName}
           </p>
         </div>
@@ -379,6 +408,24 @@ export default function PublicProfile() {
           </p>
         </footer>
       </div>
+
+      {/* Mobile badge — fixed bottom-left, visible only on mobile */}
+      {vc.badgeText && (
+        <motion.div
+          initial={{ opacity: 0, x: -12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="fixed bottom-5 left-4 z-50 lg:hidden flex items-center gap-2 bg-black/55 backdrop-blur-md border border-white/12 rounded-full px-3.5 py-2 shadow-lg"
+        >
+          <BadgeIcon className="w-3.5 h-3.5 shrink-0" style={{ color: vc.badgeColor }} />
+          <span
+            className="text-[12px] font-medium leading-none"
+            style={{ color: vc.badgeColor, fontFamily: "'Montserrat', sans-serif" }}
+          >
+            {vc.badgeText}
+          </span>
+        </motion.div>
+      )}
     </div>
   );
 }

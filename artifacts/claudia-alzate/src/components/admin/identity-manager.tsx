@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import { Save, Home, MapPin, Star, Key, Building2 } from "lucide-react";
+import { Save, Home, MapPin, Star, Key, Building2, Phone, Mail } from "lucide-react";
 
 export function IdentityManager() {
   const { toast } = useToast();
@@ -48,7 +48,10 @@ export function IdentityManager() {
     showArrowOnButtons: true,
     showAccentBarOnButtons: true,
     logoUrl: "",
-    backgroundUrl: ""
+    backgroundUrl: "",
+    badgeText: "",
+    badgeIcon: "mappin",
+    badgeColor: "#D4B483"
   });
 
   useEffect(() => {
@@ -82,6 +85,9 @@ export function IdentityManager() {
         nameLetterSpacing: vc.nameLetterSpacing ?? "0.05em",
         showArrowOnButtons: vc.showArrowOnButtons ?? true,
         showAccentBarOnButtons: vc.showAccentBarOnButtons ?? true,
+        badgeText: vc.badgeText ?? "",
+        badgeIcon: vc.badgeIcon ?? "mappin",
+        badgeColor: vc.badgeColor ?? "#D4B483",
       }));
     }
   }, [profile]);
@@ -119,6 +125,9 @@ export function IdentityManager() {
           nameLetterSpacing: form.nameLetterSpacing,
           showArrowOnButtons: form.showArrowOnButtons,
           showAccentBarOnButtons: form.showAccentBarOnButtons,
+          badgeText: form.badgeText,
+          badgeIcon: form.badgeIcon,
+          badgeColor: form.badgeColor,
         }
       } as any 
     }, {
@@ -187,6 +196,64 @@ export function IdentityManager() {
               <div className="space-y-2">
                 <Label>Logo URL</Label>
                 <Input value={form.logoUrl} onChange={e => updateField("logoUrl", e.target.value)} placeholder="Dejar en blanco para usar por defecto" />
+              </div>
+
+              {/* Badge / Viñeta */}
+              <div className="pt-4 border-t border-border space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Viñeta de ubicación / info</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Aparece abajo a la izquierda en móvil y escritorio. Déjalo en blanco para ocultar.</p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Texto de la viñeta</Label>
+                  <Input
+                    value={form.badgeText}
+                    onChange={e => updateField("badgeText", e.target.value)}
+                    placeholder="Ej: Miami, FL · DRE #12345"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Ícono</Label>
+                  <div className="flex gap-2">
+                    {([
+                      { id: "mappin", Icon: MapPin, label: "Ubicación" },
+                      { id: "phone", Icon: Phone, label: "Teléfono" },
+                      { id: "mail", Icon: Mail, label: "Email" },
+                      { id: "building2", Icon: Building2, label: "Oficina" },
+                    ] as const).map(({ id, Icon, label }) => (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => updateField("badgeIcon", id)}
+                        title={label}
+                        className={`flex flex-col items-center gap-1 p-3 rounded-lg border transition-all ${
+                          form.badgeIcon === id
+                            ? "border-primary bg-primary/10 text-primary"
+                            : "border-border text-muted-foreground hover:border-primary/40"
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        <span className="text-[10px]">{label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Label className="w-1/2">Color de la viñeta</Label>
+                  <div className="flex-1 flex gap-2">
+                    <input
+                      type="color"
+                      value={form.badgeColor}
+                      onChange={e => updateField("badgeColor", e.target.value)}
+                      className="w-10 h-10 rounded cursor-pointer border border-primary/20"
+                    />
+                    <Input
+                      value={form.badgeColor}
+                      onChange={e => updateField("badgeColor", e.target.value)}
+                      className="flex-1 font-mono text-xs uppercase"
+                    />
+                  </div>
+                </div>
               </div>
             </TabsContent>
 
