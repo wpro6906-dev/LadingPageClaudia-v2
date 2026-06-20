@@ -180,16 +180,6 @@ export default function PublicProfile() {
                 background: "radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(5,3,2,0.35) 100%)",
               }}
             />
-            {/* Warm golden shimmer in the visible image zone */}
-            <div
-              className="absolute inset-x-0"
-              style={{
-                top: "28%",
-                height: "32%",
-                background: "linear-gradient(to bottom, transparent, rgba(212,175,55,0.06), transparent)",
-                pointerEvents: "none",
-              }}
-            />
           </>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0806] to-background" />
