@@ -205,7 +205,7 @@ export default function PublicProfile() {
         )}
       </div>
 
-      {/* Mobile portrait — outside the -z-10 background so it renders above all overlays and columns */}
+      {/* Mobile portrait — z-index 50 so it sits above all content columns and overlays */}
       {vc.portraitUrl && (
         <img
           src={vc.portraitUrl}
@@ -213,7 +213,7 @@ export default function PublicProfile() {
           aria-hidden="true"
           className="lg:hidden absolute bottom-0 right-0 pointer-events-none"
           style={{
-            zIndex: 5,
+            zIndex: 50,
             height: `${Math.min(38, (vc.portraitSize ?? 50) * 0.65)}%`,
             width: "auto",
             maxWidth: "48%",
