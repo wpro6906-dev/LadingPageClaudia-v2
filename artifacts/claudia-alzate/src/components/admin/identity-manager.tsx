@@ -163,6 +163,11 @@ export function IdentityManager() {
           portraitSize: form.portraitSize,
           portraitBlendLeft: form.portraitBlendLeft,
           portraitBlendTop: form.portraitBlendTop,
+          bgPhrase: form.bgPhrase,
+          bgPhraseEnabled: form.bgPhraseEnabled,
+          bgPhraseOpacity: form.bgPhraseOpacity,
+          statsEnabled: form.statsEnabled,
+          stats: form.stats,
         }
       } as any 
     }, {
@@ -198,11 +203,12 @@ export function IdentityManager() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
         <div className="space-y-6">
           <Tabs defaultValue="identity" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
+            <TabsList className="grid w-full grid-cols-5 mb-6">
               <TabsTrigger value="identity">Identidad</TabsTrigger>
               <TabsTrigger value="colors">Colores</TabsTrigger>
               <TabsTrigger value="decorations">Decoraciones</TabsTrigger>
               <TabsTrigger value="background">Fondo</TabsTrigger>
+              <TabsTrigger value="highlights">Destacados</TabsTrigger>
             </TabsList>
             
             <TabsContent value="identity" className="space-y-4">
@@ -435,6 +441,117 @@ export function IdentityManager() {
                   </div>
                   <Slider value={[form.portraitBlendTop]} min={5} max={70} step={2} onValueChange={v => updateField("portraitBlendTop", v[0])} />
                 </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="highlights" className="space-y-6">
+              {/* Background phrase */}
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Frase decorativa de fondo</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Aparece en grande y muy tenue detrás de los botones en escritorio.</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="bgPhraseEnabled">Mostrar frase decorativa</Label>
+                  <Switch id="bgPhraseEnabled" checked={form.bgPhraseEnabled} onCheckedChange={v => updateField("bgPhraseEnabled", v)} />
+                </div>
+                {form.bgPhraseEnabled && (
+                  <div className="space-y-4 pl-4 border-l-2 border-primary/20">
+                    <div className="space-y-2">
+                      <Label>Texto de la frase</Label>
+                      <Input
+                        value={form.bgPhrase}
+                        onChange={e => updateField("bgPhrase", e.target.value)}
+                        placeholder="Ej: Luxury Real Estate"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <Label>Opacidad</Label>
+                        <span className="text-xs text-muted-foreground">{Math.round(form.bgPhraseOpacity * 100)}%</span>
+                      </div>
+                      <Slider value={[form.bgPhraseOpacity]} min={0.01} max={0.18} step={0.01} onValueChange={v => updateField("bgPhraseOpacity", v[0])} />
+                      <p className="text-xs text-muted-foreground">Valor recomendado: 3–6%</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Stats */}
+              <div className="pt-4 border-t border-border space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Estadísticas destacadas</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Aparecen debajo de los botones en escritorio, en una cuadrícula de 2 columnas.</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="statsEnabled">Mostrar estadísticas</Label>
+                  <Switch id="statsEnabled" checked={form.statsEnabled} onCheckedChange={v => updateField("statsEnabled", v)} />
+                </div>
+                {form.statsEnabled && (
+                  <div className="space-y-3">
+                    {form.stats.map((stat, i) => (
+                      <div key={i} className="p-4 rounded-xl border border-border bg-card/30 space-y-3">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Stat {i + 1}</span>
+                          <Switch
+                            checked={stat.enabled}
+                            onCheckedChange={v => {
+                              const updated = form.stats.map((s, idx) => idx === i ? { ...s, enabled: v } : s);
+                              updateField("stats", updated);
+                            }}
+                          />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <div className="space-y-1">
+                            <Label className="text-xs">Ícono</Label>
+                            <Input
+                              value={stat.icon}
+                              onChange={e => {
+                                const updated = form.stats.map((s, idx) => idx === i ? { ...s, icon: e.target.value } : s);
+                                updateField("stats", updated);
+                              }}
+                              placeholder="mappin"
+                              className="text-xs"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label className="text-xs">Número / valor</Label>
+                            <Input
+                              value={stat.value}
+                              onChange={e => {
+                                const updated = form.stats.map((s, idx) => idx === i ? { ...s, value: e.target.value } : s);
+                                updateField("stats", updated);
+                              }}
+                              placeholder="150+"
+                              className="text-xs"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label className="text-xs">Descripción</Label>
+                            <Input
+                              value={stat.label}
+                              onChange={e => {
+                                const updated = form.stats.map((s, idx) => idx === i ? { ...s, label: e.target.value } : s);
+                                updateField("stats", updated);
+                              }}
+                              placeholder="Clientes"
+                              className="text-xs"
+                            />
+                          </div>
+                        </div>
+                        <p className="text-[10px] text-muted-foreground">Íconos: mappin, home, star, users, key, building2, phone, mail, globe</p>
+                      </div>
+                    ))}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-primary/20 text-muted-foreground hover:text-foreground"
+                      onClick={() => updateField("stats", [...form.stats, { icon: "star", value: "", label: "Nueva estadística", enabled: true }])}
+                    >
+                      + Agregar estadística
+                    </Button>
+                  </div>
+                )}
               </div>
             </TabsContent>
           </Tabs>

@@ -425,6 +425,31 @@ export default function PublicProfile() {
           />
         )}
 
+        {/* ── Decorative background phrase — desktop only ── */}
+        {vc.bgPhraseEnabled !== false && vc.bgPhrase && (
+          <div
+            aria-hidden="true"
+            className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none z-0 overflow-hidden"
+          >
+            <span
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(4.5rem, 7.5vw, 8rem)",
+                fontWeight: 300,
+                fontStyle: "italic",
+                letterSpacing: "0.06em",
+                opacity: vc.bgPhraseOpacity ?? 0.04,
+                color: "#D4B483",
+                whiteSpace: "nowrap",
+                transform: "rotate(-5deg)",
+                userSelect: "none",
+              }}
+            >
+              {vc.bgPhrase}
+            </span>
+          </div>
+        )}
+
         <main className="w-full max-w-sm mx-auto lg:mx-0 lg:ml-14 lg:mr-auto flex flex-col flex-1 lg:flex-none justify-center relative z-10">
           
           {/* Links */}
@@ -479,6 +504,40 @@ export default function PublicProfile() {
               })
             )}
           </motion.div>
+
+          {/* ── Stats — desktop only ── */}
+          {vc.statsEnabled !== false && (vc.stats || []).filter(s => s.enabled).length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="hidden lg:grid grid-cols-2 gap-x-6 gap-y-5 mt-8 pt-7 border-t border-primary/10"
+            >
+              {(vc.stats || []).filter(s => s.enabled).map((stat, i) => {
+                const StatIcon = getIconComponent(stat.icon);
+                return (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className="mt-0.5 shrink-0 w-7 h-7 rounded-lg bg-primary/8 flex items-center justify-center">
+                      <StatIcon className="w-3.5 h-3.5 text-primary" />
+                    </div>
+                    <div>
+                      {stat.value && (
+                        <p
+                          className="text-sm font-semibold leading-tight font-sans"
+                          style={{ color: "#D4B483" }}
+                        >
+                          {stat.value}
+                        </p>
+                      )}
+                      <p className={`text-xs leading-tight font-sans ${stat.value ? "text-muted-foreground/60 mt-0.5" : "text-foreground/75 font-medium"}`}>
+                        {stat.label}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+          )}
         </main>
 
         {/* Desktop badge — bottom-left of right column, above portrait area */}
