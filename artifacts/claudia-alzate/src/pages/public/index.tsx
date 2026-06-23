@@ -108,11 +108,20 @@ export default function PublicProfile() {
     }).catch(() => {});
   }, []);
 
+  // Ensure external URLs always have a protocol so browsers never treat them as
+  // relative paths (which would let wouter intercept them and show a 404).
+  const toExternalUrl = (url: string) => {
+    if (!url) return '#';
+    if (/^https?:\/\//i.test(url)) return url;
+    if (/^mailto:|^tel:|^sms:/i.test(url)) return url;
+    return `https://${url}`;
+  };
+
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, link: any) => {
     e.preventDefault();
     // Open immediately — must be synchronous within the user gesture (tap/click)
     // so mobile browsers don't block it as a popup.
-    window.open(link.url, '_blank', 'noopener,noreferrer');
+    window.open(toExternalUrl(link.url), '_blank', 'noopener,noreferrer');
     // Track analytics in background after navigation is already triggered
     fetch(`${API_BASE}/api/analytics/track`, {
       method: 'POST',
@@ -475,7 +484,9 @@ export default function PublicProfile() {
                     key={link.id}
                   >
                     <a
-                      href={link.url}
+                      href={toExternalUrl(link.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={(e) => handleLinkClick(e, link)}
                       className="group relative block w-full bg-card/40 backdrop-blur-md border border-primary/15 rounded-2xl py-5 px-6 transition-all duration-400 hover:bg-card/70 hover:border-primary/50 hover:shadow-[0_0_24px_rgba(212,175,55,0.12)] overflow-hidden"
                     >

@@ -15,6 +15,15 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
 import { getIconComponent } from "@/components/ui/icons";
 
+// Ensure URLs saved to the DB always have a protocol prefix so they are never
+// treated as relative paths by the browser.
+const normalizeUrl = (url: string) => {
+  if (!url) return url;
+  if (/^https?:\/\//i.test(url)) return url;
+  if (/^mailto:|^tel:|^sms:/i.test(url)) return url;
+  return `https://${url}`;
+};
+
 export function LinksManager() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -58,7 +67,8 @@ export function LinksManager() {
 
   const handleSaveEdit = () => {
     if (!editingId) return;
-    updateMutation.mutate({ id: editingId, data: editForm }, {
+    const data = { ...editForm, url: normalizeUrl(editForm.url) };
+    updateMutation.mutate({ id: editingId, data }, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: getGetLinksQueryKey() });
         setEditingId(null);
@@ -68,7 +78,8 @@ export function LinksManager() {
   };
 
   const handleAdd = () => {
-    createMutation.mutate({ data: addForm }, {
+    const data = { ...addForm, url: normalizeUrl(addForm.url) };
+    createMutation.mutate({ data }, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: getGetLinksQueryKey() });
         setIsAdding(false);
