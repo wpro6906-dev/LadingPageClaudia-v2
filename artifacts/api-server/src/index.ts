@@ -1,6 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
-import { db, adminTable, profileTable, DEFAULT_VISUAL_CONFIG } from "@workspace/db";
+import { db, adminTable, profileTable, DEFAULT_VISUAL_CONFIG, ensureSchema } from "@workspace/db";
 import { eq } from "drizzle-orm";
 
 const ADMIN_USERNAME = "ClaudiaAlzate";
@@ -57,12 +57,21 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${process.env["PORT"]}"`);
 }
 
-Promise.all([seedAdmin(), seedProfile()]).finally(() => {
-  app.listen(port, (err) => {
+async function bootstrap() {
+  try {
+    await ensureSchema();
+    logger.info("Database schema ensured");
+  } catch (err) {
+    logger.error({ err }, "Failed to ensure schema — DB may be missing tables");
+  }
+  await Promise.all([seedAdmin(), seedProfile()]);
+  app.listen(port, (err: Error | undefined) => {
     if (err) {
       logger.error({ err }, "Error listening on port");
       process.exit(1);
     }
     logger.info({ port }, "Server listening");
   });
-});
+}
+
+bootstrap();
