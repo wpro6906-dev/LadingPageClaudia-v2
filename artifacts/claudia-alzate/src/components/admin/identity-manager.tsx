@@ -79,6 +79,11 @@ export function IdentityManager() {
     bgPhraseFont: "elegante",
     closingPhrase: "Que cada paso te acerque más a tu luz interior.",
     closingPhraseEnabled: true,
+    closingPhraseColor: "#8C6FB0",
+    closingPhraseOpacity: 1,
+    decorFloralColor: "#8B6BB8",
+    decorFloralAccentColor: "#C9A15C",
+    decorFloralOpacity: 1,
     statsEnabled: true,
     stats: [
       { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -148,6 +153,11 @@ export function IdentityManager() {
         bgPhraseFont: normalizeFontKey(vc.bgPhraseFont ?? legacyFont),
         closingPhrase: vc.closingPhrase ?? "Que cada paso te acerque más a tu luz interior.",
         closingPhraseEnabled: vc.closingPhraseEnabled ?? true,
+        closingPhraseColor: vc.closingPhraseColor ?? "#8C6FB0",
+        closingPhraseOpacity: vc.closingPhraseOpacity ?? 1,
+        decorFloralColor: vc.decorFloralColor ?? "#8B6BB8",
+        decorFloralAccentColor: vc.decorFloralAccentColor ?? "#C9A15C",
+        decorFloralOpacity: vc.decorFloralOpacity ?? 1,
         statsEnabled: vc.statsEnabled ?? true,
         stats: vc.stats ?? [
           { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -220,6 +230,11 @@ export function IdentityManager() {
           bgPhraseFont: form.bgPhraseFont,
           closingPhrase: form.closingPhrase,
           closingPhraseEnabled: form.closingPhraseEnabled,
+          closingPhraseColor: form.closingPhraseColor,
+          closingPhraseOpacity: form.closingPhraseOpacity,
+          decorFloralColor: form.decorFloralColor,
+          decorFloralAccentColor: form.decorFloralAccentColor,
+          decorFloralOpacity: form.decorFloralOpacity,
           statsEnabled: form.statsEnabled,
           stats: form.stats,
         }
@@ -385,6 +400,53 @@ export function IdentityManager() {
               <div className="flex items-center justify-between">
                 <Label className="cursor-pointer" htmlFor="showAccentBarOnButtons">Barra de acento en botones</Label>
                 <Switch id="showAccentBarOnButtons" checked={form.showAccentBarOnButtons} onCheckedChange={v => updateField("showAccentBarOnButtons", v)} />
+              </div>
+
+              {/* Floral / botanical decorations */}
+              <div className="pt-4 border-t border-border space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Decoraciones florales</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Vides y flores que enmarcan las esquinas, los botones y la frase de cierre (vista móvil).</p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Color principal (vides y pétalos)</Label>
+                  <div className="flex gap-2">
+                    <input
+                      type="color"
+                      value={form.decorFloralColor}
+                      onChange={e => updateField("decorFloralColor", e.target.value)}
+                      className="w-10 h-10 rounded cursor-pointer border border-primary/20"
+                    />
+                    <Input
+                      value={form.decorFloralColor}
+                      onChange={e => updateField("decorFloralColor", e.target.value)}
+                      className="flex-1 font-mono text-xs uppercase"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>Color de acento (centros dorados)</Label>
+                  <div className="flex gap-2">
+                    <input
+                      type="color"
+                      value={form.decorFloralAccentColor}
+                      onChange={e => updateField("decorFloralAccentColor", e.target.value)}
+                      className="w-10 h-10 rounded cursor-pointer border border-primary/20"
+                    />
+                    <Input
+                      value={form.decorFloralAccentColor}
+                      onChange={e => updateField("decorFloralAccentColor", e.target.value)}
+                      className="flex-1 font-mono text-xs uppercase"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <Label>Opacidad / intensidad</Label>
+                    <span className="text-xs text-muted-foreground">{Math.round(form.decorFloralOpacity * 100)}%</span>
+                  </div>
+                  <Slider value={[form.decorFloralOpacity]} min={0} max={1} step={0.05} onValueChange={v => updateField("decorFloralOpacity", v[0])} />
+                </div>
               </div>
             </TabsContent>
 
@@ -607,14 +669,39 @@ export function IdentityManager() {
                   <Switch id="closingPhraseEnabled" checked={form.closingPhraseEnabled} onCheckedChange={v => updateField("closingPhraseEnabled", v)} />
                 </div>
                 {form.closingPhraseEnabled && (
-                  <div className="space-y-2 pl-4 border-l-2 border-primary/20">
-                    <Label>Texto de la frase</Label>
-                    <Textarea
-                      value={form.closingPhrase}
-                      onChange={e => updateField("closingPhrase", e.target.value)}
-                      placeholder="Ej: Que cada paso te acerque más a tu luz interior."
-                      rows={2}
-                    />
+                  <div className="space-y-4 pl-4 border-l-2 border-primary/20">
+                    <div className="space-y-2">
+                      <Label>Texto de la frase</Label>
+                      <Textarea
+                        value={form.closingPhrase}
+                        onChange={e => updateField("closingPhrase", e.target.value)}
+                        placeholder="Ej: Que cada paso te acerque más a tu luz interior."
+                        rows={2}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Color</Label>
+                      <div className="flex gap-2">
+                        <input
+                          type="color"
+                          value={form.closingPhraseColor}
+                          onChange={e => updateField("closingPhraseColor", e.target.value)}
+                          className="w-10 h-10 rounded cursor-pointer border border-primary/20"
+                        />
+                        <Input
+                          value={form.closingPhraseColor}
+                          onChange={e => updateField("closingPhraseColor", e.target.value)}
+                          className="flex-1 font-mono text-xs uppercase"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <Label>Opacidad</Label>
+                        <span className="text-xs text-muted-foreground">{Math.round(form.closingPhraseOpacity * 100)}%</span>
+                      </div>
+                      <Slider value={[form.closingPhraseOpacity]} min={0.2} max={1} step={0.05} onValueChange={v => updateField("closingPhraseOpacity", v[0])} />
+                    </div>
                   </div>
                 )}
               </div>

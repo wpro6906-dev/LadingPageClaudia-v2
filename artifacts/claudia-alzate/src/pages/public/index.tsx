@@ -61,6 +61,11 @@ interface VisualConfig {
   statsEnabled?: boolean;
   closingPhrase?: string;
   closingPhraseEnabled?: boolean;
+  closingPhraseColor?: string;
+  closingPhraseOpacity?: number;
+  decorFloralColor?: string;
+  decorFloralAccentColor?: string;
+  decorFloralOpacity?: number;
   logoSize?: number;
   logoOffsetX?: number;
   logoOffsetY?: number;
@@ -89,6 +94,8 @@ function getVC(profile: any): Required<VisualConfig> {
     portraitSizeMobile: 30, portraitOffsetXMobile: 0, portraitOffsetYMobile: 0,
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9, bgPhraseFont: "elegante",
     closingPhrase: "Que cada paso te acerque más a tu luz interior.", closingPhraseEnabled: true,
+    closingPhraseColor: "#8C6FB0", closingPhraseOpacity: 1,
+    decorFloralColor: "#8B6BB8", decorFloralAccentColor: "#C9A15C", decorFloralOpacity: 1,
     logoSize: 100, logoOffsetX: 0, logoOffsetY: 0,
     logoSizeMobile: 100, logoOffsetXMobile: 0, logoOffsetYMobile: 0,
     statsEnabled: true,
@@ -582,10 +589,10 @@ export default function PublicProfile() {
         )}
 
         {/* ── Mobile-only botanical decorative layer — delicate vines, leaves and blossoms framing the section, lavender + gold ── */}
-        <BotanicalCorner className="absolute -top-2 -left-2 w-32 h-32 lg:hidden pointer-events-none z-0" style={{ transform: "scaleY(-1)" }} />
-        <BotanicalCorner className="absolute -bottom-2 -right-2 w-36 h-36 lg:hidden pointer-events-none z-0" style={{ transform: "scaleX(-1)" }} />
-        <BotanicalCorner className="absolute top-2 -right-3 w-20 h-20 lg:hidden pointer-events-none z-0 opacity-80" style={{ transform: "scale(-1,-1)" }} />
-        <BotanicalEdgeVine className="absolute right-0 top-8 bottom-8 w-9 lg:hidden pointer-events-none z-0" style={{ height: "auto" }} />
+        <BotanicalCorner className="absolute -top-2 -left-2 w-32 h-32 lg:hidden pointer-events-none z-0" style={{ transform: "scaleY(-1)" }} color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity} />
+        <BotanicalCorner className="absolute -bottom-2 -right-2 w-36 h-36 lg:hidden pointer-events-none z-0" style={{ transform: "scaleX(-1)" }} color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity} />
+        <BotanicalCorner className="absolute top-2 -right-3 w-20 h-20 lg:hidden pointer-events-none z-0" style={{ transform: "scale(-1,-1)" }} color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity * 0.8} />
+        <BotanicalEdgeVine className="absolute right-0 top-8 bottom-8 w-9 lg:hidden pointer-events-none z-0" style={{ height: "auto" }} color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 lg:hidden pointer-events-none z-0"
           style={{ width: 260, height: 140, background: "radial-gradient(ellipse at top, rgba(155,127,196,0.14) 0%, transparent 72%)" }} />
         {/* Soft light particles */}
@@ -614,10 +621,10 @@ export default function PublicProfile() {
                 return (
                   <motion.div variants={itemVariants} key={link.id} className="relative">
                     {index === 0 && (
-                      <BotanicalSprig className="lg:hidden absolute -top-2 -left-3 w-14 h-8 pointer-events-none z-0 -scale-x-100" />
+                      <BotanicalSprig className="lg:hidden absolute -top-2 -left-3 w-14 h-8 pointer-events-none z-0 -scale-x-100" color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity} />
                     )}
                     {index === activeLinks.length - 2 && (
-                      <BotanicalSprig className="lg:hidden absolute -bottom-2 -right-3 w-14 h-8 pointer-events-none z-0" />
+                      <BotanicalSprig className="lg:hidden absolute -bottom-2 -right-3 w-14 h-8 pointer-events-none z-0" color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity} />
                     )}
                     <a
                       href={toExternalUrl(link.url)}
@@ -666,14 +673,14 @@ export default function PublicProfile() {
               transition={{ duration: 0.7, delay: 0.5 }}
               className="lg:hidden flex flex-col items-center gap-1 mt-3 mb-6 px-6 text-center relative z-10"
             >
-              <BotanicalFlourish className="w-44 h-9" />
+              <BotanicalFlourish className="w-44 h-9" color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity} />
               <p
                 className="text-sm italic leading-relaxed -mt-1"
-                style={{ color: "#8C6FB0", fontFamily: bgPhraseFontFamily }}
+                style={{ color: vc.closingPhraseColor, opacity: vc.closingPhraseOpacity, fontFamily: bgPhraseFontFamily }}
               >
                 {vc.closingPhrase}
               </p>
-              <BotanicalFlourish className="w-32 h-6 rotate-180 opacity-70" />
+              <BotanicalFlourish className="w-32 h-6 rotate-180" color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity * 0.7} />
             </motion.div>
           )}
 
