@@ -231,12 +231,12 @@ export default function PublicProfile() {
               />
               {/* Base overlay — barely-there wash, just to settle the photo tone; contrast for text now comes from the text styling, not from dimming the image */}
               <div className="absolute inset-0" style={{ background: `rgba(15,10,20,${vc.mobileBgOverlay ?? 0.06})` }} />
-              {/* Bottom fade — starts low and stays gentle, so the photo keeps its color and depth almost all the way down; only turns fully solid right at the block's own edge (where the first button begins) */}
+              {/* Bottom fade — confined to a thin strip right at the block's own edge, so it never washes over the text above; only turns fully solid right where the first button begins */}
               <div
                 className="absolute inset-x-0 bottom-0"
                 style={{
-                  height: "48%",
-                  background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsl(35,45%,97%) 4%, hsla(35,45%,97%,0.92) 16%, hsla(35,45%,97%,0.68) 34%, hsla(35,45%,97%,0.36) 56%, hsla(35,45%,97%,0.12) 78%, transparent 100%)",
+                  height: "20%",
+                  background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsl(35,45%,97%) 5%, hsla(35,45%,97%,0.6) 22%, hsla(35,45%,97%,0.25) 45%, hsla(35,45%,97%,0.08) 70%, transparent 100%)",
                 }}
               />
             </>
