@@ -36,6 +36,9 @@ const extraOrigins = process.env.ALLOWED_ORIGINS
 function isOriginAllowed(origin: string): boolean {
   if (origin.endsWith(".vercel.app")) return true;
   if (origin.endsWith(".onrender.com")) return true;
+  if (origin.endsWith(".replit.dev")) return true;
+  if (origin.endsWith(".replit.app")) return true;
+  if (origin.endsWith(".repl.co")) return true;
   if (extraOrigins.includes(origin)) return true;
   if (!IS_PROD && origin.startsWith("http://localhost")) return true;
   return false;

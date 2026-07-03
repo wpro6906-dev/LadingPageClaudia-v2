@@ -16,13 +16,10 @@ async function seedAdmin() {
     if (!existing) {
       await db.insert(adminTable).values({ username: ADMIN_USERNAME, password: ADMIN_PASSWORD });
       logger.info({ username: ADMIN_USERNAME }, "Admin user created in DB");
-    } else if (existing.password !== ADMIN_PASSWORD) {
-      await db
-        .update(adminTable)
-        .set({ password: ADMIN_PASSWORD })
-        .where(eq(adminTable.id, existing.id));
-      logger.info({ username: ADMIN_USERNAME }, "Admin password updated in DB");
     } else {
+      // Do not overwrite an existing password on every boot — the admin may
+      // have changed it via the dashboard. Only the first insert sets the
+      // default password.
       logger.info({ username: ADMIN_USERNAME }, "Admin user already exists");
     }
   } catch (err) {
