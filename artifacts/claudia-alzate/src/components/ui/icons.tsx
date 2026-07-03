@@ -2,7 +2,8 @@ import {
   Home, Link as LinkIcon, Globe, Phone, Mail, MapPin, Star, Key, Building2,
   ChevronRight, Linkedin, Twitter, Youtube, Award, TrendingUp, Briefcase,
   Heart, ThumbsUp, Calendar, Clock, User, Users, MessageCircle, DollarSign,
-  Percent, Search, ShieldCheck, Zap, CheckCircle2,
+  Percent, Search, ShieldCheck, Zap, CheckCircle2, Sparkles, Flower2, Sun,
+  Moon, Feather, Leaf, Wind, HandHeart, PlayCircle,
 } from "lucide-react";
 import { SiWhatsapp, SiInstagram, SiFacebook, SiTiktok } from "react-icons/si";
 
@@ -40,6 +41,15 @@ export function getIconComponent(name: string) {
     case "shieldcheck":   return ShieldCheck;
     case "zap":           return Zap;
     case "checkcircle2":  return CheckCircle2;
+    case "sparkles": case "sparkle": return Sparkles;
+    case "flower2": case "flower": return Flower2;
+    case "sun":           return Sun;
+    case "moon":          return Moon;
+    case "feather": case "angel": return Feather;
+    case "leaf":          return Leaf;
+    case "wind":          return Wind;
+    case "handheart": case "gratitude": return HandHeart;
+    case "playcircle": case "meditation": return PlayCircle;
     default:              return LinkIcon;
   }
 }

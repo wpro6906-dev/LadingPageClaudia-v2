@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -58,8 +58,8 @@
   --color-sidebar-accent-border: var(--sidebar-accent-border);
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  --font-sans: 'Montserrat', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Poppins', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   --text-xs: 0.75rem;
@@ -97,61 +97,61 @@
 
 /* LIGHT MODE */
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
+  --button-outline: rgba(120,90,150, .12);
+  --badge-outline: rgba(120,90,150, .06);
   --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --elevate-1: rgba(120,90,150, .04);
+  --elevate-2: rgba(120,90,150, .09);
 
-  /* Deep Black Luxury Theme */
-  --background: 5 5% 2%;
-  --foreground: 0 0% 98%;
-  --border: 0 0% 15%;
-  --card: 0 0% 6%;
-  --card-foreground: 0 0% 98%;
-  --card-border: 0 0% 15%;
-  
-  --sidebar: 0 0% 4%;
-  --sidebar-foreground: 0 0% 98%;
-  --sidebar-border: 0 0% 15%;
-  --sidebar-primary: 38 55% 55%;
-  --sidebar-primary-foreground: 5 5% 2%;
-  --sidebar-accent: 0 0% 10%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 38 55% 55%;
-  
-  --popover: 0 0% 6%;
-  --popover-foreground: 0 0% 98%;
-  --popover-border: 0 0% 15%;
-  
-  --primary: 38 55% 55%;
-  --primary-foreground: 5 5% 2%;
-  --secondary: 0 0% 10%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 12%;
-  --muted-foreground: 0 0% 65%;
-  --accent: 38 55% 55%;
-  --accent-foreground: 5 5% 2%;
-  --destructive: 0 84% 60%;
+  /* Vivir Bajo la Luz — Spiritual Warm Theme */
+  --background: 35 45% 97%;
+  --foreground: 280 20% 27%;
+  --border: 280 25% 89%;
+  --card: 30 45% 99%;
+  --card-foreground: 280 20% 27%;
+  --card-border: 280 20% 88%;
+
+  --sidebar: 35 40% 98%;
+  --sidebar-foreground: 280 20% 27%;
+  --sidebar-border: 280 25% 89%;
+  --sidebar-primary: 262 38% 63%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 280 30% 94%;
+  --sidebar-accent-foreground: 280 20% 27%;
+  --sidebar-ring: 262 38% 63%;
+
+  --popover: 30 45% 99%;
+  --popover-foreground: 280 20% 27%;
+  --popover-border: 280 20% 88%;
+
+  --primary: 262 38% 63%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 100 22% 66%;
+  --secondary-foreground: 100 30% 18%;
+  --muted: 280 28% 94%;
+  --muted-foreground: 280 10% 48%;
+  --accent: 38 48% 62%;
+  --accent-foreground: 38 45% 15%;
+  --destructive: 0 65% 60%;
   --destructive-foreground: 0 0% 98%;
-  
-  --input: 0 0% 15%;
-  --ring: 38 55% 55%;
-  --chart-1: 38 55% 55%;
-  --chart-2: 0 0% 65%;
-  --chart-3: 0 0% 45%;
-  --chart-4: 0 0% 25%;
-  --chart-5: 0 0% 15%;
 
-  --radius: .5rem;
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.5);
-  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.5);
-  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 1px 2px -1px hsl(0 0% 0% / 0.5);
-  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 1px 2px -1px hsl(0 0% 0% / 0.5);
-  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 2px 4px -1px hsl(0 0% 0% / 0.5);
-  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 4px 6px -1px hsl(0 0% 0% / 0.5);
-  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 8px 10px -1px hsl(0 0% 0% / 0.5);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.5);
+  --input: 280 25% 89%;
+  --ring: 262 38% 63%;
+  --chart-1: 262 38% 63%;
+  --chart-2: 100 22% 60%;
+  --chart-3: 38 48% 62%;
+  --chart-4: 280 20% 75%;
+  --chart-5: 280 10% 55%;
+
+  --radius: 1.25rem;
+  --shadow-2xs: 0px 2px 8px 0px hsl(280 30% 60% / 0.06);
+  --shadow-xs: 0px 2px 8px 0px hsl(280 30% 60% / 0.08);
+  --shadow-sm: 0px 4px 16px -2px hsl(280 30% 60% / 0.10), 0px 2px 4px -1px hsl(280 30% 60% / 0.06);
+  --shadow: 0px 4px 16px -2px hsl(280 30% 60% / 0.10), 0px 2px 4px -1px hsl(280 30% 60% / 0.06);
+  --shadow-md: 0px 8px 24px -4px hsl(280 30% 60% / 0.12), 0px 2px 6px -1px hsl(280 30% 60% / 0.08);
+  --shadow-lg: 0px 12px 32px -6px hsl(280 30% 60% / 0.14), 0px 4px 10px -2px hsl(280 30% 60% / 0.08);
+  --shadow-xl: 0px 20px 48px -8px hsl(280 30% 60% / 0.16), 0px 8px 16px -4px hsl(280 30% 60% / 0.10);
+  --shadow-2xl: 0px 24px 56px -8px hsl(280 30% 60% / 0.18);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -165,60 +165,60 @@
 }
 
 .dark {
-  --button-outline: rgba(255,255,255, .10);
-  --badge-outline: rgba(255,255,255, .05);
-  --opaque-button-border-intensity: 9;
-  --elevate-1: rgba(255,255,255, .04);
-  --elevate-2: rgba(255,255,255, .09);
+  --button-outline: rgba(120,90,150, .12);
+  --badge-outline: rgba(120,90,150, .06);
+  --opaque-button-border-intensity: -8;
+  --elevate-1: rgba(120,90,150, .04);
+  --elevate-2: rgba(120,90,150, .09);
 
-  /* Deep Black Luxury Theme */
-  --background: 5 5% 2%;
-  --foreground: 0 0% 98%;
-  --border: 0 0% 15%;
-  --card: 0 0% 6%;
-  --card-foreground: 0 0% 98%;
-  --card-border: 0 0% 15%;
-  
-  --sidebar: 0 0% 4%;
-  --sidebar-foreground: 0 0% 98%;
-  --sidebar-border: 0 0% 15%;
-  --sidebar-primary: 38 55% 55%;
-  --sidebar-primary-foreground: 5 5% 2%;
-  --sidebar-accent: 0 0% 10%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 38 55% 55%;
-  
-  --popover: 0 0% 6%;
-  --popover-foreground: 0 0% 98%;
-  --popover-border: 0 0% 15%;
-  
-  --primary: 38 55% 55%;
-  --primary-foreground: 5 5% 2%;
-  --secondary: 0 0% 10%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 12%;
-  --muted-foreground: 0 0% 65%;
-  --accent: 38 55% 55%;
-  --accent-foreground: 5 5% 2%;
-  --destructive: 0 84% 60%;
+  /* Vivir Bajo la Luz — Spiritual Warm Theme (kept identical to light: the brand is luminous, not dark) */
+  --background: 35 45% 97%;
+  --foreground: 280 20% 27%;
+  --border: 280 25% 89%;
+  --card: 30 45% 99%;
+  --card-foreground: 280 20% 27%;
+  --card-border: 280 20% 88%;
+
+  --sidebar: 35 40% 98%;
+  --sidebar-foreground: 280 20% 27%;
+  --sidebar-border: 280 25% 89%;
+  --sidebar-primary: 262 38% 63%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 280 30% 94%;
+  --sidebar-accent-foreground: 280 20% 27%;
+  --sidebar-ring: 262 38% 63%;
+
+  --popover: 30 45% 99%;
+  --popover-foreground: 280 20% 27%;
+  --popover-border: 280 20% 88%;
+
+  --primary: 262 38% 63%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 100 22% 66%;
+  --secondary-foreground: 100 30% 18%;
+  --muted: 280 28% 94%;
+  --muted-foreground: 280 10% 48%;
+  --accent: 38 48% 62%;
+  --accent-foreground: 38 45% 15%;
+  --destructive: 0 65% 60%;
   --destructive-foreground: 0 0% 98%;
-  
-  --input: 0 0% 15%;
-  --ring: 38 55% 55%;
-  --chart-1: 38 55% 55%;
-  --chart-2: 0 0% 65%;
-  --chart-3: 0 0% 45%;
-  --chart-4: 0 0% 25%;
-  --chart-5: 0 0% 15%;
 
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.5);
-  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.5);
-  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 1px 2px -1px hsl(0 0% 0% / 0.5);
-  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 1px 2px -1px hsl(0 0% 0% / 0.5);
-  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 2px 4px -1px hsl(0 0% 0% / 0.5);
-  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 4px 6px -1px hsl(0 0% 0% / 0.5);
-  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.5), 0px 8px 10px -1px hsl(0 0% 0% / 0.5);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.5);
+  --input: 280 25% 89%;
+  --ring: 262 38% 63%;
+  --chart-1: 262 38% 63%;
+  --chart-2: 100 22% 60%;
+  --chart-3: 38 48% 62%;
+  --chart-4: 280 20% 75%;
+  --chart-5: 280 10% 55%;
+
+  --shadow-2xs: 0px 2px 8px 0px hsl(280 30% 60% / 0.06);
+  --shadow-xs: 0px 2px 8px 0px hsl(280 30% 60% / 0.08);
+  --shadow-sm: 0px 4px 16px -2px hsl(280 30% 60% / 0.10), 0px 2px 4px -1px hsl(280 30% 60% / 0.06);
+  --shadow: 0px 4px 16px -2px hsl(280 30% 60% / 0.10), 0px 2px 4px -1px hsl(280 30% 60% / 0.06);
+  --shadow-md: 0px 8px 24px -4px hsl(280 30% 60% / 0.12), 0px 2px 6px -1px hsl(280 30% 60% / 0.08);
+  --shadow-lg: 0px 12px 32px -6px hsl(280 30% 60% / 0.14), 0px 4px 10px -2px hsl(280 30% 60% / 0.08);
+  --shadow-xl: 0px 20px 48px -8px hsl(280 30% 60% / 0.16), 0px 8px 16px -4px hsl(280 30% 60% / 0.10);
+  --shadow-2xl: 0px 24px 56px -8px hsl(280 30% 60% / 0.18);
 }
 
 @layer base {

@@ -15,7 +15,8 @@ import {
   Globe, Award, TrendingUp, Briefcase, Heart, ThumbsUp, Calendar,
   Clock, User, MessageCircle, DollarSign, Percent, Search,
   ShieldCheck, Zap, CheckCircle2, Linkedin, Twitter, Youtube,
-  ChevronDown, type LucideIcon,
+  ChevronDown, Sun, Sparkles, Flower2, Moon, Feather, Leaf, Wind,
+  HandHeart, PlayCircle, type LucideIcon,
 } from "lucide-react";
 import { SiInstagram, SiFacebook, SiWhatsapp, SiTiktok } from "react-icons/si";
 
@@ -54,6 +55,15 @@ const STAT_ICONS: IconEntry[] = [
   { key: "facebook",      label: "Facebook",    Icon: SiFacebook as LucideIcon },
   { key: "whatsapp",      label: "WhatsApp",    Icon: SiWhatsapp as LucideIcon },
   { key: "tiktok",        label: "TikTok",      Icon: SiTiktok as LucideIcon },
+  { key: "sun",           label: "Sol",         Icon: Sun },
+  { key: "sparkles",      label: "Destellos",   Icon: Sparkles },
+  { key: "flower2",       label: "Flor",        Icon: Flower2 },
+  { key: "moon",          label: "Luna",        Icon: Moon },
+  { key: "feather",       label: "Ángeles",     Icon: Feather },
+  { key: "leaf",          label: "Hoja",        Icon: Leaf },
+  { key: "wind",          label: "Viento",      Icon: Wind },
+  { key: "handheart",     label: "Gratitud",    Icon: HandHeart },
+  { key: "playcircle",    label: "Meditación",  Icon: PlayCircle },
 ];
 
 function IconPicker({ value, onChange }: { value: string; onChange: (key: string) => void }) {
@@ -113,18 +123,18 @@ export function IdentityManager() {
   const [form, setForm] = useState({
     firstName: "Claudia",
     lastName: "Alzate",
-    firstNameColor: "#FFFFFF",
-    lastNameColor: "#D4B483",
-    subtitleText: "REALTOR",
-    subtitleColor: "#D4B483",
+    firstNameColor: "#6B4F8A",
+    lastNameColor: "#C9A15C",
+    subtitleText: "COACH ESPIRITUAL",
+    subtitleColor: "#8C7AA6",
     decoratorEnabled: true,
-    decoratorIcon: "home",
-    decoratorColor: "#D4B483",
-    tagline1: "Te ayudo a encontrar más que una casa,",
-    tagline2: "tu próximo hogar.",
-    tagline1Color: "#FFFFFF",
-    tagline2Color: "#D4B483",
-    bgOverlay: 0.7,
+    decoratorIcon: "sun",
+    decoratorColor: "#C9A15C",
+    tagline1: "Coach de manifestación y abundancia, facilitadora de ceremonias holísticas",
+    tagline2: "y guía en procesos de transformación.",
+    tagline1Color: "#6B5B7B",
+    tagline2Color: "#C9A15C",
+    bgOverlay: 0.25,
     bgBlur: 0,
     bgZoom: 1,
     bgPosition: "center",
@@ -138,22 +148,22 @@ export function IdentityManager() {
     logoUrl: "",
     backgroundUrl: "",
     badgeText: "",
-    badgeIcon: "mappin",
-    badgeColor: "#D4B483",
+    badgeIcon: "sparkles",
+    badgeColor: "#C9A15C",
     portraitUrl: "",
-    portraitOpacity: 0.85,
+    portraitOpacity: 0.9,
     portraitSize: 68,
     portraitBlendLeft: 50,
     portraitBlendTop: 30,
-    bgPhrase: "Luxury Real Estate",
+    bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
     bgPhraseEnabled: true,
-    bgPhraseOpacity: 0.04,
+    bgPhraseOpacity: 0.9,
     statsEnabled: true,
     stats: [
-      { icon: "mappin", value: "", label: "Miami, FL", enabled: true },
-      { icon: "home", value: "150+", label: "Propiedades Vendidas", enabled: true },
-      { icon: "star", value: "10+", label: "Años de Experiencia", enabled: true },
-      { icon: "users", value: "500+", label: "Clientes Satisfechos", enabled: true },
+      { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
+      { icon: "sparkles", value: "500+", label: "Mujeres Acompañadas", enabled: true },
+      { icon: "flower2", value: "10+", label: "Años de Experiencia", enabled: true },
+      { icon: "feather", value: "100+", label: "Ceremonias Facilitadas", enabled: true },
     ],
   });
 
@@ -166,18 +176,18 @@ export function IdentityManager() {
         backgroundUrl: profile.backgroundUrl || "",
         firstName: vc.firstName ?? "Claudia",
         lastName: vc.lastName ?? "Alzate",
-        firstNameColor: vc.firstNameColor ?? "#FFFFFF",
-        lastNameColor: vc.lastNameColor ?? "#D4B483",
-        subtitleText: vc.subtitleText ?? "REALTOR",
-        subtitleColor: vc.subtitleColor ?? "#D4B483",
+        firstNameColor: vc.firstNameColor ?? "#6B4F8A",
+        lastNameColor: vc.lastNameColor ?? "#C9A15C",
+        subtitleText: vc.subtitleText ?? "COACH ESPIRITUAL",
+        subtitleColor: vc.subtitleColor ?? "#8C7AA6",
         decoratorEnabled: vc.decoratorEnabled ?? true,
-        decoratorIcon: vc.decoratorIcon ?? "home",
-        decoratorColor: vc.decoratorColor ?? "#D4B483",
-        tagline1: vc.tagline1 ?? "Te ayudo a encontrar más que una casa,",
-        tagline2: vc.tagline2 ?? "tu próximo hogar.",
-        tagline1Color: vc.tagline1Color ?? "#FFFFFF",
-        tagline2Color: vc.tagline2Color ?? "#D4B483",
-        bgOverlay: vc.bgOverlay ?? 0.7,
+        decoratorIcon: vc.decoratorIcon ?? "sun",
+        decoratorColor: vc.decoratorColor ?? "#C9A15C",
+        tagline1: vc.tagline1 ?? "Coach de manifestación y abundancia, facilitadora de ceremonias holísticas",
+        tagline2: vc.tagline2 ?? "y guía en procesos de transformación.",
+        tagline1Color: vc.tagline1Color ?? "#6B5B7B",
+        tagline2Color: vc.tagline2Color ?? "#C9A15C",
+        bgOverlay: vc.bgOverlay ?? 0.25,
         bgBlur: vc.bgBlur ?? 0,
         bgZoom: vc.bgZoom ?? 1,
         bgPosition: vc.bgPosition ?? "center",
@@ -189,22 +199,22 @@ export function IdentityManager() {
         showArrowOnButtons: vc.showArrowOnButtons ?? true,
         showAccentBarOnButtons: vc.showAccentBarOnButtons ?? true,
         badgeText: vc.badgeText ?? "",
-        badgeIcon: vc.badgeIcon ?? "mappin",
-        badgeColor: vc.badgeColor ?? "#D4B483",
+        badgeIcon: vc.badgeIcon ?? "sparkles",
+        badgeColor: vc.badgeColor ?? "#C9A15C",
         portraitUrl: vc.portraitUrl ?? "",
-        portraitOpacity: vc.portraitOpacity ?? 0.85,
+        portraitOpacity: vc.portraitOpacity ?? 0.9,
         portraitSize: vc.portraitSize ?? 68,
         portraitBlendLeft: vc.portraitBlendLeft ?? 50,
         portraitBlendTop: vc.portraitBlendTop ?? 30,
-        bgPhrase: vc.bgPhrase ?? "Luxury Real Estate",
+        bgPhrase: vc.bgPhrase ?? "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
         bgPhraseEnabled: vc.bgPhraseEnabled ?? true,
-        bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.04,
+        bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
         statsEnabled: vc.statsEnabled ?? true,
         stats: vc.stats ?? [
-          { icon: "mappin", value: "", label: "Miami, FL", enabled: true },
-          { icon: "home", value: "150+", label: "Propiedades Vendidas", enabled: true },
-          { icon: "star", value: "10+", label: "Años de Experiencia", enabled: true },
-          { icon: "users", value: "500+", label: "Clientes Satisfechos", enabled: true },
+          { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
+          { icon: "sparkles", value: "500+", label: "Mujeres Acompañadas", enabled: true },
+          { icon: "flower2", value: "10+", label: "Años de Experiencia", enabled: true },
+          { icon: "feather", value: "100+", label: "Ceremonias Facilitadas", enabled: true },
         ],
       }));
     }
@@ -278,7 +288,13 @@ export function IdentityManager() {
     if (name === "star") return Star;
     if (name === "key") return Key;
     if (name === "building2" || name === "building") return Building2;
-    return Home;
+    if (name === "sparkles" || name === "sparkle") return Sparkles;
+    if (name === "flower2" || name === "flower") return Flower2;
+    if (name === "moon") return Moon;
+    if (name === "feather" || name === "angel") return Feather;
+    if (name === "leaf") return Leaf;
+    if (name === "home") return Home;
+    return Sun;
   })();
 
   return (
@@ -345,6 +361,10 @@ export function IdentityManager() {
                   <Label>Ícono</Label>
                   <div className="flex gap-2">
                     {([
+                      { id: "sparkles", Icon: Sparkles, label: "Destellos" },
+                      { id: "sun", Icon: Sun, label: "Sol" },
+                      { id: "flower2", Icon: Flower2, label: "Flor" },
+                      { id: "feather", Icon: Feather, label: "Ángeles" },
                       { id: "mappin", Icon: MapPin, label: "Ubicación" },
                       { id: "phone", Icon: Phone, label: "Teléfono" },
                       { id: "mail", Icon: Mail, label: "Email" },
@@ -424,8 +444,8 @@ export function IdentityManager() {
               {form.decoratorEnabled && (
                 <div className="space-y-2 pl-4 border-l-2 border-primary/20">
                   <Label>Nombre del ícono</Label>
-                  <Input value={form.decoratorIcon} onChange={e => updateField("decoratorIcon", e.target.value)} placeholder="home, mapPin, star, key, building2" />
-                  <p className="text-xs text-muted-foreground">home, mapPin, star, key, building2</p>
+                  <Input value={form.decoratorIcon} onChange={e => updateField("decoratorIcon", e.target.value)} placeholder="sun, sparkles, flower2, moon, feather, leaf" />
+                  <p className="text-xs text-muted-foreground">sun, sparkles, flower2, moon, feather, leaf, home, mapPin, star, key, building2</p>
                 </div>
               )}
               <div className="flex items-center justify-between">
@@ -642,10 +662,10 @@ export function IdentityManager() {
                         size="sm"
                         className="border-destructive/30 text-destructive/70 hover:text-destructive hover:border-destructive/60 hover:bg-destructive/5"
                         onClick={() => updateField("stats", [
-                          { icon: "mappin", value: "", label: "Miami, FL", enabled: true },
-                          { icon: "home", value: "150+", label: "Propiedades Vendidas", enabled: true },
-                          { icon: "star", value: "10+", label: "Años de Experiencia", enabled: true },
-                          { icon: "users", value: "500+", label: "Clientes Satisfechos", enabled: true },
+                          { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
+                          { icon: "sparkles", value: "500+", label: "Mujeres Acompañadas", enabled: true },
+                          { icon: "flower2", value: "10+", label: "Años de Experiencia", enabled: true },
+                          { icon: "feather", value: "100+", label: "Ceremonias Facilitadas", enabled: true },
                         ])}
                       >
                         Reiniciar
@@ -678,26 +698,26 @@ export function IdentityManager() {
                        filter: `blur(${form.bgBlur || 0}px)`
                      }}
                    />
-                   <div className="absolute inset-0 bg-black" style={{ opacity: form.bgOverlay ?? 0.7 }} />
+                   <div className="absolute inset-0" style={{ background: "hsl(35,45%,97%)", opacity: form.bgOverlay ?? 0.25 }} />
                  </>
                ) : (
-                 <div className="absolute inset-0 bg-gradient-to-b from-[#0a0806] to-background" />
+                 <div className="absolute inset-0 bg-gradient-to-br from-[#F3E9FB] via-[#FBF6F0] to-[#EFF5EA]" />
                )}
             </div>
             
             <CardContent className="p-6 flex flex-col items-center justify-center min-h-[480px] text-center relative z-10 scale-[0.8] origin-top">
-              <h3 className="text-[10px] font-mono text-muted-foreground mb-8 uppercase tracking-widest bg-black/50 px-2 py-1 rounded backdrop-blur-sm">Live Preview</h3>
+              <h3 className="text-[10px] font-mono text-muted-foreground mb-8 uppercase tracking-widest bg-white/60 px-2 py-1 rounded backdrop-blur-sm">Live Preview</h3>
               
               <div className="flex flex-col items-center mb-2">
-                <span className="text-4xl font-serif font-light" style={{ color: form.firstNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: "'Playfair Display', serif" }}>
+                <span className="text-4xl font-serif font-light" style={{ color: form.firstNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: "'Cormorant Garamond', serif" }}>
                   {form.firstName}
                 </span>
-                <span className="text-4xl font-serif font-medium" style={{ color: form.lastNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: "'Playfair Display', serif" }}>
+                <span className="text-4xl font-serif font-medium" style={{ color: form.lastNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: "'Cormorant Garamond', serif" }}>
                   {form.lastName}
                 </span>
               </div>
               
-              <p className="text-[10px] font-sans uppercase mb-4 tracking-[0.4em]" style={{ color: form.subtitleColor, fontFamily: "'Montserrat', sans-serif" }}>
+              <p className="text-[10px] font-sans uppercase mb-4 tracking-[0.4em]" style={{ color: form.subtitleColor, fontFamily: "'Poppins', sans-serif" }}>
                 {form.subtitleText}
               </p>
 
