@@ -576,7 +576,8 @@ export default function PublicProfile() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => handleLinkClick(e, link)}
-                      className="group relative block w-full bg-card/70 backdrop-blur-md border border-primary/15 rounded-2xl py-5 px-6 transition-all duration-400 hover:bg-card hover:border-primary/40 hover:shadow-[0_8px_28px_-6px_rgba(155,127,196,0.25)] overflow-hidden z-10"
+                      className="group relative block w-full backdrop-blur-md border border-primary/15 rounded-2xl py-5 px-6 transition-all duration-400 hover:border-primary/40 hover:shadow-[0_8px_28px_-6px_rgba(155,127,196,0.25)] hover:brightness-105 overflow-hidden z-10"
+                      style={{ background: "linear-gradient(135deg, rgba(215,199,234,0.32), rgba(232,214,190,0.28))" }}
                     >
                       {vc.showAccentBarOnButtons !== false && (
                         <div className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
