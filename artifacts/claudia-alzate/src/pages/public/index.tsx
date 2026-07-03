@@ -192,7 +192,7 @@ export default function PublicProfile() {
   return (
     <div className="min-h-[100dvh] bg-transparent lg:bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
       {/* Left Column / Mobile Header */}
-      <div className="relative w-full min-h-[58vh] lg:min-h-0 lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
+      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
         lg:border-r border-primary/15 shrink-0 lg:h-[100dvh] overflow-hidden">
 
         {/* Mobile background — scoped to this header block's own height, so the fade to the links
@@ -240,25 +240,6 @@ export default function PublicProfile() {
             <div className="absolute inset-0 bg-gradient-to-b from-[#F3E9FB] via-[#FBF6F0] to-background" />
           )}
         </div>
-
-        {/* Mobile portrait — integrated into the hero block, anchored bottom-right, never displaces the links below */}
-        {vc.portraitUrl && (
-          <img
-            src={vc.portraitUrl}
-            alt=""
-            aria-hidden="true"
-            className="lg:hidden absolute bottom-0 right-0 pointer-events-none z-10"
-            style={{
-              height: `${vc.portraitSizeMobile ?? 30}vh`,
-              width: "auto",
-              maxWidth: "60%",
-              objectFit: "contain",
-              objectPosition: "bottom right",
-              opacity: vc.portraitOpacity ?? 0.9,
-              transform: `translate(${vc.portraitOffsetXMobile ?? 0}px, ${vc.portraitOffsetYMobile ?? 0}px)`,
-            }}
-          />
-        )}
 
         {/* Desktop left column background */}
         <div className="absolute inset-0 hidden lg:block -z-10">
@@ -607,6 +588,25 @@ export default function PublicProfile() {
           </p>
         </footer>
       </div>
+
+      {/* Mobile portrait — fixed to the viewport's bottom-right corner, overlapping content like a signature photo, never displaces the links or footer */}
+      {vc.portraitUrl && (
+        <img
+          src={vc.portraitUrl}
+          alt=""
+          aria-hidden="true"
+          className="fixed bottom-0 right-0 z-40 lg:hidden pointer-events-none"
+          style={{
+            height: `${vc.portraitSizeMobile ?? 30}vh`,
+            width: "auto",
+            maxWidth: "55%",
+            objectFit: "contain",
+            objectPosition: "bottom right",
+            opacity: vc.portraitOpacity ?? 0.9,
+            transform: `translate(${vc.portraitOffsetXMobile ?? 0}px, ${vc.portraitOffsetYMobile ?? 0}px)`,
+          }}
+        />
+      )}
 
       {/* Mobile badge — fixed bottom-left, visible only on mobile */}
       {vc.badgeText && (
