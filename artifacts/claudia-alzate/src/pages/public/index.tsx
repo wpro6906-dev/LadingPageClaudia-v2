@@ -192,7 +192,7 @@ export default function PublicProfile() {
   return (
     <div className="min-h-[100dvh] bg-transparent lg:bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
       {/* Left Column / Mobile Header */}
-      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
+      <div className="relative w-full min-h-[58vh] lg:min-h-0 lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
         lg:border-r border-primary/15 shrink-0 lg:h-[100dvh] overflow-hidden">
 
         {/* Mobile background — scoped to this header block's own height, so the fade to the links
