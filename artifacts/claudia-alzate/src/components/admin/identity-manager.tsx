@@ -61,9 +61,9 @@ export function IdentityManager() {
     badgeColor: "#C9A15C",
     portraitUrl: "",
     portraitOpacity: 0.9,
-    portraitSize: 68,
-    portraitBlendLeft: 50,
-    portraitBlendTop: 30,
+    portraitSize: 30,
+    portraitBlendLeft: 0,
+    portraitBlendTop: 0,
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
     bgPhraseEnabled: true,
     bgPhraseOpacity: 0.9,
@@ -119,9 +119,9 @@ export function IdentityManager() {
         badgeColor: vc.badgeColor ?? "#C9A15C",
         portraitUrl: vc.portraitUrl ?? "",
         portraitOpacity: vc.portraitOpacity ?? 0.9,
-        portraitSize: vc.portraitSize ?? 68,
-        portraitBlendLeft: vc.portraitBlendLeft ?? 50,
-        portraitBlendTop: vc.portraitBlendTop ?? 30,
+        portraitSize: vc.portraitSize ?? 30,
+        portraitBlendLeft: vc.portraitBlendLeft ?? 0,
+        portraitBlendTop: vc.portraitBlendTop ?? 0,
         bgPhrase: vc.bgPhrase ?? "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
         bgPhraseEnabled: vc.bgPhraseEnabled ?? true,
         bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
@@ -422,21 +422,24 @@ export function IdentityManager() {
                     <Label>Tamaño</Label>
                     <span className="text-xs text-muted-foreground">{form.portraitSize}%</span>
                   </div>
-                  <Slider value={[form.portraitSize]} min={35} max={95} step={1} onValueChange={v => updateField("portraitSize", v[0])} />
+                  <Slider value={[form.portraitSize]} min={10} max={55} step={1} onValueChange={v => updateField("portraitSize", v[0])} />
+                  <p className="text-[11px] text-muted-foreground">Altura de la foto respecto a su bloque. Valores pequeños dan un tamaño más discreto.</p>
                 </div>
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <Label>Fusión lateral (izquierda)</Label>
-                    <span className="text-xs text-muted-foreground">{form.portraitBlendLeft}%</span>
+                    <Label>Posición horizontal</Label>
+                    <span className="text-xs text-muted-foreground">{form.portraitBlendLeft > 0 ? `${form.portraitBlendLeft}px derecha` : form.portraitBlendLeft < 0 ? `${Math.abs(form.portraitBlendLeft)}px izquierda` : "centrado"}</span>
                   </div>
-                  <Slider value={[form.portraitBlendLeft]} min={10} max={80} step={2} onValueChange={v => updateField("portraitBlendLeft", v[0])} />
+                  <Slider value={[form.portraitBlendLeft]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitBlendLeft", v[0])} />
+                  <p className="text-[11px] text-muted-foreground">Mueve la foto a la izquierda o derecha, en píxeles.</p>
                 </div>
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <Label>Fusión superior</Label>
-                    <span className="text-xs text-muted-foreground">{form.portraitBlendTop}%</span>
+                    <Label>Posición vertical</Label>
+                    <span className="text-xs text-muted-foreground">{form.portraitBlendTop > 0 ? `${form.portraitBlendTop}px abajo` : form.portraitBlendTop < 0 ? `${Math.abs(form.portraitBlendTop)}px arriba` : "centrado"}</span>
                   </div>
-                  <Slider value={[form.portraitBlendTop]} min={5} max={70} step={2} onValueChange={v => updateField("portraitBlendTop", v[0])} />
+                  <Slider value={[form.portraitBlendTop]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitBlendTop", v[0])} />
+                  <p className="text-[11px] text-muted-foreground">Mueve la foto hacia arriba o abajo, en píxeles.</p>
                 </div>
               </div>
             </TabsContent>

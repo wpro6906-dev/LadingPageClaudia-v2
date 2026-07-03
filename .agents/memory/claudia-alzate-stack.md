@@ -47,6 +47,11 @@ description: Key rules, gotchas, and decisions for the Claudia Alzate Realtor® 
 - **Why:** product explicitly rejected a single global font picker after it shipped — wanted each text individually customizable, matching how colors are already per-field.
 - **How to apply:** use `FontPickerCompact` (dropdown, shows live font preview) from `@/components/ui/fonts` under each text input in the dashboard; store each field's choice as `<field>Font` inside `visualConfig`, read via `getFontFamily(vc.<field>Font)` on the public page. The legacy top-level `profile.fontTitle` DB column was an earlier global-font attempt — still normalized as a fallback default when a per-field key is absent, but no longer written to on save.
 
+## Mobile layout — percentage heights break inside auto-height columns
+- The left/header column has no explicit height on mobile (only `lg:h-[100dvh]`), so any absolutely-positioned child using `height: X%` resolves against an "auto" containing block and renders at the image's raw intrinsic size instead — it then gets clipped to a near-invisible sliver by the column's `overflow-hidden`.
+- **Why:** CSS spec treats percentage-height on a box whose container has no definite height as `auto`, not "no-op" — easy to miss because desktop (`lg:h-[100dvh]`) is unaffected and looks correct in review.
+- **How to apply:** size elements scoped to that mobile column with `vh` or `px` units, never bare `%`, unless the column itself gets an explicit height. Also keep any background/portrait/vignette layers that must track that column's own height nested *inside* the column div (not as siblings using page-wide `absolute inset-0`), otherwise gradients/fades are computed against total scrollable page height and create a visible seam wherever the column's real content boundary falls.
+
 ## Codegen
 - After any OpenAPI spec change: `pnpm --filter @workspace/api-spec run codegen`
 - After any DB schema change: `pnpm --filter @workspace/db run push`

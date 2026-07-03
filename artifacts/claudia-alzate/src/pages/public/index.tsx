@@ -72,8 +72,8 @@ function getVC(profile: any): Required<VisualConfig> {
     gradientTop: true, gradientBottom: true, showDecorLines: true, showGlow: true,
     nameLetterSpacing: "0.05em", showArrowOnButtons: true, showAccentBarOnButtons: true,
     badgeText: "", badgeIcon: "sparkles", badgeColor: "#C9A15C",
-    portraitUrl: "", portraitOpacity: 0.9, portraitSize: 68,
-    portraitBlendLeft: 50, portraitBlendTop: 30,
+    portraitUrl: "", portraitOpacity: 0.9, portraitSize: 30,
+    portraitBlendLeft: 0, portraitBlendTop: 0,
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9, bgPhraseFont: "elegante",
     statsEnabled: true,
     stats: [
@@ -187,81 +187,75 @@ export default function PublicProfile() {
 
   return (
     <div className="min-h-[100dvh] bg-transparent lg:bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
-      {/* Mobile background — full-bleed image with soft luminous gradient layers */}
-      <div className="absolute inset-0 lg:hidden -z-10 overflow-hidden bg-background">
-        {profile?.backgroundUrl ? (
-          <>
-            {/* Base image — fills entire screen, zoomed & repositioned for portrait */}
-            <img
-              src={profile.backgroundUrl}
-              alt=""
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: vc.mobileBgPosition || "60% center",
-                transform: `scale(${vc.mobileBgZoom || 1.1})`,
-                transformOrigin: "center center",
-                filter: vc.bgBlur ? `blur(${vc.bgBlur}px)` : undefined,
-              }}
-            />
-            {/* Base overlay — warm, luminous, unifies tone */}
-            <div className="absolute inset-0" style={{ background: "rgba(250,244,255,0.18)" }} />
-            {/* Top vignette — enough to read text, not enough to kill the image */}
-            <div
-              className="absolute inset-x-0 top-0"
-              style={{
-                height: "48%",
-                background: "linear-gradient(to bottom, hsl(35,45%,97%) 0%, hsla(35,45%,97%,0.45) 50%, transparent 100%)",
-              }}
-            />
-            {/* Bottom soft fade — image melts into the cream links section */}
-            <div
-              className="absolute inset-x-0 bottom-0"
-              style={{
-                height: "52%",
-                background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsla(35,45%,97%,0.92) 18%, hsla(35,45%,97%,0.55) 50%, transparent 100%)",
-              }}
-            />
-            {/* Lateral vignette — subtle edge depth */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background: "radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, hsla(280,30%,70%,0.18) 100%)",
-              }}
-            />
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-b from-[#F3E9FB] via-[#FBF6F0] to-background" />
-        )}
-      </div>
-
-      {/* Mobile portrait — z-index 50 so it sits above all content columns and overlays */}
-      {vc.portraitUrl && (
-        <img
-          src={vc.portraitUrl}
-          alt=""
-          aria-hidden="true"
-          className="lg:hidden absolute bottom-0 right-0 pointer-events-none"
-          style={{
-            zIndex: 50,
-            height: `${Math.min(38, (vc.portraitSize ?? 50) * 0.65)}%`,
-            width: "auto",
-            maxWidth: "48%",
-            objectFit: "contain",
-            objectPosition: "bottom right",
-            opacity: vc.portraitOpacity ?? 0.9,
-          }}
-        />
-      )}
-
       {/* Left Column / Mobile Header */}
       <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
         lg:border-r border-primary/15 shrink-0 lg:h-[100dvh] overflow-hidden">
-        
+
+        {/* Mobile background — scoped to this header block's own height, so the fade to the links
+            section below always lands exactly at the block's edge, no matter how tall the page grows */}
+        <div className="absolute inset-0 lg:hidden -z-10 overflow-hidden bg-background">
+          {profile?.backgroundUrl ? (
+            <>
+              {/* Base image */}
+              <img
+                src={profile.backgroundUrl}
+                alt=""
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: vc.mobileBgPosition || "60% center",
+                  transform: `scale(${vc.mobileBgZoom || 1.1})`,
+                  transformOrigin: "center center",
+                  filter: vc.bgBlur ? `blur(${vc.bgBlur}px)` : undefined,
+                }}
+              />
+              {/* Base overlay — moody dark wash instead of a whitish tint */}
+              <div className="absolute inset-0" style={{ background: "rgba(12,8,18,0.28)" }} />
+              {/* Top vignette — enough to read text, not enough to kill the image */}
+              <div
+                className="absolute inset-x-0 top-0"
+                style={{
+                  height: "40%",
+                  background: "linear-gradient(to bottom, hsla(260,25%,8%,0.35) 0%, transparent 100%)",
+                }}
+              />
+              {/* Bottom fade — always meets the block's own bottom edge, so it melts cleanly into the solid links section below, regardless of page length */}
+              <div
+                className="absolute inset-x-0 bottom-0"
+                style={{
+                  height: "55%",
+                  background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsl(35,45%,97%) 8%, hsla(35,45%,97%,0.7) 35%, transparent 100%)",
+                }}
+              />
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-b from-[#F3E9FB] via-[#FBF6F0] to-background" />
+          )}
+        </div>
+
+        {/* Mobile portrait — anchored within this header block, so X/Y offsets move it relative to the block itself */}
+        {vc.portraitUrl && (
+          <img
+            src={vc.portraitUrl}
+            alt=""
+            aria-hidden="true"
+            className="lg:hidden absolute bottom-0 right-0 pointer-events-none z-10"
+            style={{
+              height: `${vc.portraitSize ?? 30}vh`,
+              width: "auto",
+              maxWidth: "60%",
+              objectFit: "contain",
+              objectPosition: "bottom right",
+              opacity: vc.portraitOpacity ?? 0.9,
+              transform: `translate(${vc.portraitBlendLeft ?? 0}px, ${vc.portraitBlendTop ?? 0}px)`,
+            }}
+          />
+        )}
+
         {/* Desktop left column background */}
         <div className="absolute inset-0 hidden lg:block -z-10">
           {profile?.backgroundUrl ? (
@@ -275,7 +269,7 @@ export default function PublicProfile() {
                   filter: `blur(${vc.bgBlur || 0}px)`
                 }}
               />
-              <div className="absolute inset-0" style={{ background: "hsl(35,45%,97%)", opacity: vc.bgOverlay ?? 0.25 }} />
+              <div className="absolute inset-0" style={{ background: "#0a0610", opacity: vc.bgOverlay ?? 0.25 }} />
             </>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-[#F3E9FB] via-[#FBF6F0] to-[#EFF5EA]" />
@@ -405,7 +399,7 @@ export default function PublicProfile() {
       </div>
 
       {/* Right Column / Mobile Links */}
-      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto bg-background/60 relative z-10 overflow-hidden">
+      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto bg-background lg:bg-background/60 relative z-10 overflow-hidden">
 
         {/* ── Desktop-only decorative layer ── */}
 
@@ -450,12 +444,13 @@ export default function PublicProfile() {
             aria-hidden="true"
             className="hidden lg:block absolute bottom-0 right-0 pointer-events-none z-0"
             style={{
-              height: "72%",
+              height: `${vc.portraitSize ?? 30}%`,
               width: "auto",
               maxWidth: "40%",
               objectFit: "contain",
               objectPosition: "bottom right",
               opacity: vc.portraitOpacity ?? 0.9,
+              transform: `translate(${vc.portraitBlendLeft ?? 0}px, ${vc.portraitBlendTop ?? 0}px)`,
             }}
           />
         )}
