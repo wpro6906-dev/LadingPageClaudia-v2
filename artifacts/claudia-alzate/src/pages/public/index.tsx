@@ -72,12 +72,12 @@ interface VisualConfig {
 function getVC(profile: any): Required<VisualConfig> {
   const defaults = {
     firstName: "Claudia", lastName: "Alzate",
-    firstNameColor: "#6B4F8A", lastNameColor: "#C9A15C",
+    firstNameColor: "#FFFFFF", lastNameColor: "#F6D68A",
     firstNameFont: "elegante", lastNameFont: "elegante",
-    subtitleText: "COACH ESPIRITUAL", subtitleColor: "#8C7AA6", subtitleFont: "moderna",
+    subtitleText: "COACH ESPIRITUAL", subtitleColor: "#FDF8ED", subtitleFont: "moderna",
     decoratorEnabled: true, decoratorIcon: "sun", decoratorColor: "#C9A15C",
     tagline1: "Coach de manifestación y abundancia, facilitadora de ceremonias holísticas", tagline2: "y guía en procesos de transformación.",
-    tagline1Color: "#6B5B7B", tagline2Color: "#C9A15C",
+    tagline1Color: "#FBF5EA", tagline2Color: "#F6D68A",
     tagline1Font: "moderna", tagline2Font: "elegante",
     bgOverlay: 0.25, bgBlur: 0, bgZoom: 1, bgPosition: "center",
     mobileBgPosition: "60% center", mobileBgZoom: 1.1, mobileBgOverlay: 0.2,
@@ -384,7 +384,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-4xl text-center font-semibold leading-[1.05]"
-            style={{ color: "#FFFFFF", letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 3px 10px rgba(0,0,0,0.3)" }}
+            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 3px 10px rgba(0,0,0,0.3)" }}
           >
             {vc.firstName}
           </motion.span>
@@ -393,7 +393,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-4xl text-center font-bold leading-[1.05]"
-            style={{ color: "#F6D68A", letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 3px 10px rgba(0,0,0,0.3)" }}
+            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 3px 10px rgba(0,0,0,0.3)" }}
           >
             {vc.lastName}
           </motion.span>
@@ -406,7 +406,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-6xl text-center font-light"
-            style={{ color: "#FFFFFF", letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)" }}
+            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)" }}
           >
             {vc.firstName}
           </motion.span>
@@ -415,7 +415,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-6xl text-center font-medium"
-            style={{ color: "#F6D68A", letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)" }}
+            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)" }}
           >
             {vc.lastName}
           </motion.span>
@@ -430,7 +430,7 @@ export default function PublicProfile() {
             fontFamily: subtitleFontFamily,
           }}
         >
-          <span style={{ color: "#FDF8ED", textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.subtitleText}</span>
+          <span style={{ color: vc.subtitleColor, textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.subtitleText}</span>
         </motion.p>
 
         {vc.decoratorEnabled !== false && (
@@ -454,7 +454,7 @@ export default function PublicProfile() {
             className="text-xs lg:text-sm text-center"
             style={{ fontFamily: tagline1FontFamily }}
           >
-            <span style={{ color: "#FBF5EA", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.28)" }}>{vc.tagline1}</span>
+            <span style={{ color: vc.tagline1Color, textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.28)" }}>{vc.tagline1}</span>
           </motion.p>
           <motion.p 
             initial={{ y: 10, opacity: 0 }}
@@ -463,7 +463,7 @@ export default function PublicProfile() {
             className="text-lg lg:text-2xl font-semibold text-center"
             style={{ fontFamily: tagline2FontFamily, fontStyle: "italic" }}
           >
-            <span style={{ color: "#F6D68A", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.tagline2}</span>
+            <span style={{ color: vc.tagline2Color, textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.tagline2}</span>
           </motion.p>
         </div>
 
