@@ -13,8 +13,11 @@ interface VisualConfig {
   lastName?: string;
   firstNameColor?: string;
   lastNameColor?: string;
+  firstNameFont?: string;
+  lastNameFont?: string;
   subtitleText?: string;
   subtitleColor?: string;
+  subtitleFont?: string;
   decoratorEnabled?: boolean;
   decoratorIcon?: string;
   decoratorColor?: string;
@@ -22,6 +25,8 @@ interface VisualConfig {
   tagline2?: string;
   tagline1Color?: string;
   tagline2Color?: string;
+  tagline1Font?: string;
+  tagline2Font?: string;
   bgOverlay?: number;
   bgBlur?: number;
   bgZoom?: number;
@@ -47,6 +52,7 @@ interface VisualConfig {
   bgPhrase?: string;
   bgPhraseEnabled?: boolean;
   bgPhraseOpacity?: number;
+  bgPhraseFont?: string;
   stats?: { icon: string; value: string; label: string; enabled: boolean }[];
   statsEnabled?: boolean;
 }
@@ -55,10 +61,12 @@ function getVC(profile: any): Required<VisualConfig> {
   const defaults = {
     firstName: "Claudia", lastName: "Alzate",
     firstNameColor: "#6B4F8A", lastNameColor: "#C9A15C",
-    subtitleText: "COACH ESPIRITUAL", subtitleColor: "#8C7AA6",
+    firstNameFont: "elegante", lastNameFont: "elegante",
+    subtitleText: "COACH ESPIRITUAL", subtitleColor: "#8C7AA6", subtitleFont: "moderna",
     decoratorEnabled: true, decoratorIcon: "sun", decoratorColor: "#C9A15C",
     tagline1: "Coach de manifestación y abundancia, facilitadora de ceremonias holísticas", tagline2: "y guía en procesos de transformación.",
     tagline1Color: "#6B5B7B", tagline2Color: "#C9A15C",
+    tagline1Font: "moderna", tagline2Font: "elegante",
     bgOverlay: 0.25, bgBlur: 0, bgZoom: 1, bgPosition: "center",
     mobileBgPosition: "60% center", mobileBgZoom: 1.1, mobileBgOverlay: 0.2,
     gradientTop: true, gradientBottom: true, showDecorLines: true, showGlow: true,
@@ -66,7 +74,7 @@ function getVC(profile: any): Required<VisualConfig> {
     badgeText: "", badgeIcon: "sparkles", badgeColor: "#C9A15C",
     portraitUrl: "", portraitOpacity: 0.9, portraitSize: 68,
     portraitBlendLeft: 50, portraitBlendTop: 30,
-    bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9,
+    bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9, bgPhraseFont: "elegante",
     statsEnabled: true,
     stats: [
       { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -132,7 +140,12 @@ export default function PublicProfile() {
   };
 
   const vc = getVC(profile);
-  const headingFontFamily = getFontFamily((profile as any)?.fontTitle);
+  const firstNameFontFamily = getFontFamily(vc.firstNameFont);
+  const lastNameFontFamily = getFontFamily(vc.lastNameFont);
+  const subtitleFontFamily = getFontFamily(vc.subtitleFont);
+  const tagline1FontFamily = getFontFamily(vc.tagline1Font);
+  const tagline2FontFamily = getFontFamily(vc.tagline2Font);
+  const bgPhraseFontFamily = getFontFamily(vc.bgPhraseFont);
 
   const BadgeIcon = (() => {
     const n = vc.badgeIcon?.toLowerCase();
@@ -324,7 +337,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-3xl lg:text-6xl text-center font-light"
-            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: headingFontFamily }}
+            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily }}
           >
             {vc.firstName}
           </motion.span>
@@ -333,7 +346,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-3xl lg:text-6xl text-center font-medium"
-            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: headingFontFamily }}
+            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily }}
           >
             {vc.lastName}
           </motion.span>
@@ -344,7 +357,7 @@ export default function PublicProfile() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-xs font-sans uppercase mb-2 lg:mb-6 text-center tracking-[0.4em] z-10"
-          style={{ color: vc.subtitleColor, fontFamily: "'Poppins', sans-serif" }}
+          style={{ color: vc.subtitleColor, fontFamily: subtitleFontFamily }}
         >
           {vc.subtitleText}
         </motion.p>
@@ -368,7 +381,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-xs lg:text-sm opacity-90 text-center"
-            style={{ color: vc.tagline1Color, fontFamily: headingFontFamily }}
+            style={{ color: vc.tagline1Color, fontFamily: tagline1FontFamily }}
           >
             {vc.tagline1}
           </motion.p>
@@ -377,7 +390,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
             className="text-lg lg:text-2xl font-semibold text-center"
-            style={{ color: vc.tagline2Color, fontFamily: headingFontFamily, fontStyle: "italic" }}
+            style={{ color: vc.tagline2Color, fontFamily: tagline2FontFamily, fontStyle: "italic" }}
           >
             {vc.tagline2}
           </motion.p>
@@ -459,7 +472,7 @@ export default function PublicProfile() {
             <div className="w-8 h-px mb-3" style={{ background: "linear-gradient(to left, rgba(201,161,92,0.9), transparent)" }} />
             <p
               style={{
-                fontFamily: headingFontFamily,
+                fontFamily: bgPhraseFontFamily,
                 fontSize: "clamp(1.1rem, 1.6vw, 1.5rem)",
                 fontWeight: 300,
                 fontStyle: "italic",

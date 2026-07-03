@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { Save, Sun } from "lucide-react";
 import { IconPicker, getIconComponent } from "@/components/ui/icons";
-import { FontPicker, getFontFamily, normalizeFontKey } from "@/components/ui/fonts";
+import { FontPickerCompact, getFontFamily, normalizeFontKey } from "@/components/ui/fonts";
 
 export function IdentityManager() {
   const { toast } = useToast();
@@ -25,13 +25,15 @@ export function IdentityManager() {
   const updateMutation = useUpdateProfile();
   
   const [form, setForm] = useState({
-    headingFont: "elegante",
     firstName: "Claudia",
     lastName: "Alzate",
     firstNameColor: "#6B4F8A",
     lastNameColor: "#C9A15C",
+    firstNameFont: "elegante",
+    lastNameFont: "elegante",
     subtitleText: "COACH ESPIRITUAL",
     subtitleColor: "#8C7AA6",
+    subtitleFont: "moderna",
     decoratorEnabled: true,
     decoratorIcon: "sun",
     decoratorColor: "#C9A15C",
@@ -39,6 +41,8 @@ export function IdentityManager() {
     tagline2: "y guía en procesos de transformación.",
     tagline1Color: "#6B5B7B",
     tagline2Color: "#C9A15C",
+    tagline1Font: "moderna",
+    tagline2Font: "elegante",
     bgOverlay: 0.25,
     bgBlur: 0,
     bgZoom: 1,
@@ -63,6 +67,7 @@ export function IdentityManager() {
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
     bgPhraseEnabled: true,
     bgPhraseOpacity: 0.9,
+    bgPhraseFont: "elegante",
     statsEnabled: true,
     stats: [
       { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -75,17 +80,20 @@ export function IdentityManager() {
   useEffect(() => {
     if (profile) {
       const vc = (profile as any).visualConfig || {};
+      const legacyFont = normalizeFontKey((profile as any).fontTitle);
       setForm(prev => ({
         ...prev,
-        headingFont: normalizeFontKey((profile as any).fontTitle),
         logoUrl: profile.logoUrl || "",
         backgroundUrl: profile.backgroundUrl || "",
         firstName: vc.firstName ?? "Claudia",
         lastName: vc.lastName ?? "Alzate",
         firstNameColor: vc.firstNameColor ?? "#6B4F8A",
         lastNameColor: vc.lastNameColor ?? "#C9A15C",
+        firstNameFont: normalizeFontKey(vc.firstNameFont ?? legacyFont),
+        lastNameFont: normalizeFontKey(vc.lastNameFont ?? legacyFont),
         subtitleText: vc.subtitleText ?? "COACH ESPIRITUAL",
         subtitleColor: vc.subtitleColor ?? "#8C7AA6",
+        subtitleFont: normalizeFontKey(vc.subtitleFont ?? "moderna"),
         decoratorEnabled: vc.decoratorEnabled ?? true,
         decoratorIcon: vc.decoratorIcon ?? "sun",
         decoratorColor: vc.decoratorColor ?? "#C9A15C",
@@ -93,6 +101,8 @@ export function IdentityManager() {
         tagline2: vc.tagline2 ?? "y guía en procesos de transformación.",
         tagline1Color: vc.tagline1Color ?? "#6B5B7B",
         tagline2Color: vc.tagline2Color ?? "#C9A15C",
+        tagline1Font: normalizeFontKey(vc.tagline1Font ?? "moderna"),
+        tagline2Font: normalizeFontKey(vc.tagline2Font ?? legacyFont),
         bgOverlay: vc.bgOverlay ?? 0.25,
         bgBlur: vc.bgBlur ?? 0,
         bgZoom: vc.bgZoom ?? 1,
@@ -115,6 +125,7 @@ export function IdentityManager() {
         bgPhrase: vc.bgPhrase ?? "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
         bgPhraseEnabled: vc.bgPhraseEnabled ?? true,
         bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
+        bgPhraseFont: normalizeFontKey(vc.bgPhraseFont ?? legacyFont),
         statsEnabled: vc.statsEnabled ?? true,
         stats: vc.stats ?? [
           { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -134,14 +145,16 @@ export function IdentityManager() {
         tagline: form.tagline1 + " " + form.tagline2,
         logoUrl: form.logoUrl || null,
         backgroundUrl: form.backgroundUrl || null,
-        fontTitle: form.headingFont,
         visualConfig: {
           firstName: form.firstName,
           lastName: form.lastName,
           firstNameColor: form.firstNameColor,
           lastNameColor: form.lastNameColor,
+          firstNameFont: form.firstNameFont,
+          lastNameFont: form.lastNameFont,
           subtitleText: form.subtitleText,
           subtitleColor: form.subtitleColor,
+          subtitleFont: form.subtitleFont,
           decoratorEnabled: form.decoratorEnabled,
           decoratorIcon: form.decoratorIcon,
           decoratorColor: form.decoratorColor,
@@ -149,6 +162,8 @@ export function IdentityManager() {
           tagline2: form.tagline2,
           tagline1Color: form.tagline1Color,
           tagline2Color: form.tagline2Color,
+          tagline1Font: form.tagline1Font,
+          tagline2Font: form.tagline2Font,
           bgOverlay: form.bgOverlay,
           bgBlur: form.bgBlur,
           bgZoom: form.bgZoom,
@@ -171,6 +186,7 @@ export function IdentityManager() {
           bgPhrase: form.bgPhrase,
           bgPhraseEnabled: form.bgPhraseEnabled,
           bgPhraseOpacity: form.bgPhraseOpacity,
+          bgPhraseFont: form.bgPhraseFont,
           statsEnabled: form.statsEnabled,
           stats: form.stats,
         }
@@ -210,32 +226,33 @@ export function IdentityManager() {
             </TabsList>
             
             <TabsContent value="identity" className="space-y-4">
+              <p className="text-xs text-muted-foreground -mt-2">Cada texto tiene su propia tipografía: elige un estilo debajo de cada campo.</p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>First Name</Label>
                   <Input value={form.firstName} onChange={e => updateField("firstName", e.target.value)} />
+                  <FontPickerCompact value={form.firstNameFont} onChange={v => updateField("firstNameFont", v)} />
                 </div>
                 <div className="space-y-2">
                   <Label>Last Name</Label>
                   <Input value={form.lastName} onChange={e => updateField("lastName", e.target.value)} />
+                  <FontPickerCompact value={form.lastNameFont} onChange={v => updateField("lastNameFont", v)} />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label>Subtítulo (ej: REALTOR)</Label>
                 <Input value={form.subtitleText} onChange={e => updateField("subtitleText", e.target.value)} />
+                <FontPickerCompact value={form.subtitleFont} onChange={v => updateField("subtitleFont", v)} />
               </div>
               <div className="space-y-2">
                 <Label>Tagline línea 1</Label>
                 <Textarea value={form.tagline1} onChange={e => updateField("tagline1", e.target.value)} rows={2} />
+                <FontPickerCompact value={form.tagline1Font} onChange={v => updateField("tagline1Font", v)} />
               </div>
               <div className="space-y-2">
                 <Label>Tagline línea 2</Label>
                 <Textarea value={form.tagline2} onChange={e => updateField("tagline2", e.target.value)} rows={2} />
-              </div>
-              <div className="space-y-2 pt-2">
-                <Label>Tipografía del nombre y las frases</Label>
-                <p className="text-xs text-muted-foreground -mt-1 mb-1">Elige el estilo que se aplicará al nombre y a las frases principales.</p>
-                <FontPicker value={form.headingFont} onChange={v => updateField("headingFont", v)} />
+                <FontPickerCompact value={form.tagline2Font} onChange={v => updateField("tagline2Font", v)} />
               </div>
               <div className="space-y-2">
                 <Label>Logo URL</Label>
@@ -443,6 +460,7 @@ export function IdentityManager() {
                         onChange={e => updateField("bgPhrase", e.target.value)}
                         placeholder="Ej: Luxury Real Estate"
                       />
+                      <FontPickerCompact value={form.bgPhraseFont} onChange={v => updateField("bgPhraseFont", v)} />
                     </div>
                     <div className="space-y-3">
                       <div className="flex justify-between">
@@ -581,15 +599,15 @@ export function IdentityManager() {
               <h3 className="text-[10px] font-mono text-muted-foreground mb-8 uppercase tracking-widest bg-white/60 px-2 py-1 rounded backdrop-blur-sm">Live Preview</h3>
               
               <div className="flex flex-col items-center mb-2">
-                <span className="text-4xl font-light" style={{ color: form.firstNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: getFontFamily(form.headingFont) }}>
+                <span className="text-4xl font-light" style={{ color: form.firstNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: getFontFamily(form.firstNameFont) }}>
                   {form.firstName}
                 </span>
-                <span className="text-4xl font-medium" style={{ color: form.lastNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: getFontFamily(form.headingFont) }}>
+                <span className="text-4xl font-medium" style={{ color: form.lastNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: getFontFamily(form.lastNameFont) }}>
                   {form.lastName}
                 </span>
               </div>
               
-              <p className="text-[10px] font-sans uppercase mb-4 tracking-[0.4em]" style={{ color: form.subtitleColor, fontFamily: "'Poppins', sans-serif" }}>
+              <p className="text-[10px] font-sans uppercase mb-4 tracking-[0.4em]" style={{ color: form.subtitleColor, fontFamily: getFontFamily(form.subtitleFont) }}>
                 {form.subtitleText}
               </p>
 
@@ -602,10 +620,10 @@ export function IdentityManager() {
               )}
 
               <div className="flex flex-col items-center gap-1 mt-2">
-                <p className="font-sans text-[12px] opacity-80 text-center" style={{ color: form.tagline1Color }}>
+                <p className="font-sans text-[12px] opacity-80 text-center" style={{ color: form.tagline1Color, fontFamily: getFontFamily(form.tagline1Font) }}>
                   {form.tagline1}
                 </p>
-                <p className="text-lg font-semibold text-center leading-snug" style={{ color: form.tagline2Color, fontFamily: getFontFamily(form.headingFont), fontStyle: "italic" }}>
+                <p className="text-lg font-semibold text-center leading-snug" style={{ color: form.tagline2Color, fontFamily: getFontFamily(form.tagline2Font), fontStyle: "italic" }}>
                   {form.tagline2}
                 </p>
               </div>

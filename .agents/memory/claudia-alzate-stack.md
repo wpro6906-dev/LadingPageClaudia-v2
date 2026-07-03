@@ -42,6 +42,11 @@ description: Key rules, gotchas, and decisions for the Claudia Alzate Realtor® 
 - **Why:** product requirement — no typing icon names anywhere in the dashboard; the picker also keeps icon keys valid against `getIconComponent()`.
 - **How to apply:** when adding any new icon-choosing field, import `{ IconPicker }` from `@/components/ui/icons` and bind it directly to the string field; add new icon options to `ICON_GROUPS` in that file (and to `getIconComponent()`'s switch) rather than creating a local picker/catalogue.
 
+## Font selection UX — per-field, not global
+- Font choice must be per-text-field (firstName, lastName, subtitle, tagline1, tagline2, bgPhrase), each with its own key in `visualConfig` (e.g. `firstNameFont`), NOT one shared/global font applied to all texts.
+- **Why:** product explicitly rejected a single global font picker after it shipped — wanted each text individually customizable, matching how colors are already per-field.
+- **How to apply:** use `FontPickerCompact` (dropdown, shows live font preview) from `@/components/ui/fonts` under each text input in the dashboard; store each field's choice as `<field>Font` inside `visualConfig`, read via `getFontFamily(vc.<field>Font)` on the public page. The legacy top-level `profile.fontTitle` DB column was an earlier global-font attempt — still normalized as a fallback default when a per-field key is absent, but no longer written to on save.
+
 ## Codegen
 - After any OpenAPI spec change: `pnpm --filter @workspace/api-spec run codegen`
 - After any DB schema change: `pnpm --filter @workspace/db run push`
