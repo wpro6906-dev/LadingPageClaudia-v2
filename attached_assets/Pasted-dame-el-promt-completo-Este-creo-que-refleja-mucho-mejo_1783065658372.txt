@@ -1,0 +1,17 @@
+dame el promt completo 
+
+Este creo que refleja mucho mejor lo que quieres lograr:
+
+Quiero que vuelvas a diseñar la sección blanca donde están los botones de la versión móvil, porque el resultado actual no es lo que buscaba. Elimina por completo las líneas y pequeños símbolos que agregaste entre los botones, ya que no aportan al diseño y solo hacen que todo se vea más separado.
+
+Lo que quiero es que esa sección tenga una apariencia mucho más elegante y artística utilizando decoraciones florales y orgánicas, no simples separadores. Agrega ramas, hojas, flores delicadas, trazos curvos, líneas orgánicas y formas onduladas que recorran algunas esquinas y bordes de la sección, como si enmarcaran suavemente el contenido. También puedes hacer que algunas ramas o flores rodeen parcialmente ciertos botones para que todo se vea integrado y no como elementos aislados.
+
+Las decoraciones deben sentirse parte del diseño, no pegadas encima. Quiero un estilo muy limpio, femenino y premium, inspirado en ilustraciones botánicas minimalistas. Utiliza principalmente tonos lavanda, morados suaves y pequeños detalles dorados. Puedes añadir algunos puntitos de luz o partículas muy sutiles para dar más vida, pero sin exagerar.
+
+No aumentes el espacio entre los botones. Al contrario, quiero mantener una separación equilibrada para que la página siga viéndose compacta y agradable. Las decoraciones deben llenar los espacios vacíos sin necesidad de crear huecos más grandes.
+
+Después del último botón, conserva la idea de agregar una pequeña frase inspiradora, pero intégrala con una decoración floral elegante que cierre visualmente la página. Esa frase debe seguir siendo editable desde el dashboard.
+
+En la versión de escritorio, no hagas cambios importantes. Solo agrega algunos detalles decorativos muy sutiles en las zonas donde haya espacio vacío, como pequeñas ramas, hojas o flores en las esquinas, manteniendo el diseño limpio y elegante. No quiero recargar la versión de escritorio; la prioridad es mejorar la versión móvil.
+
+El resultado final debe sentirse como una landing premium de bienestar, meditación y crecimiento personal, donde las ilustraciones botánicas forman parte de la composición y aportan personalidad sin distraer del contenido principal.

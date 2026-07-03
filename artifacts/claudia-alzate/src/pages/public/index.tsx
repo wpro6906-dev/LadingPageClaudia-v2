@@ -7,6 +7,7 @@ import { getFontFamily } from "@/components/ui/fonts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, MapPin, Star, Key, Building2, Phone, Mail, Users, Sun, Sparkles, Flower2, Heart, Feather, Leaf } from "lucide-react";
+import { BotanicalCorner, BotanicalEdgeVine, BotanicalSprig, BotanicalFlourish } from "@/components/ui/botanical-decor";
 
 interface VisualConfig {
   firstName?: string;
@@ -483,23 +484,17 @@ export default function PublicProfile() {
           </motion.div>
         )}
 
-        {/* ── Mobile-only decorative layer — botanical/spiritual accents, lavender + gold, low opacity so the cards stay legible ── */}
-        <div className="absolute top-4 left-4 lg:hidden pointer-events-none z-0 opacity-[0.22]">
-          <Flower2 className="w-6 h-6" style={{ color: "hsl(262,45%,55%)" }} strokeWidth={1} />
-        </div>
-        <div className="absolute top-5 right-5 lg:hidden pointer-events-none z-0 opacity-[0.22]">
-          <Sparkles className="w-5 h-5" style={{ color: "hsl(38,55%,58%)" }} strokeWidth={1} />
-        </div>
+        {/* ── Mobile-only botanical decorative layer — delicate vines, leaves and blossoms framing the section, lavender + gold ── */}
+        <BotanicalCorner className="absolute -top-2 -left-2 w-32 h-32 lg:hidden pointer-events-none z-0" style={{ transform: "scaleY(-1)" }} />
+        <BotanicalCorner className="absolute -bottom-2 -right-2 w-36 h-36 lg:hidden pointer-events-none z-0" style={{ transform: "scaleX(-1)" }} />
+        <BotanicalCorner className="absolute top-2 -right-3 w-20 h-20 lg:hidden pointer-events-none z-0 opacity-80" style={{ transform: "scale(-1,-1)" }} />
+        <BotanicalEdgeVine className="absolute right-0 top-8 bottom-8 w-9 lg:hidden pointer-events-none z-0" style={{ height: "auto" }} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 lg:hidden pointer-events-none z-0"
-          style={{ width: 260, height: 140, background: "radial-gradient(ellipse at top, rgba(155,127,196,0.16) 0%, transparent 72%)" }} />
-        <div className="absolute bottom-24 left-2 lg:hidden pointer-events-none z-0 opacity-[0.18] -rotate-12">
-          <Leaf className="w-5 h-5" style={{ color: "hsl(100,30%,48%)" }} strokeWidth={1} />
-        </div>
-        <div className="absolute bottom-40 right-3 lg:hidden pointer-events-none z-0 opacity-[0.16] rotate-12">
-          <Feather className="w-4 h-4" style={{ color: "hsl(262,38%,60%)" }} strokeWidth={1} />
-        </div>
-        <div className="absolute right-0 top-1/3 w-px h-1/4 lg:hidden pointer-events-none z-0"
-          style={{ background: "linear-gradient(to bottom, transparent, rgba(155,127,196,0.35) 50%, transparent)" }} />
+          style={{ width: 260, height: 140, background: "radial-gradient(ellipse at top, rgba(155,127,196,0.14) 0%, transparent 72%)" }} />
+        {/* Soft light particles */}
+        <div className="absolute top-[18%] left-[8%] w-1 h-1 rounded-full lg:hidden pointer-events-none z-0" style={{ background: "#C9A15C", opacity: 0.5, boxShadow: "0 0 6px 1px rgba(201,161,92,0.5)" }} />
+        <div className="absolute top-[38%] right-[10%] w-[3px] h-[3px] rounded-full lg:hidden pointer-events-none z-0" style={{ background: "#B9A4D9", opacity: 0.55, boxShadow: "0 0 6px 1px rgba(155,127,196,0.5)" }} />
+        <div className="absolute top-[62%] left-[6%] w-1 h-1 rounded-full lg:hidden pointer-events-none z-0" style={{ background: "#C9A9E0", opacity: 0.45, boxShadow: "0 0 5px 1px rgba(201,169,224,0.45)" }} />
 
         <main className="w-full max-w-sm mx-auto lg:mx-0 lg:ml-14 lg:mr-auto flex flex-col flex-1 lg:flex-none justify-center relative z-10">
           
@@ -508,58 +503,54 @@ export default function PublicProfile() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="w-full space-y-3 lg:space-y-4 mb-8 lg:mb-0"
+            className="w-full space-y-3 lg:space-y-4 mb-8 lg:mb-0 relative"
           >
             {isLinksLoading ? (
               Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="w-full h-20 rounded-2xl bg-card/60" />)
             ) : (
               activeLinks.map((link, index) => {
                 const Icon = getIconComponent(link.icon);
-                const SeparatorIcon = index % 2 === 0 ? Flower2 : Sparkles;
                 return (
-                  <Fragment key={link.id}>
-                    {index > 0 && index % 2 === 0 && (
-                      <div className="lg:hidden flex items-center justify-center gap-3 py-1 -mt-1 mb-3 pointer-events-none select-none">
-                        <div className="flex-1 max-w-[36px] h-px" style={{ background: "linear-gradient(to right, transparent, rgba(155,127,196,0.35))" }} />
-                        <SeparatorIcon className="w-3 h-3 shrink-0" style={{ color: "hsl(38,50%,60%)" }} strokeWidth={1.3} />
-                        <div className="flex-1 max-w-[36px] h-px" style={{ background: "linear-gradient(to left, transparent, rgba(155,127,196,0.35))" }} />
-                      </div>
+                  <motion.div variants={itemVariants} key={link.id} className="relative">
+                    {index === 0 && (
+                      <BotanicalSprig className="lg:hidden absolute -top-2 -left-3 w-14 h-8 pointer-events-none z-0 -scale-x-100" />
                     )}
-                    <motion.div variants={itemVariants}>
-                      <a
-                        href={toExternalUrl(link.url)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => handleLinkClick(e, link)}
-                        className="group relative block w-full bg-card/70 backdrop-blur-md border border-primary/15 rounded-2xl py-5 px-6 transition-all duration-400 hover:bg-card hover:border-primary/40 hover:shadow-[0_8px_28px_-6px_rgba(155,127,196,0.25)] overflow-hidden"
-                      >
-                        {vc.showAccentBarOnButtons !== false && (
-                          <div className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
-                        )}
-                        
-                        <div className="flex items-center gap-4 relative z-10">
-                          <div className="bg-primary/10 rounded-xl p-3 shrink-0">
-                            <Icon className="w-5 h-5 text-primary" />
-                          </div>
-                          <div className="flex-1 overflow-hidden">
-                            <h3 className="font-sans font-semibold text-sm text-foreground group-hover:text-primary transition-colors duration-300 truncate">
-                              {link.title}
-                            </h3>
-                            {link.description && (
-                              <p className="text-xs text-muted-foreground mt-0.5 truncate">
-                                {link.description}
-                              </p>
-                            )}
-                          </div>
-                          {vc.showArrowOnButtons !== false && (
-                            <div className="shrink-0">
-                              <ChevronRight className="w-4 h-4 text-primary/50 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
-                            </div>
+                    {index === activeLinks.length - 2 && (
+                      <BotanicalSprig className="lg:hidden absolute -bottom-2 -right-3 w-14 h-8 pointer-events-none z-0" />
+                    )}
+                    <a
+                      href={toExternalUrl(link.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => handleLinkClick(e, link)}
+                      className="group relative block w-full bg-card/70 backdrop-blur-md border border-primary/15 rounded-2xl py-5 px-6 transition-all duration-400 hover:bg-card hover:border-primary/40 hover:shadow-[0_8px_28px_-6px_rgba(155,127,196,0.25)] overflow-hidden z-10"
+                    >
+                      {vc.showAccentBarOnButtons !== false && (
+                        <div className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+                      )}
+                      
+                      <div className="flex items-center gap-4 relative z-10">
+                        <div className="bg-primary/10 rounded-xl p-3 shrink-0">
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div className="flex-1 overflow-hidden">
+                          <h3 className="font-sans font-semibold text-sm text-foreground group-hover:text-primary transition-colors duration-300 truncate">
+                            {link.title}
+                          </h3>
+                          {link.description && (
+                            <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                              {link.description}
+                            </p>
                           )}
                         </div>
-                      </a>
-                    </motion.div>
-                  </Fragment>
+                        {vc.showArrowOnButtons !== false && (
+                          <div className="shrink-0">
+                            <ChevronRight className="w-4 h-4 text-primary/50 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+                          </div>
+                        )}
+                      </div>
+                    </a>
+                  </motion.div>
                 );
               })
             )}
@@ -571,19 +562,16 @@ export default function PublicProfile() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
-              className="lg:hidden flex flex-col items-center gap-3 mt-2 mb-6 px-4 text-center relative z-10"
+              className="lg:hidden flex flex-col items-center gap-1 mt-3 mb-6 px-6 text-center relative z-10"
             >
-              <div className="flex items-center gap-3 w-full max-w-[140px]">
-                <div className="flex-1 h-px bg-primary/30" />
-                <Sun className="w-3.5 h-3.5 shrink-0 opacity-70" style={{ color: "#C9A15C" }} strokeWidth={1.3} />
-                <div className="flex-1 h-px bg-primary/30" />
-              </div>
+              <BotanicalFlourish className="w-44 h-9" />
               <p
-                className="text-sm italic leading-relaxed"
+                className="text-sm italic leading-relaxed -mt-1"
                 style={{ color: "#8C6FB0", fontFamily: bgPhraseFontFamily }}
               >
                 {vc.closingPhrase}
               </p>
+              <BotanicalFlourish className="w-32 h-6 rotate-180 opacity-70" />
             </motion.div>
           )}
 
