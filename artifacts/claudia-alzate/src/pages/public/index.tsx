@@ -202,9 +202,9 @@ export default function PublicProfile() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-transparent lg:bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
+    <div className="lg:min-h-[100dvh] bg-transparent lg:bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
       {/* Left Column / Mobile Header */}
-      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-[46px] lg:p-12 z-10 
+      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-[safe_center] px-8 pt-6 pb-[46px] lg:p-12 z-10 
         lg:border-r border-primary/15 shrink-0 lg:h-[100dvh] overflow-hidden">
 
         {/* Mobile background — scoped to this header block's own height, so the fade to the links
@@ -435,7 +435,7 @@ export default function PublicProfile() {
       </div>
 
       {/* Right Column / Mobile Links */}
-      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto lg:bg-background/60 relative z-10 overflow-hidden -mt-[46px] lg:mt-0">
+      <div className="w-full lg:w-[60%] flex flex-col items-center justify-[safe_center] px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto lg:bg-background/60 relative z-10 overflow-hidden -mt-[46px] lg:mt-0">
 
         {/* Mobile only: the header's photo fade continues seamlessly into this column's own
             top edge, so the transition finishes gradually around the first card instead of
@@ -549,7 +549,7 @@ export default function PublicProfile() {
         <div className="absolute top-[38%] right-[10%] w-[3px] h-[3px] rounded-full lg:hidden pointer-events-none z-0" style={{ background: "#B9A4D9", opacity: 0.55, boxShadow: "0 0 6px 1px rgba(155,127,196,0.5)" }} />
         <div className="absolute top-[62%] left-[6%] w-1 h-1 rounded-full lg:hidden pointer-events-none z-0" style={{ background: "#C9A9E0", opacity: 0.45, boxShadow: "0 0 5px 1px rgba(201,169,224,0.45)" }} />
 
-        <main className="w-full max-w-sm mx-auto lg:mx-0 lg:ml-14 lg:mr-auto flex flex-col flex-1 lg:flex-none justify-center relative z-10">
+        <main className="w-full max-w-sm mx-auto lg:mx-0 lg:ml-14 lg:mr-auto flex flex-col flex-1 lg:flex-none justify-[safe_center] relative z-10">
           
           {/* Links */}
           <motion.div 
