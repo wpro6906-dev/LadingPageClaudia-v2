@@ -192,7 +192,7 @@ export default function PublicProfile() {
   return (
     <div className="min-h-[100dvh] bg-transparent lg:bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
       {/* Left Column / Mobile Header */}
-      <div className="relative w-full min-h-[58vh] lg:min-h-0 lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
+      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-3 lg:p-12 z-10 
         lg:border-r border-primary/15 shrink-0 lg:h-[100dvh] overflow-hidden">
 
         {/* Mobile background — scoped to this header block's own height, so the fade to the links
@@ -240,25 +240,6 @@ export default function PublicProfile() {
             <div className="absolute inset-0 bg-gradient-to-b from-[#F3E9FB] via-[#FBF6F0] to-background" />
           )}
         </div>
-
-        {/* Mobile portrait — anchored within this header block, so X/Y offsets move it relative to the block itself */}
-        {vc.portraitUrl && (
-          <img
-            src={vc.portraitUrl}
-            alt=""
-            aria-hidden="true"
-            className="lg:hidden absolute bottom-0 right-0 pointer-events-none z-10"
-            style={{
-              height: `${vc.portraitSizeMobile ?? 30}vh`,
-              width: "auto",
-              maxWidth: "60%",
-              objectFit: "contain",
-              objectPosition: "bottom right",
-              opacity: vc.portraitOpacity ?? 0.9,
-              transform: `translate(${vc.portraitOffsetXMobile ?? 0}px, ${vc.portraitOffsetYMobile ?? 0}px)`,
-            }}
-          />
-        )}
 
         {/* Desktop left column background */}
         <div className="absolute inset-0 hidden lg:block -z-10">
@@ -580,6 +561,26 @@ export default function PublicProfile() {
             </motion.div>
           )}
         </main>
+
+        {/* Mobile portrait — sits below the links list, in normal flow so it's never covered by the white background */}
+        {vc.portraitUrl && (
+          <div className="lg:hidden w-full flex justify-end pr-2 pt-2">
+            <img
+              src={vc.portraitUrl}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none"
+              style={{
+                height: `${vc.portraitSizeMobile ?? 30}vh`,
+                width: "auto",
+                maxWidth: "70%",
+                objectFit: "contain",
+                opacity: vc.portraitOpacity ?? 0.9,
+                transform: `translate(${vc.portraitOffsetXMobile ?? 0}px, ${vc.portraitOffsetYMobile ?? 0}px)`,
+              }}
+            />
+          </div>
+        )}
 
         {/* Desktop badge — bottom-left of right column, above portrait area */}
         {vc.badgeText && (

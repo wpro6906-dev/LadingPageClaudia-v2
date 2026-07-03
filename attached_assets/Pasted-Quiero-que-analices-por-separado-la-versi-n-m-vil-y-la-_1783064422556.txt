@@ -1,0 +1,15 @@
+Quiero que analices por separado la versión móvil y la versión de escritorio de la landing, porque ambas tienen espacios vacíos diferentes y necesitan un tratamiento distinto. No cambies ninguna funcionalidad, solo mejora el diseño visual.
+
+Versión móvil
+
+La parte blanca donde están los botones se siente demasiado simple. Quiero que conserve su estilo limpio, pero que tenga mucha más personalidad. Agrega elementos decorativos elegantes como ramas, flores, hojas, pequeños detalles botánicos y símbolos espirituales muy sutiles (loto, estrellas, sol, etc.), utilizando principalmente tonos lavanda, morados suaves y pequeños detalles dorados. Las decoraciones deben integrarse de forma natural en las esquinas, bordes y espacios vacíos para que la página se vea mucho más premium, sin saturarla.
+
+También quiero que entre algunos botones haya pequeños separadores decorativos o detalles gráficos que rompan la monotonía, manteniendo una apariencia elegante y armoniosa.
+
+Al final de la página, después del último botón, agrega una pequeña sección con una frase inspiradora relacionada con la paz, la luz o la transformación. Esa frase debe seguir siendo editable desde el dashboard, igual que el resto del contenido de la página.
+
+Versión de escritorio
+
+Analiza el diseño actual y aprovecha mejor los espacios vacíos. Agrega elementos decorativos diferentes a los de la versión móvil, adaptados al formato horizontal: ramas, flores, hojas, detalles orgánicos, partículas de luz o ilustraciones sutiles que complementen el diseño sin distraer. Quiero que la versión de escritorio se sienta más trabajada, elegante y equilibrada visualmente, evitando que queden zonas grandes completamente vacías.
+
+En ambas versiones, las decoraciones deben verse profesionales, bien distribuidas y coherentes con la identidad visual de Claudia Alzate y el concepto "Vivir bajo la luz". No cambies la estructura, la funcionalidad ni el contenido editable; únicamente mejora el diseño visual y la composición para que la página tenga un acabado mucho más premium.
