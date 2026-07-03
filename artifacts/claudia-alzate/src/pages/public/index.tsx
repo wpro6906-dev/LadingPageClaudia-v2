@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, Fragment } from "react";
 import { API_BASE } from "@/lib/api-base";
 import { useGetProfile, getGetProfileQueryKey, useGetLinks, getGetLinksQueryKey } from "@workspace/api-client-react";
 import logoPath from "@assets/image_1781908878316.png";
@@ -124,6 +124,47 @@ export default function PublicProfile() {
   });
 
   const activeLinks = links?.filter(link => link.active).sort((a, b) => a.order - b.order) || [];
+
+  // ── Desktop auto-fit: shrink the links/content block so it always fits the
+  // viewport height without scrolling, no matter how many links exist. ──
+  const desktopFitContainerRef = useRef<HTMLDivElement>(null);
+  const desktopFitContentRef = useRef<HTMLElement>(null);
+  const [desktopScale, setDesktopScale] = useState(1);
+
+  useLayoutEffect(() => {
+    const container = desktopFitContainerRef.current;
+    const content = desktopFitContentRef.current;
+    if (!container || !content) return;
+
+    const recompute = () => {
+      const isDesktop = window.innerWidth >= 1024;
+      if (!isDesktop) {
+        setDesktopScale(1);
+        return;
+      }
+      const containerStyles = window.getComputedStyle(container);
+      const paddingY = parseFloat(containerStyles.paddingTop || "0") + parseFloat(containerStyles.paddingBottom || "0");
+      const availableHeight = container.clientHeight - paddingY;
+      const naturalHeight = content.scrollHeight;
+      if (naturalHeight <= 0 || availableHeight <= 0) return;
+      const nextScale = naturalHeight > availableHeight
+        ? Math.max(0.35, availableHeight / naturalHeight)
+        : 1;
+      setDesktopScale((prev) => (Math.abs(prev - nextScale) > 0.005 ? nextScale : prev));
+    };
+
+    recompute();
+
+    const resizeObserver = new ResizeObserver(() => recompute());
+    resizeObserver.observe(container);
+    resizeObserver.observe(content);
+    window.addEventListener("resize", recompute);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", recompute);
+    };
+  }, [activeLinks.length, isLinksLoading]);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/analytics/track`, {
@@ -435,7 +476,10 @@ export default function PublicProfile() {
       </div>
 
       {/* Right Column / Mobile Links */}
-      <div className="w-full lg:w-[60%] flex flex-col items-center justify-[safe_center] px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto lg:bg-background/60 relative z-10 overflow-hidden -mt-[46px] lg:mt-0">
+      <div
+        ref={desktopFitContainerRef}
+        className="w-full lg:w-[60%] flex flex-col items-center justify-[safe_center] px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-hidden lg:bg-background/60 relative z-10 overflow-hidden -mt-[46px] lg:mt-0"
+      >
 
         {/* Mobile only: the header's photo fade continues seamlessly into this column's own
             top edge, so the transition finishes gradually around the first card instead of
@@ -549,7 +593,11 @@ export default function PublicProfile() {
         <div className="absolute top-[38%] right-[10%] w-[3px] h-[3px] rounded-full lg:hidden pointer-events-none z-0" style={{ background: "#B9A4D9", opacity: 0.55, boxShadow: "0 0 6px 1px rgba(155,127,196,0.5)" }} />
         <div className="absolute top-[62%] left-[6%] w-1 h-1 rounded-full lg:hidden pointer-events-none z-0" style={{ background: "#C9A9E0", opacity: 0.45, boxShadow: "0 0 5px 1px rgba(201,169,224,0.45)" }} />
 
-        <main className="w-full max-w-sm mx-auto lg:mx-0 lg:ml-14 lg:mr-auto flex flex-col flex-1 lg:flex-none justify-[safe_center] relative z-10">
+        <main
+          ref={desktopFitContentRef}
+          className="w-full max-w-sm mx-auto lg:mx-0 lg:ml-14 lg:mr-auto flex flex-col flex-1 lg:flex-none justify-[safe_center] relative z-10"
+          style={{ transform: `scale(${desktopScale})`, transformOrigin: "top center" }}
+        >
           
           {/* Links */}
           <motion.div 
