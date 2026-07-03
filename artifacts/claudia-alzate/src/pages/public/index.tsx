@@ -49,6 +49,9 @@ interface VisualConfig {
   portraitSize?: number;
   portraitBlendLeft?: number;
   portraitBlendTop?: number;
+  portraitSizeMobile?: number;
+  portraitOffsetXMobile?: number;
+  portraitOffsetYMobile?: number;
   bgPhrase?: string;
   bgPhraseEnabled?: boolean;
   bgPhraseOpacity?: number;
@@ -72,8 +75,9 @@ function getVC(profile: any): Required<VisualConfig> {
     gradientTop: true, gradientBottom: true, showDecorLines: true, showGlow: true,
     nameLetterSpacing: "0.05em", showArrowOnButtons: true, showAccentBarOnButtons: true,
     badgeText: "", badgeIcon: "sparkles", badgeColor: "#C9A15C",
-    portraitUrl: "", portraitOpacity: 0.9, portraitSize: 30,
+    portraitUrl: "", portraitOpacity: 0.9, portraitSize: 68,
     portraitBlendLeft: 0, portraitBlendTop: 0,
+    portraitSizeMobile: 30, portraitOffsetXMobile: 0, portraitOffsetYMobile: 0,
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9, bgPhraseFont: "elegante",
     statsEnabled: true,
     stats: [
@@ -245,13 +249,13 @@ export default function PublicProfile() {
             aria-hidden="true"
             className="lg:hidden absolute bottom-0 right-0 pointer-events-none z-10"
             style={{
-              height: `${vc.portraitSize ?? 30}vh`,
+              height: `${vc.portraitSizeMobile ?? 30}vh`,
               width: "auto",
               maxWidth: "60%",
               objectFit: "contain",
               objectPosition: "bottom right",
               opacity: vc.portraitOpacity ?? 0.9,
-              transform: `translate(${vc.portraitBlendLeft ?? 0}px, ${vc.portraitBlendTop ?? 0}px)`,
+              transform: `translate(${vc.portraitOffsetXMobile ?? 0}px, ${vc.portraitOffsetYMobile ?? 0}px)`,
             }}
           />
         )}
@@ -444,7 +448,7 @@ export default function PublicProfile() {
             aria-hidden="true"
             className="hidden lg:block absolute bottom-0 right-0 pointer-events-none z-0"
             style={{
-              height: `${vc.portraitSize ?? 30}%`,
+              height: `${vc.portraitSize ?? 68}%`,
               width: "auto",
               maxWidth: "40%",
               objectFit: "contain",

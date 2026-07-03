@@ -61,9 +61,12 @@ export function IdentityManager() {
     badgeColor: "#C9A15C",
     portraitUrl: "",
     portraitOpacity: 0.9,
-    portraitSize: 30,
+    portraitSize: 68,
     portraitBlendLeft: 0,
     portraitBlendTop: 0,
+    portraitSizeMobile: 30,
+    portraitOffsetXMobile: 0,
+    portraitOffsetYMobile: 0,
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
     bgPhraseEnabled: true,
     bgPhraseOpacity: 0.9,
@@ -119,9 +122,12 @@ export function IdentityManager() {
         badgeColor: vc.badgeColor ?? "#C9A15C",
         portraitUrl: vc.portraitUrl ?? "",
         portraitOpacity: vc.portraitOpacity ?? 0.9,
-        portraitSize: vc.portraitSize ?? 30,
+        portraitSize: vc.portraitSize ?? 68,
         portraitBlendLeft: vc.portraitBlendLeft ?? 0,
         portraitBlendTop: vc.portraitBlendTop ?? 0,
+        portraitSizeMobile: vc.portraitSizeMobile ?? 30,
+        portraitOffsetXMobile: vc.portraitOffsetXMobile ?? 0,
+        portraitOffsetYMobile: vc.portraitOffsetYMobile ?? 0,
         bgPhrase: vc.bgPhrase ?? "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
         bgPhraseEnabled: vc.bgPhraseEnabled ?? true,
         bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
@@ -183,6 +189,9 @@ export function IdentityManager() {
           portraitSize: form.portraitSize,
           portraitBlendLeft: form.portraitBlendLeft,
           portraitBlendTop: form.portraitBlendTop,
+          portraitSizeMobile: form.portraitSizeMobile,
+          portraitOffsetXMobile: form.portraitOffsetXMobile,
+          portraitOffsetYMobile: form.portraitOffsetYMobile,
           bgPhrase: form.bgPhrase,
           bgPhraseEnabled: form.bgPhraseEnabled,
           bgPhraseOpacity: form.bgPhraseOpacity,
@@ -416,30 +425,58 @@ export function IdentityManager() {
                     <span className="text-xs text-muted-foreground">{Math.round(form.portraitOpacity * 100)}%</span>
                   </div>
                   <Slider value={[form.portraitOpacity]} min={0.1} max={1} step={0.05} onValueChange={v => updateField("portraitOpacity", v[0])} />
+                  <p className="text-[11px] text-muted-foreground">Aplica tanto en escritorio como en móvil.</p>
                 </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <Label>Tamaño</Label>
-                    <span className="text-xs text-muted-foreground">{form.portraitSize}%</span>
+
+                <div className="space-y-4 pt-3 border-t border-border/60">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Escritorio</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Tamaño</Label>
+                      <span className="text-xs text-muted-foreground">{form.portraitSize}%</span>
+                    </div>
+                    <Slider value={[form.portraitSize]} min={35} max={95} step={1} onValueChange={v => updateField("portraitSize", v[0])} />
                   </div>
-                  <Slider value={[form.portraitSize]} min={10} max={55} step={1} onValueChange={v => updateField("portraitSize", v[0])} />
-                  <p className="text-[11px] text-muted-foreground">Altura de la foto respecto a su bloque. Valores pequeños dan un tamaño más discreto.</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición horizontal</Label>
+                      <span className="text-xs text-muted-foreground">{form.portraitBlendLeft > 0 ? `${form.portraitBlendLeft}px derecha` : form.portraitBlendLeft < 0 ? `${Math.abs(form.portraitBlendLeft)}px izquierda` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.portraitBlendLeft]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitBlendLeft", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición vertical</Label>
+                      <span className="text-xs text-muted-foreground">{form.portraitBlendTop > 0 ? `${form.portraitBlendTop}px abajo` : form.portraitBlendTop < 0 ? `${Math.abs(form.portraitBlendTop)}px arriba` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.portraitBlendTop]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitBlendTop", v[0])} />
+                  </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <Label>Posición horizontal</Label>
-                    <span className="text-xs text-muted-foreground">{form.portraitBlendLeft > 0 ? `${form.portraitBlendLeft}px derecha` : form.portraitBlendLeft < 0 ? `${Math.abs(form.portraitBlendLeft)}px izquierda` : "centrado"}</span>
+
+                <div className="space-y-4 pt-3 border-t border-border/60">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Celular</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Tamaño</Label>
+                      <span className="text-xs text-muted-foreground">{form.portraitSizeMobile}%</span>
+                    </div>
+                    <Slider value={[form.portraitSizeMobile]} min={10} max={55} step={1} onValueChange={v => updateField("portraitSizeMobile", v[0])} />
+                    <p className="text-[11px] text-muted-foreground">Altura de la foto respecto al bloque superior. Valores pequeños dan un tamaño más discreto.</p>
                   </div>
-                  <Slider value={[form.portraitBlendLeft]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitBlendLeft", v[0])} />
-                  <p className="text-[11px] text-muted-foreground">Mueve la foto a la izquierda o derecha, en píxeles.</p>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <Label>Posición vertical</Label>
-                    <span className="text-xs text-muted-foreground">{form.portraitBlendTop > 0 ? `${form.portraitBlendTop}px abajo` : form.portraitBlendTop < 0 ? `${Math.abs(form.portraitBlendTop)}px arriba` : "centrado"}</span>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición horizontal</Label>
+                      <span className="text-xs text-muted-foreground">{form.portraitOffsetXMobile > 0 ? `${form.portraitOffsetXMobile}px derecha` : form.portraitOffsetXMobile < 0 ? `${Math.abs(form.portraitOffsetXMobile)}px izquierda` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.portraitOffsetXMobile]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitOffsetXMobile", v[0])} />
                   </div>
-                  <Slider value={[form.portraitBlendTop]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitBlendTop", v[0])} />
-                  <p className="text-[11px] text-muted-foreground">Mueve la foto hacia arriba o abajo, en píxeles.</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición vertical</Label>
+                      <span className="text-xs text-muted-foreground">{form.portraitOffsetYMobile > 0 ? `${form.portraitOffsetYMobile}px abajo` : form.portraitOffsetYMobile < 0 ? `${Math.abs(form.portraitOffsetYMobile)}px arriba` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.portraitOffsetYMobile]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitOffsetYMobile", v[0])} />
+                  </div>
                 </div>
               </div>
             </TabsContent>
