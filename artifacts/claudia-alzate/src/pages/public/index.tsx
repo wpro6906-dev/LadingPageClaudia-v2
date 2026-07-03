@@ -204,7 +204,7 @@ export default function PublicProfile() {
   return (
     <div className="min-h-[100dvh] bg-transparent lg:bg-background text-foreground relative flex flex-col lg:flex-row overflow-hidden lg:overflow-hidden">
       {/* Left Column / Mobile Header */}
-      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-8 lg:p-12 z-10 
+      <div className="relative w-full lg:w-[40%] flex flex-col items-center justify-center px-8 pt-6 pb-[46px] lg:p-12 z-10 
         lg:border-r border-primary/15 shrink-0 lg:h-[100dvh] overflow-hidden">
 
         {/* Mobile background — scoped to this header block's own height, so the fade to the links
@@ -358,14 +358,14 @@ export default function PublicProfile() {
           </motion.span>
         </div>
 
-        {/* Identity — desktop: keeps the fully customizable palette from the dashboard */}
+        {/* Identity — desktop: fixed high-contrast palette, same treatment as mobile, so the name reads clearly against any part of the photo */}
         <div className="hidden lg:flex flex-col items-center lg:mb-3 z-10">
           <motion.span 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-6xl text-center font-light"
-            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily }}
+            style={{ color: "#FFFFFF", letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)" }}
           >
             {vc.firstName}
           </motion.span>
@@ -374,7 +374,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-6xl text-center font-medium"
-            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily }}
+            style={{ color: "#F6D68A", letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)" }}
           >
             {vc.lastName}
           </motion.span>
@@ -386,12 +386,10 @@ export default function PublicProfile() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-xs font-sans uppercase mb-1.5 lg:mb-6 text-center tracking-[0.35em] lg:tracking-[0.4em] z-10 font-semibold lg:font-normal"
           style={{
-            color: vc.subtitleColor,
             fontFamily: subtitleFontFamily,
           }}
         >
-          <span className="lg:hidden" style={{ color: "#FDF8ED", textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.subtitleText}</span>
-          <span className="hidden lg:inline">{vc.subtitleText}</span>
+          <span style={{ color: "#FDF8ED", textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.subtitleText}</span>
         </motion.p>
 
         {vc.decoratorEnabled !== false && (
@@ -415,8 +413,7 @@ export default function PublicProfile() {
             className="text-xs lg:text-sm text-center"
             style={{ fontFamily: tagline1FontFamily }}
           >
-            <span className="lg:hidden" style={{ color: "#FBF5EA", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.28)" }}>{vc.tagline1}</span>
-            <span className="hidden lg:inline opacity-90" style={{ color: vc.tagline1Color }}>{vc.tagline1}</span>
+            <span style={{ color: "#FBF5EA", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.28)" }}>{vc.tagline1}</span>
           </motion.p>
           <motion.p 
             initial={{ y: 10, opacity: 0 }}
@@ -425,8 +422,7 @@ export default function PublicProfile() {
             className="text-lg lg:text-2xl font-semibold text-center"
             style={{ fontFamily: tagline2FontFamily, fontStyle: "italic" }}
           >
-            <span className="lg:hidden" style={{ color: "#F6D68A", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.tagline2}</span>
-            <span className="hidden lg:inline" style={{ color: vc.tagline2Color }}>{vc.tagline2}</span>
+            <span style={{ color: "#F6D68A", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.tagline2}</span>
           </motion.p>
         </div>
 
@@ -439,7 +435,13 @@ export default function PublicProfile() {
       </div>
 
       {/* Right Column / Mobile Links */}
-      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto bg-background lg:bg-background/60 relative z-10 overflow-hidden">
+      <div className="w-full lg:w-[60%] flex flex-col items-center justify-center px-6 pt-2 pb-6 lg:p-12 lg:h-[100dvh] lg:overflow-y-auto lg:bg-background/60 relative z-10 overflow-hidden -mt-[46px] lg:mt-0">
+
+        {/* Mobile only: the header's photo fade continues seamlessly into this column's own
+            top edge, so the transition finishes gradually around the first card instead of
+            cutting off abruptly at the column boundary. Purely visual — doesn't affect layout. */}
+        <div className="absolute inset-x-0 top-[46px] bottom-0 lg:hidden -z-10" style={{ background: "hsl(var(--background))" }} />
+        <div className="absolute inset-x-0 top-0 h-[46px] lg:hidden -z-10" style={{ background: "linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%)" }} />
 
         {/* ── Desktop-only decorative layer ── */}
 
