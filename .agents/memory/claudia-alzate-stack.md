@@ -53,6 +53,11 @@ description: Key rules, gotchas, and decisions for the Claudia Alzate Realtor® 
 - **How to apply:** size elements scoped to that mobile column with `vh` or `px` units, never bare `%`, unless the column itself gets an explicit height. Also keep any background/portrait/vignette layers that must track that column's own height nested *inside* the column div (not as siblings using page-wide `absolute inset-0`), otherwise gradients/fades are computed against total scrollable page height and create a visible seam wherever the column's real content boundary falls.
 - Even with `vh` sizing, an absolutely-positioned `bottom-0`/`right-0` child (e.g. portrait photo) still anchors against the column's *content-driven* height, not the visual hero area — if the column has no `min-h` on mobile, its height collapses to just the text/logo content, so the child lands high up and any downward offset quickly exceeds that short box and gets clipped by `overflow-hidden`. Fix: give the mobile column an explicit `min-h-[Xvh]` (reset with `lg:min-h-0` on desktop) so there's real room for the child to sit at the true bottom and for offset sliders to have effect.
 
+## framer-motion — never wrap a `variants`-driven child in an extra plain `motion.div`
+- Inserting a bare `<motion.div>` (no `variants`/`initial`/`animate` of its own) between a `variants`-controlled parent and its `variants`-controlled child silently breaks the hidden→show propagation — the child never animates in and stays effectively invisible (0 height/opacity), while sibling static elements render fine.
+- **Why:** discovered when adding conditional separators between mapped list items required an extra wrapper per item; the extra `motion.div` layer broke the container/item stagger animation even though it looked like valid nesting.
+- **How to apply:** when you need a non-animated wrapper around a `variants` item (e.g. to also render a conditional sibling like a separator), use `<Fragment key={...}>` instead of `<motion.div>` for that wrapper — plain Fragments don't interfere with variant propagation.
+
 ## Codegen
 - After any OpenAPI spec change: `pnpm --filter @workspace/api-spec run codegen`
 - After any DB schema change: `pnpm --filter @workspace/db run push`

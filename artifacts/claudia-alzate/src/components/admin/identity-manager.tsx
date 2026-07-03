@@ -71,6 +71,8 @@ export function IdentityManager() {
     bgPhraseEnabled: true,
     bgPhraseOpacity: 0.9,
     bgPhraseFont: "elegante",
+    closingPhrase: "Que cada paso te acerque más a tu luz interior.",
+    closingPhraseEnabled: true,
     statsEnabled: true,
     stats: [
       { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -132,6 +134,8 @@ export function IdentityManager() {
         bgPhraseEnabled: vc.bgPhraseEnabled ?? true,
         bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
         bgPhraseFont: normalizeFontKey(vc.bgPhraseFont ?? legacyFont),
+        closingPhrase: vc.closingPhrase ?? "Que cada paso te acerque más a tu luz interior.",
+        closingPhraseEnabled: vc.closingPhraseEnabled ?? true,
         statsEnabled: vc.statsEnabled ?? true,
         stats: vc.stats ?? [
           { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -196,6 +200,8 @@ export function IdentityManager() {
           bgPhraseEnabled: form.bgPhraseEnabled,
           bgPhraseOpacity: form.bgPhraseOpacity,
           bgPhraseFont: form.bgPhraseFont,
+          closingPhrase: form.closingPhrase,
+          closingPhraseEnabled: form.closingPhraseEnabled,
           statsEnabled: form.statsEnabled,
           stats: form.stats,
         }
@@ -510,6 +516,29 @@ export function IdentityManager() {
                       <Slider value={[form.bgPhraseOpacity]} min={0.3} max={1} step={0.05} onValueChange={v => updateField("bgPhraseOpacity", v[0])} />
                       <p className="text-xs text-muted-foreground">Valor recomendado: 80–95%</p>
                     </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Closing phrase — mobile only */}
+              <div className="pt-4 border-t border-border space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Frase de cierre (móvil)</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Aparece debajo del último botón, solo en la vista móvil, como cierre inspirador.</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="closingPhraseEnabled">Mostrar frase de cierre</Label>
+                  <Switch id="closingPhraseEnabled" checked={form.closingPhraseEnabled} onCheckedChange={v => updateField("closingPhraseEnabled", v)} />
+                </div>
+                {form.closingPhraseEnabled && (
+                  <div className="space-y-2 pl-4 border-l-2 border-primary/20">
+                    <Label>Texto de la frase</Label>
+                    <Textarea
+                      value={form.closingPhrase}
+                      onChange={e => updateField("closingPhrase", e.target.value)}
+                      placeholder="Ej: Que cada paso te acerque más a tu luz interior."
+                      rows={2}
+                    />
                   </div>
                 )}
               </div>
