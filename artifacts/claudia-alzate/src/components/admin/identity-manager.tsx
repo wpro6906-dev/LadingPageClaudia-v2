@@ -700,7 +700,8 @@ export function IdentityManager() {
                         <Label>Opacidad</Label>
                         <span className="text-xs text-muted-foreground">{Math.round(form.closingPhraseOpacity * 100)}%</span>
                       </div>
-                      <Slider value={[form.closingPhraseOpacity]} min={0.2} max={1} step={0.05} onValueChange={v => updateField("closingPhraseOpacity", v[0])} />
+                      <Slider value={[form.closingPhraseOpacity]} min={0} max={1} step={0.02} onValueChange={v => updateField("closingPhraseOpacity", v[0])} />
+                      <p className="text-[11px] text-muted-foreground">Controla la intensidad del color: en 0% se ve casi blanco, en 100% se ve el color pleno.</p>
                     </div>
                   </div>
                 )}

@@ -109,6 +109,20 @@ function getVC(profile: any): Required<VisualConfig> {
   return { ...defaults, ...(profile?.visualConfig || {}) };
 }
 
+function mixColorWithWhite(hex: string, intensity: number): string {
+  const clamped = Math.max(0, Math.min(1, intensity ?? 1));
+  const normalized = hex.replace("#", "");
+  const full = normalized.length === 3
+    ? normalized.split("").map(c => c + c).join("")
+    : normalized;
+  const r = parseInt(full.substring(0, 2), 16);
+  const g = parseInt(full.substring(2, 4), 16);
+  const b = parseInt(full.substring(4, 6), 16);
+  if ([r, g, b].some(Number.isNaN)) return hex;
+  const mix = (channel: number) => Math.round(channel + (255 - channel) * (1 - clamped));
+  return `rgb(${mix(r)}, ${mix(g)}, ${mix(b)})`;
+}
+
 const STALE_MS = 5 * 60 * 1000;
 
 export default function PublicProfile() {
@@ -676,7 +690,7 @@ export default function PublicProfile() {
               <BotanicalFlourish className="w-44 h-9" color={vc.decorFloralColor} accentColor={vc.decorFloralAccentColor} intensity={vc.decorFloralOpacity} />
               <p
                 className="text-sm italic leading-relaxed -mt-1"
-                style={{ color: vc.closingPhraseColor, opacity: vc.closingPhraseOpacity, fontFamily: bgPhraseFontFamily }}
+                style={{ color: mixColorWithWhite(vc.closingPhraseColor, vc.closingPhraseOpacity), fontFamily: bgPhraseFontFamily }}
               >
                 {vc.closingPhrase}
               </p>
