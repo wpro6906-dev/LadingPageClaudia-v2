@@ -61,6 +61,12 @@ interface VisualConfig {
   statsEnabled?: boolean;
   closingPhrase?: string;
   closingPhraseEnabled?: boolean;
+  logoSize?: number;
+  logoOffsetX?: number;
+  logoOffsetY?: number;
+  logoSizeMobile?: number;
+  logoOffsetXMobile?: number;
+  logoOffsetYMobile?: number;
 }
 
 function getVC(profile: any): Required<VisualConfig> {
@@ -83,6 +89,8 @@ function getVC(profile: any): Required<VisualConfig> {
     portraitSizeMobile: 30, portraitOffsetXMobile: 0, portraitOffsetYMobile: 0,
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9, bgPhraseFont: "elegante",
     closingPhrase: "Que cada paso te acerque más a tu luz interior.", closingPhraseEnabled: true,
+    logoSize: 100, logoOffsetX: 0, logoOffsetY: 0,
+    logoSizeMobile: 100, logoOffsetXMobile: 0, logoOffsetYMobile: 0,
     statsEnabled: true,
     stats: [
       { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
@@ -221,22 +229,22 @@ export default function PublicProfile() {
                   filter: vc.bgBlur ? `blur(${vc.bgBlur}px)` : undefined,
                 }}
               />
-              {/* Base overlay — moody dark wash instead of a whitish tint */}
-              <div className="absolute inset-0" style={{ background: "rgba(12,8,18,0.28)" }} />
-              {/* Top vignette — enough to read text, not enough to kill the image */}
+              {/* Base overlay — light, configurable wash so the photo stays rich and visible, not a flat white/dark plate */}
+              <div className="absolute inset-0" style={{ background: `rgba(20,14,28,${vc.mobileBgOverlay ?? 0.15})` }} />
+              {/* Top vignette — just enough to read the name/text over the photo */}
               <div
                 className="absolute inset-x-0 top-0"
                 style={{
-                  height: "40%",
-                  background: "linear-gradient(to bottom, hsla(260,25%,8%,0.35) 0%, transparent 100%)",
+                  height: "42%",
+                  background: "linear-gradient(to bottom, hsla(260,25%,8%,0.4) 0%, transparent 100%)",
                 }}
               />
-              {/* Bottom fade — always meets the block's own bottom edge, so it melts cleanly into the solid links section below, regardless of page length */}
+              {/* Bottom fade — long and gradual, only becoming fully solid right at the block's own edge (where the first button begins) */}
               <div
                 className="absolute inset-x-0 bottom-0"
                 style={{
-                  height: "55%",
-                  background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsl(35,45%,97%) 8%, hsla(35,45%,97%,0.7) 35%, transparent 100%)",
+                  height: "88%",
+                  background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsl(35,45%,97%) 3%, hsla(35,45%,97%,0.88) 13%, hsla(35,45%,97%,0.6) 30%, hsla(35,45%,97%,0.3) 52%, hsla(35,45%,97%,0.08) 78%, transparent 100%)",
                 }}
               />
             </>
@@ -300,27 +308,50 @@ export default function PublicProfile() {
           <div className="absolute w-96 h-96 -top-24 left-1/2 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
         )}
 
-        {/* Logo */}
-        <motion.div 
+        {/* Logo — mobile */}
+        <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-3 lg:mb-8 rounded-full relative z-10"
+          className="lg:hidden mb-3 rounded-full relative z-10"
+          style={{
+            width: `${80 * ((vc.logoSizeMobile ?? 100) / 100)}px`,
+            height: `${80 * ((vc.logoSizeMobile ?? 100) / 100)}px`,
+            transform: `translate(${vc.logoOffsetXMobile ?? 0}px, ${vc.logoOffsetYMobile ?? 0}px)`,
+          }}
         >
           <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse shadow-[0_0_24px_rgba(201,161,92,0.20)] scale-[1.08]"></div>
-          <div className="w-20 h-20 lg:w-36 lg:h-36 overflow-hidden rounded-full border border-primary/30 bg-white/70 p-1 backdrop-blur-sm relative z-10 shadow-lg">
+          <div className="w-full h-full overflow-hidden rounded-full border border-primary/30 bg-white/70 p-1 backdrop-blur-sm relative z-10 shadow-lg">
+            <img src={profile?.logoUrl || logoPath} alt="Logo" className="w-full h-full object-cover rounded-full" />
+          </div>
+        </motion.div>
+
+        {/* Logo — desktop */}
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="hidden lg:block lg:mb-8 rounded-full relative z-10"
+          style={{
+            width: `${144 * ((vc.logoSize ?? 100) / 100)}px`,
+            height: `${144 * ((vc.logoSize ?? 100) / 100)}px`,
+            transform: `translate(${vc.logoOffsetX ?? 0}px, ${vc.logoOffsetY ?? 0}px)`,
+          }}
+        >
+          <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse shadow-[0_0_24px_rgba(201,161,92,0.20)] scale-[1.08]"></div>
+          <div className="w-full h-full overflow-hidden rounded-full border border-primary/30 bg-white/70 p-1 backdrop-blur-sm relative z-10 shadow-lg">
             <img src={profile?.logoUrl || logoPath} alt="Logo" className="w-full h-full object-cover rounded-full" />
           </div>
         </motion.div>
 
         {/* Identity */}
-        <div className="flex flex-col items-center mb-1 lg:mb-3 z-10">
+        <div className="flex flex-col items-center mb-1 lg:mb-3 z-10 leading-[1] lg:leading-normal gap-0.5 lg:gap-0">
           <motion.span 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl lg:text-6xl text-center font-light"
-            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily }}
+            className="text-3xl lg:text-6xl text-center font-medium lg:font-light leading-[1.05] lg:leading-normal"
+            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.5)" }}
           >
             {vc.firstName}
           </motion.span>
@@ -328,8 +359,8 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-3xl lg:text-6xl text-center font-medium"
-            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily }}
+            className="text-3xl lg:text-6xl text-center font-semibold lg:font-medium leading-[1.05] lg:leading-normal"
+            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.5)" }}
           >
             {vc.lastName}
           </motion.span>
@@ -339,8 +370,8 @@ export default function PublicProfile() {
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-xs font-sans uppercase mb-2 lg:mb-6 text-center tracking-[0.4em] z-10"
-          style={{ color: vc.subtitleColor, fontFamily: subtitleFontFamily }}
+          className="text-xs font-sans uppercase mb-1.5 lg:mb-6 text-center tracking-[0.35em] lg:tracking-[0.4em] z-10 font-medium lg:font-normal"
+          style={{ color: vc.subtitleColor, fontFamily: subtitleFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.9), 0 3px 12px rgba(0,0,0,0.55)" }}
         >
           {vc.subtitleText}
         </motion.p>
@@ -350,7 +381,7 @@ export default function PublicProfile() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-row items-center gap-3 mb-2 lg:mb-6 z-10 w-full max-w-[160px]"
+            className="flex flex-row items-center gap-3 mb-1.5 lg:mb-6 z-10 w-full max-w-[160px]"
           >
             <div className="flex-1 max-w-[60px] h-px bg-primary opacity-40" />
             <DecoratorIcon className="w-3.5 h-3.5" style={{ color: vc.decoratorColor }} />
@@ -363,8 +394,8 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-xs lg:text-sm opacity-90 text-center"
-            style={{ color: vc.tagline1Color, fontFamily: tagline1FontFamily }}
+            className="text-xs lg:text-sm opacity-95 lg:opacity-90 text-center"
+            style={{ color: vc.tagline1Color, fontFamily: tagline1FontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.8), 0 3px 10px rgba(0,0,0,0.45)" }}
           >
             {vc.tagline1}
           </motion.p>
@@ -373,7 +404,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
             className="text-lg lg:text-2xl font-semibold text-center"
-            style={{ color: vc.tagline2Color, fontFamily: tagline2FontFamily, fontStyle: "italic" }}
+            style={{ color: vc.tagline2Color, fontFamily: tagline2FontFamily, fontStyle: "italic", textShadow: "0 1px 3px rgba(0,0,0,0.75), 0 4px 14px rgba(0,0,0,0.4)" }}
           >
             {vc.tagline2}
           </motion.p>

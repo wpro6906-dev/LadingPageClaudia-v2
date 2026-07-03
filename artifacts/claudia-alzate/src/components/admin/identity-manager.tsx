@@ -67,6 +67,12 @@ export function IdentityManager() {
     portraitSizeMobile: 30,
     portraitOffsetXMobile: 0,
     portraitOffsetYMobile: 0,
+    logoSize: 100,
+    logoOffsetX: 0,
+    logoOffsetY: 0,
+    logoSizeMobile: 100,
+    logoOffsetXMobile: 0,
+    logoOffsetYMobile: 0,
     bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
     bgPhraseEnabled: true,
     bgPhraseOpacity: 0.9,
@@ -130,6 +136,12 @@ export function IdentityManager() {
         portraitSizeMobile: vc.portraitSizeMobile ?? 30,
         portraitOffsetXMobile: vc.portraitOffsetXMobile ?? 0,
         portraitOffsetYMobile: vc.portraitOffsetYMobile ?? 0,
+        logoSize: vc.logoSize ?? 100,
+        logoOffsetX: vc.logoOffsetX ?? 0,
+        logoOffsetY: vc.logoOffsetY ?? 0,
+        logoSizeMobile: vc.logoSizeMobile ?? 100,
+        logoOffsetXMobile: vc.logoOffsetXMobile ?? 0,
+        logoOffsetYMobile: vc.logoOffsetYMobile ?? 0,
         bgPhrase: vc.bgPhrase ?? "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
         bgPhraseEnabled: vc.bgPhraseEnabled ?? true,
         bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
@@ -196,6 +208,12 @@ export function IdentityManager() {
           portraitSizeMobile: form.portraitSizeMobile,
           portraitOffsetXMobile: form.portraitOffsetXMobile,
           portraitOffsetYMobile: form.portraitOffsetYMobile,
+          logoSize: form.logoSize,
+          logoOffsetX: form.logoOffsetX,
+          logoOffsetY: form.logoOffsetY,
+          logoSizeMobile: form.logoSizeMobile,
+          logoOffsetXMobile: form.logoOffsetXMobile,
+          logoOffsetYMobile: form.logoOffsetYMobile,
           bgPhrase: form.bgPhrase,
           bgPhraseEnabled: form.bgPhraseEnabled,
           bgPhraseOpacity: form.bgPhraseOpacity,
@@ -409,6 +427,64 @@ export function IdentityManager() {
               <div className="flex items-center justify-between">
                 <Label className="cursor-pointer" htmlFor="gradientBottom">Gradiente inferior</Label>
                 <Switch id="gradientBottom" checked={form.gradientBottom} onCheckedChange={v => updateField("gradientBottom", v)} />
+              </div>
+
+              {/* Logo */}
+              <div className="pt-4 border-t border-border space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Logo</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Ajusta tamaño y posición del logo por separado en escritorio y celular.</p>
+                </div>
+
+                <div className="space-y-4 pt-1">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Escritorio</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Tamaño</Label>
+                      <span className="text-xs text-muted-foreground">{form.logoSize}%</span>
+                    </div>
+                    <Slider value={[form.logoSize]} min={50} max={160} step={2} onValueChange={v => updateField("logoSize", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición horizontal</Label>
+                      <span className="text-xs text-muted-foreground">{form.logoOffsetX > 0 ? `${form.logoOffsetX}px derecha` : form.logoOffsetX < 0 ? `${Math.abs(form.logoOffsetX)}px izquierda` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.logoOffsetX]} min={-100} max={100} step={2} onValueChange={v => updateField("logoOffsetX", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición vertical</Label>
+                      <span className="text-xs text-muted-foreground">{form.logoOffsetY > 0 ? `${form.logoOffsetY}px abajo` : form.logoOffsetY < 0 ? `${Math.abs(form.logoOffsetY)}px arriba` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.logoOffsetY]} min={-100} max={100} step={2} onValueChange={v => updateField("logoOffsetY", v[0])} />
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-3 border-t border-border/60">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Celular</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Tamaño</Label>
+                      <span className="text-xs text-muted-foreground">{form.logoSizeMobile}%</span>
+                    </div>
+                    <Slider value={[form.logoSizeMobile]} min={50} max={160} step={2} onValueChange={v => updateField("logoSizeMobile", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición horizontal</Label>
+                      <span className="text-xs text-muted-foreground">{form.logoOffsetXMobile > 0 ? `${form.logoOffsetXMobile}px derecha` : form.logoOffsetXMobile < 0 ? `${Math.abs(form.logoOffsetXMobile)}px izquierda` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.logoOffsetXMobile]} min={-80} max={80} step={2} onValueChange={v => updateField("logoOffsetXMobile", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición vertical</Label>
+                      <span className="text-xs text-muted-foreground">{form.logoOffsetYMobile > 0 ? `${form.logoOffsetYMobile}px abajo` : form.logoOffsetYMobile < 0 ? `${Math.abs(form.logoOffsetYMobile)}px arriba` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.logoOffsetYMobile]} min={-80} max={80} step={2} onValueChange={v => updateField("logoOffsetYMobile", v[0])} />
+                  </div>
+                </div>
               </div>
 
               {/* Portrait / Foto persona */}
