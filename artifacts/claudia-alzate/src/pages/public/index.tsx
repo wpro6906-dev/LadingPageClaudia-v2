@@ -229,22 +229,14 @@ export default function PublicProfile() {
                   filter: vc.bgBlur ? `blur(${vc.bgBlur}px)` : undefined,
                 }}
               />
-              {/* Base overlay — light, configurable wash so the photo stays rich and visible, not a flat white/dark plate */}
-              <div className="absolute inset-0" style={{ background: `rgba(20,14,28,${vc.mobileBgOverlay ?? 0.15})` }} />
-              {/* Top vignette — just enough to read the name/text over the photo */}
-              <div
-                className="absolute inset-x-0 top-0"
-                style={{
-                  height: "42%",
-                  background: "linear-gradient(to bottom, hsla(260,25%,8%,0.4) 0%, transparent 100%)",
-                }}
-              />
-              {/* Bottom fade — long and gradual, only becoming fully solid right at the block's own edge (where the first button begins) */}
+              {/* Base overlay — barely-there wash, just to settle the photo tone; contrast for text now comes from the text styling, not from dimming the image */}
+              <div className="absolute inset-0" style={{ background: `rgba(15,10,20,${vc.mobileBgOverlay ?? 0.06})` }} />
+              {/* Bottom fade — starts low and stays gentle, so the photo keeps its color and depth almost all the way down; only turns fully solid right at the block's own edge (where the first button begins) */}
               <div
                 className="absolute inset-x-0 bottom-0"
                 style={{
-                  height: "88%",
-                  background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsl(35,45%,97%) 3%, hsla(35,45%,97%,0.88) 13%, hsla(35,45%,97%,0.6) 30%, hsla(35,45%,97%,0.3) 52%, hsla(35,45%,97%,0.08) 78%, transparent 100%)",
+                  height: "48%",
+                  background: "linear-gradient(to top, hsl(35,45%,97%) 0%, hsl(35,45%,97%) 4%, hsla(35,45%,97%,0.92) 16%, hsla(35,45%,97%,0.68) 34%, hsla(35,45%,97%,0.36) 56%, hsla(35,45%,97%,0.12) 78%, transparent 100%)",
                 }}
               />
             </>
@@ -344,14 +336,14 @@ export default function PublicProfile() {
           </div>
         </motion.div>
 
-        {/* Identity */}
-        <div className="flex flex-col items-center mb-1 lg:mb-3 z-10 leading-[1] lg:leading-normal gap-0.5 lg:gap-0">
+        {/* Identity — mobile: fixed high-contrast palette (white/cream/gold) so the name reads instantly over any photo, without dimming the image */}
+        <div className="lg:hidden flex flex-col items-center mb-1 leading-[1] gap-0.5 z-10">
           <motion.span 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl lg:text-6xl text-center font-medium lg:font-light leading-[1.05] lg:leading-normal"
-            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.5)" }}
+            className="text-4xl text-center font-semibold leading-[1.05]"
+            style={{ color: "#FFFFFF", letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 3px 10px rgba(0,0,0,0.3)" }}
           >
             {vc.firstName}
           </motion.span>
@@ -359,8 +351,30 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-3xl lg:text-6xl text-center font-semibold lg:font-medium leading-[1.05] lg:leading-normal"
-            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 3px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.5)" }}
+            className="text-4xl text-center font-bold leading-[1.05]"
+            style={{ color: "#F6D68A", letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 3px 10px rgba(0,0,0,0.3)" }}
+          >
+            {vc.lastName}
+          </motion.span>
+        </div>
+
+        {/* Identity — desktop: keeps the fully customizable palette from the dashboard */}
+        <div className="hidden lg:flex flex-col items-center lg:mb-3 z-10">
+          <motion.span 
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-6xl text-center font-light"
+            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: firstNameFontFamily }}
+          >
+            {vc.firstName}
+          </motion.span>
+          <motion.span 
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-6xl text-center font-medium"
+            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: lastNameFontFamily }}
           >
             {vc.lastName}
           </motion.span>
@@ -370,10 +384,14 @@ export default function PublicProfile() {
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-xs font-sans uppercase mb-1.5 lg:mb-6 text-center tracking-[0.35em] lg:tracking-[0.4em] z-10 font-medium lg:font-normal"
-          style={{ color: vc.subtitleColor, fontFamily: subtitleFontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.9), 0 3px 12px rgba(0,0,0,0.55)" }}
+          className="text-xs font-sans uppercase mb-1.5 lg:mb-6 text-center tracking-[0.35em] lg:tracking-[0.4em] z-10 font-semibold lg:font-normal"
+          style={{
+            color: vc.subtitleColor,
+            fontFamily: subtitleFontFamily,
+          }}
         >
-          {vc.subtitleText}
+          <span className="lg:hidden" style={{ color: "#FDF8ED", textShadow: "0 1px 2px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.subtitleText}</span>
+          <span className="hidden lg:inline">{vc.subtitleText}</span>
         </motion.p>
 
         {vc.decoratorEnabled !== false && (
@@ -384,7 +402,7 @@ export default function PublicProfile() {
             className="flex flex-row items-center gap-3 mb-1.5 lg:mb-6 z-10 w-full max-w-[160px]"
           >
             <div className="flex-1 max-w-[60px] h-px bg-primary opacity-40" />
-            <DecoratorIcon className="w-3.5 h-3.5" style={{ color: vc.decoratorColor }} />
+            <DecoratorIcon className="w-3.5 h-3.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] lg:drop-shadow-none" style={{ color: vc.decoratorColor }} />
             <div className="flex-1 max-w-[60px] h-px bg-primary opacity-40" />
           </motion.div>
         )}
@@ -394,19 +412,21 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-xs lg:text-sm opacity-95 lg:opacity-90 text-center"
-            style={{ color: vc.tagline1Color, fontFamily: tagline1FontFamily, textShadow: "0 1px 2px rgba(0,0,0,0.8), 0 3px 10px rgba(0,0,0,0.45)" }}
+            className="text-xs lg:text-sm text-center"
+            style={{ fontFamily: tagline1FontFamily }}
           >
-            {vc.tagline1}
+            <span className="lg:hidden" style={{ color: "#FBF5EA", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.28)" }}>{vc.tagline1}</span>
+            <span className="hidden lg:inline opacity-90" style={{ color: vc.tagline1Color }}>{vc.tagline1}</span>
           </motion.p>
           <motion.p 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
             className="text-lg lg:text-2xl font-semibold text-center"
-            style={{ color: vc.tagline2Color, fontFamily: tagline2FontFamily, fontStyle: "italic", textShadow: "0 1px 3px rgba(0,0,0,0.75), 0 4px 14px rgba(0,0,0,0.4)" }}
+            style={{ fontFamily: tagline2FontFamily, fontStyle: "italic" }}
           >
-            {vc.tagline2}
+            <span className="lg:hidden" style={{ color: "#F6D68A", textShadow: "0 1px 2px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3)" }}>{vc.tagline2}</span>
+            <span className="hidden lg:inline" style={{ color: vc.tagline2Color }}>{vc.tagline2}</span>
           </motion.p>
         </div>
 
