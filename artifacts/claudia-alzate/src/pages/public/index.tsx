@@ -3,6 +3,7 @@ import { API_BASE } from "@/lib/api-base";
 import { useGetProfile, getGetProfileQueryKey, useGetLinks, getGetLinksQueryKey } from "@workspace/api-client-react";
 import logoPath from "@assets/image_1781908878316.png";
 import { getIconComponent, ChevronRight } from "@/components/ui/icons";
+import { getFontFamily } from "@/components/ui/fonts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, MapPin, Star, Key, Building2, Phone, Mail, Users, Sun, Sparkles, Flower2, Heart, Feather, Leaf } from "lucide-react";
@@ -131,6 +132,7 @@ export default function PublicProfile() {
   };
 
   const vc = getVC(profile);
+  const headingFontFamily = getFontFamily((profile as any)?.fontTitle);
 
   const BadgeIcon = (() => {
     const n = vc.badgeIcon?.toLowerCase();
@@ -321,8 +323,8 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl lg:text-6xl font-serif text-center font-light"
-            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: "'Cormorant Garamond', serif" }}
+            className="text-3xl lg:text-6xl text-center font-light"
+            style={{ color: vc.firstNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: headingFontFamily }}
           >
             {vc.firstName}
           </motion.span>
@@ -330,8 +332,8 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-3xl lg:text-6xl font-serif text-center font-medium"
-            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: "'Cormorant Garamond', serif" }}
+            className="text-3xl lg:text-6xl text-center font-medium"
+            style={{ color: vc.lastNameColor, letterSpacing: vc.nameLetterSpacing, fontFamily: headingFontFamily }}
           >
             {vc.lastName}
           </motion.span>
@@ -365,8 +367,8 @@ export default function PublicProfile() {
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="font-sans text-xs lg:text-sm opacity-90 text-center"
-            style={{ color: vc.tagline1Color }}
+            className="text-xs lg:text-sm opacity-90 text-center"
+            style={{ color: vc.tagline1Color, fontFamily: headingFontFamily }}
           >
             {vc.tagline1}
           </motion.p>
@@ -375,7 +377,7 @@ export default function PublicProfile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.7 }}
             className="text-lg lg:text-2xl font-semibold text-center"
-            style={{ color: vc.tagline2Color, fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic" }}
+            style={{ color: vc.tagline2Color, fontFamily: headingFontFamily, fontStyle: "italic" }}
           >
             {vc.tagline2}
           </motion.p>
@@ -457,7 +459,7 @@ export default function PublicProfile() {
             <div className="w-8 h-px mb-3" style={{ background: "linear-gradient(to left, rgba(201,161,92,0.9), transparent)" }} />
             <p
               style={{
-                fontFamily: "'Cormorant Garamond', serif",
+                fontFamily: headingFontFamily,
                 fontSize: "clamp(1.1rem, 1.6vw, 1.5rem)",
                 fontWeight: 300,
                 fontStyle: "italic",

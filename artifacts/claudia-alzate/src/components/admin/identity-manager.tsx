@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { Save, Sun } from "lucide-react";
 import { IconPicker, getIconComponent } from "@/components/ui/icons";
+import { FontPicker, getFontFamily, normalizeFontKey } from "@/components/ui/fonts";
 
 export function IdentityManager() {
   const { toast } = useToast();
@@ -24,6 +25,7 @@ export function IdentityManager() {
   const updateMutation = useUpdateProfile();
   
   const [form, setForm] = useState({
+    headingFont: "elegante",
     firstName: "Claudia",
     lastName: "Alzate",
     firstNameColor: "#6B4F8A",
@@ -75,6 +77,7 @@ export function IdentityManager() {
       const vc = (profile as any).visualConfig || {};
       setForm(prev => ({
         ...prev,
+        headingFont: normalizeFontKey((profile as any).fontTitle),
         logoUrl: profile.logoUrl || "",
         backgroundUrl: profile.backgroundUrl || "",
         firstName: vc.firstName ?? "Claudia",
@@ -131,6 +134,7 @@ export function IdentityManager() {
         tagline: form.tagline1 + " " + form.tagline2,
         logoUrl: form.logoUrl || null,
         backgroundUrl: form.backgroundUrl || null,
+        fontTitle: form.headingFont,
         visualConfig: {
           firstName: form.firstName,
           lastName: form.lastName,
@@ -227,6 +231,11 @@ export function IdentityManager() {
               <div className="space-y-2">
                 <Label>Tagline línea 2</Label>
                 <Textarea value={form.tagline2} onChange={e => updateField("tagline2", e.target.value)} rows={2} />
+              </div>
+              <div className="space-y-2 pt-2">
+                <Label>Tipografía del nombre y las frases</Label>
+                <p className="text-xs text-muted-foreground -mt-1 mb-1">Elige el estilo que se aplicará al nombre y a las frases principales.</p>
+                <FontPicker value={form.headingFont} onChange={v => updateField("headingFont", v)} />
               </div>
               <div className="space-y-2">
                 <Label>Logo URL</Label>
@@ -572,10 +581,10 @@ export function IdentityManager() {
               <h3 className="text-[10px] font-mono text-muted-foreground mb-8 uppercase tracking-widest bg-white/60 px-2 py-1 rounded backdrop-blur-sm">Live Preview</h3>
               
               <div className="flex flex-col items-center mb-2">
-                <span className="text-4xl font-serif font-light" style={{ color: form.firstNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: "'Cormorant Garamond', serif" }}>
+                <span className="text-4xl font-light" style={{ color: form.firstNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: getFontFamily(form.headingFont) }}>
                   {form.firstName}
                 </span>
-                <span className="text-4xl font-serif font-medium" style={{ color: form.lastNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: "'Cormorant Garamond', serif" }}>
+                <span className="text-4xl font-medium" style={{ color: form.lastNameColor, letterSpacing: form.nameLetterSpacing, fontFamily: getFontFamily(form.headingFont) }}>
                   {form.lastName}
                 </span>
               </div>
@@ -596,7 +605,7 @@ export function IdentityManager() {
                 <p className="font-sans text-[12px] opacity-80 text-center" style={{ color: form.tagline1Color }}>
                   {form.tagline1}
                 </p>
-                <p className="text-lg font-semibold text-center leading-snug" style={{ color: form.tagline2Color, fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic" }}>
+                <p className="text-lg font-semibold text-center leading-snug" style={{ color: form.tagline2Color, fontFamily: getFontFamily(form.headingFont), fontStyle: "italic" }}>
                   {form.tagline2}
                 </p>
               </div>
