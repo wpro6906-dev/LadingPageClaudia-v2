@@ -587,26 +587,26 @@ export default function PublicProfile() {
             © {new Date().getFullYear()} {vc.firstName} {vc.lastName}
           </p>
         </footer>
-      </div>
 
-      {/* Mobile portrait — fixed to the viewport's bottom-right corner, overlapping content like a signature photo, never displaces the links or footer */}
-      {vc.portraitUrl && (
-        <img
-          src={vc.portraitUrl}
-          alt=""
-          aria-hidden="true"
-          className="fixed bottom-0 right-0 z-40 lg:hidden pointer-events-none"
-          style={{
-            height: `${vc.portraitSizeMobile ?? 30}vh`,
-            width: "auto",
-            maxWidth: "55%",
-            objectFit: "contain",
-            objectPosition: "bottom right",
-            opacity: vc.portraitOpacity ?? 0.9,
-            transform: `translate(${vc.portraitOffsetXMobile ?? 0}px, ${vc.portraitOffsetYMobile ?? 0}px)`,
-          }}
-        />
-      )}
+        {/* Mobile portrait — anchored to this column's own bottom-right corner, so it overlaps the last card like a signature photo without pushing the footer or links */}
+        {vc.portraitUrl && (
+          <img
+            src={vc.portraitUrl}
+            alt=""
+            aria-hidden="true"
+            className="lg:hidden absolute bottom-0 right-0 z-30 pointer-events-none"
+            style={{
+              height: `${vc.portraitSizeMobile ?? 30}vh`,
+              width: "auto",
+              maxWidth: "55%",
+              objectFit: "contain",
+              objectPosition: "bottom right",
+              opacity: vc.portraitOpacity ?? 0.9,
+              transform: `translate(${vc.portraitOffsetXMobile ?? 0}px, ${vc.portraitOffsetYMobile ?? 0}px)`,
+            }}
+          />
+        )}
+      </div>
 
       {/* Mobile badge — fixed bottom-left, visible only on mobile */}
       {vc.badgeText && (
