@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
-import { getIconComponent } from "@/components/ui/icons";
+import { getIconComponent, IconPicker } from "@/components/ui/icons";
 
 // Ensure URLs saved to the DB always have a protocol prefix so they are never
 // treated as relative paths by the browser.
@@ -120,7 +120,7 @@ export function LinksManager() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-muted-foreground">Icon</label>
-                <Input value={addForm.icon} onChange={e => setAddForm({...addForm, icon: e.target.value})} placeholder="instagram, whatsapp..." />
+                <IconPicker value={addForm.icon} onChange={v => setAddForm({...addForm, icon: v})} />
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-muted-foreground">Description (Optional)</label>
@@ -154,7 +154,7 @@ export function LinksManager() {
                   <div className="flex-1 grid grid-cols-2 gap-2">
                     <Input value={editForm.title} onChange={e => setEditForm({...editForm, title: e.target.value})} placeholder="Title" className="h-8 text-sm" />
                     <Input value={editForm.url} onChange={e => setEditForm({...editForm, url: e.target.value})} placeholder="URL" className="h-8 text-sm" />
-                    <Input value={editForm.icon} onChange={e => setEditForm({...editForm, icon: e.target.value})} placeholder="Icon" className="h-8 text-sm" />
+                    <IconPicker value={editForm.icon} onChange={v => setEditForm({...editForm, icon: v})} />
                     <Input value={editForm.description || ""} onChange={e => setEditForm({...editForm, description: e.target.value})} placeholder="Description" className="h-8 text-sm" />
                   </div>
                 ) : (

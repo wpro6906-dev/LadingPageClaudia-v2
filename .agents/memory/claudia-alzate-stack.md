@@ -35,7 +35,12 @@ description: Key rules, gotchas, and decisions for the Claudia Alzate Realtor® 
 - **Por qué:** Drizzle mapea internamente sus propiedades JS → columnas SQL. Nunca construir el objeto `set()` con nombres de columna SQL.
 
 ## Admin credentials
-- username: `admin`, password: `admin123` (in-memory session auth, no persistent store)
+- username: `ClaudiaAlzate`, password `Clauda321`. Auth is JWT-based (stateless, HS256) and the password persists in the DB — `seedAdmin()` only creates the admin row if missing, it never resets an existing password on restart.
+
+## Icon selection UX
+- All admin-dashboard icon fields (identity decorator/badge, stats, links) must use the shared click-based `IconPicker` + categorized catalogue in `artifacts/claudia-alzate/src/components/ui/icons.tsx` — never a free-text icon-name input.
+- **Why:** product requirement — no typing icon names anywhere in the dashboard; the picker also keeps icon keys valid against `getIconComponent()`.
+- **How to apply:** when adding any new icon-choosing field, import `{ IconPicker }` from `@/components/ui/icons` and bind it directly to the string field; add new icon options to `ICON_GROUPS` in that file (and to `getIconComponent()`'s switch) rather than creating a local picker/catalogue.
 
 ## Codegen
 - After any OpenAPI spec change: `pnpm --filter @workspace/api-spec run codegen`

@@ -10,105 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import {
-  Save, Home, MapPin, Star, Key, Building2, Phone, Mail, Users,
-  Globe, Award, TrendingUp, Briefcase, Heart, ThumbsUp, Calendar,
-  Clock, User, MessageCircle, DollarSign, Percent, Search,
-  ShieldCheck, Zap, CheckCircle2, Linkedin, Twitter, Youtube,
-  ChevronDown, Sun, Sparkles, Flower2, Moon, Feather, Leaf, Wind,
-  HandHeart, PlayCircle, type LucideIcon,
-} from "lucide-react";
-import { SiInstagram, SiFacebook, SiWhatsapp, SiTiktok } from "react-icons/si";
-
-// ── Icon catalogue used in the visual picker ────────────────────────────────
-type IconEntry = { key: string; label: string; Icon: LucideIcon | React.ComponentType<{ className?: string }> };
-
-const STAT_ICONS: IconEntry[] = [
-  { key: "home",          label: "Casa",        Icon: Home },
-  { key: "building2",     label: "Edificio",    Icon: Building2 },
-  { key: "key",           label: "Llave",       Icon: Key },
-  { key: "mappin",        label: "Ubicación",   Icon: MapPin },
-  { key: "star",          label: "Estrella",    Icon: Star },
-  { key: "award",         label: "Premio",      Icon: Award },
-  { key: "shieldcheck",   label: "Garantía",    Icon: ShieldCheck },
-  { key: "checkcircle2",  label: "Verificado",  Icon: CheckCircle2 },
-  { key: "users",         label: "Clientes",    Icon: Users },
-  { key: "user",          label: "Persona",     Icon: User },
-  { key: "heart",         label: "Favorito",    Icon: Heart },
-  { key: "thumbsup",      label: "Aprobado",    Icon: ThumbsUp },
-  { key: "phone",         label: "Teléfono",    Icon: Phone },
-  { key: "mail",          label: "Correo",      Icon: Mail },
-  { key: "messagecircle", label: "Mensaje",     Icon: MessageCircle },
-  { key: "globe",         label: "Web",         Icon: Globe },
-  { key: "trendingup",    label: "Tendencia",   Icon: TrendingUp },
-  { key: "briefcase",     label: "Negocio",     Icon: Briefcase },
-  { key: "dollar",        label: "Precio",      Icon: DollarSign },
-  { key: "percent",       label: "Descuento",   Icon: Percent },
-  { key: "calendar",      label: "Fecha",       Icon: Calendar },
-  { key: "clock",         label: "Tiempo",      Icon: Clock },
-  { key: "search",        label: "Buscar",      Icon: Search },
-  { key: "zap",           label: "Rápido",      Icon: Zap },
-  { key: "linkedin",      label: "LinkedIn",    Icon: Linkedin },
-  { key: "twitter",       label: "Twitter",     Icon: Twitter },
-  { key: "youtube",       label: "YouTube",     Icon: Youtube },
-  { key: "instagram",     label: "Instagram",   Icon: SiInstagram as LucideIcon },
-  { key: "facebook",      label: "Facebook",    Icon: SiFacebook as LucideIcon },
-  { key: "whatsapp",      label: "WhatsApp",    Icon: SiWhatsapp as LucideIcon },
-  { key: "tiktok",        label: "TikTok",      Icon: SiTiktok as LucideIcon },
-  { key: "sun",           label: "Sol",         Icon: Sun },
-  { key: "sparkles",      label: "Destellos",   Icon: Sparkles },
-  { key: "flower2",       label: "Flor",        Icon: Flower2 },
-  { key: "moon",          label: "Luna",        Icon: Moon },
-  { key: "feather",       label: "Ángeles",     Icon: Feather },
-  { key: "leaf",          label: "Hoja",        Icon: Leaf },
-  { key: "wind",          label: "Viento",      Icon: Wind },
-  { key: "handheart",     label: "Gratitud",    Icon: HandHeart },
-  { key: "playcircle",    label: "Meditación",  Icon: PlayCircle },
-];
-
-function IconPicker({ value, onChange }: { value: string; onChange: (key: string) => void }) {
-  const [open, setOpen] = useState(false);
-  const current = STAT_ICONS.find(e => e.key === value) ?? STAT_ICONS[0];
-  const CurrentIcon = current.Icon;
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-md border border-input bg-background text-sm hover:bg-accent transition-colors"
-      >
-        <span className="flex items-center gap-2">
-          <CurrentIcon className="w-4 h-4 shrink-0" />
-          <span className="truncate text-xs text-muted-foreground">{current.label}</span>
-        </span>
-        <ChevronDown className={`w-3 h-3 text-muted-foreground transition-transform shrink-0 ${open ? "rotate-180" : ""}`} />
-      </button>
-      {open && (
-        <>
-          {/* backdrop */}
-          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          {/* picker grid */}
-          <div className="absolute left-0 top-full mt-1 z-50 bg-popover border border-border rounded-xl shadow-xl p-3 w-64">
-            <div className="grid grid-cols-5 gap-1">
-              {STAT_ICONS.map(({ key, label, Icon }) => (
-                <button
-                  key={key}
-                  type="button"
-                  title={label}
-                  onClick={() => { onChange(key); setOpen(false); }}
-                  className={`flex flex-col items-center justify-center gap-1 p-2 rounded-lg text-[10px] transition-colors hover:bg-accent ${value === key ? "bg-primary/15 ring-1 ring-primary/50 text-primary" : "text-muted-foreground"}`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="leading-none truncate w-full text-center">{label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
+import { Save, Sun } from "lucide-react";
+import { IconPicker, getIconComponent } from "@/components/ui/icons";
 
 export function IdentityManager() {
   const { toast } = useToast();
@@ -282,20 +185,7 @@ export function IdentityManager() {
 
   if (isLoading) return <div className="p-8">Cargando identidad...</div>;
 
-  const DecoratorIcon = (() => {
-    const name = form.decoratorIcon?.toLowerCase();
-    if (name === "mappin") return MapPin;
-    if (name === "star") return Star;
-    if (name === "key") return Key;
-    if (name === "building2" || name === "building") return Building2;
-    if (name === "sparkles" || name === "sparkle") return Sparkles;
-    if (name === "flower2" || name === "flower") return Flower2;
-    if (name === "moon") return Moon;
-    if (name === "feather" || name === "angel") return Feather;
-    if (name === "leaf") return Leaf;
-    if (name === "home") return Home;
-    return Sun;
-  })();
+  const DecoratorIcon = form.decoratorIcon ? getIconComponent(form.decoratorIcon) : Sun;
 
   return (
     <div className="space-y-6">
@@ -359,33 +249,7 @@ export function IdentityManager() {
                 </div>
                 <div className="space-y-2">
                   <Label>Ícono</Label>
-                  <div className="flex gap-2">
-                    {([
-                      { id: "sparkles", Icon: Sparkles, label: "Destellos" },
-                      { id: "sun", Icon: Sun, label: "Sol" },
-                      { id: "flower2", Icon: Flower2, label: "Flor" },
-                      { id: "feather", Icon: Feather, label: "Ángeles" },
-                      { id: "mappin", Icon: MapPin, label: "Ubicación" },
-                      { id: "phone", Icon: Phone, label: "Teléfono" },
-                      { id: "mail", Icon: Mail, label: "Email" },
-                      { id: "building2", Icon: Building2, label: "Oficina" },
-                    ] as const).map(({ id, Icon, label }) => (
-                      <button
-                        key={id}
-                        type="button"
-                        onClick={() => updateField("badgeIcon", id)}
-                        title={label}
-                        className={`flex flex-col items-center gap-1 p-3 rounded-lg border transition-all ${
-                          form.badgeIcon === id
-                            ? "border-primary bg-primary/10 text-primary"
-                            : "border-border text-muted-foreground hover:border-primary/40"
-                        }`}
-                      >
-                        <Icon className="w-4 h-4" />
-                        <span className="text-[10px]">{label}</span>
-                      </button>
-                    ))}
-                  </div>
+                  <IconPicker value={form.badgeIcon} onChange={v => updateField("badgeIcon", v)} />
                 </div>
                 <div className="flex items-center gap-4">
                   <Label className="w-1/2">Color de la viñeta</Label>
@@ -443,9 +307,8 @@ export function IdentityManager() {
               </div>
               {form.decoratorEnabled && (
                 <div className="space-y-2 pl-4 border-l-2 border-primary/20">
-                  <Label>Nombre del ícono</Label>
-                  <Input value={form.decoratorIcon} onChange={e => updateField("decoratorIcon", e.target.value)} placeholder="sun, sparkles, flower2, moon, feather, leaf" />
-                  <p className="text-xs text-muted-foreground">sun, sparkles, flower2, moon, feather, leaf, home, mapPin, star, key, building2</p>
+                  <Label>Ícono</Label>
+                  <IconPicker value={form.decoratorIcon} onChange={v => updateField("decoratorIcon", v)} />
                 </div>
               )}
               <div className="flex items-center justify-between">
