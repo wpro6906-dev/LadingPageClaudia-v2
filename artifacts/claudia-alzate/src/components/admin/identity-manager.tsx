@@ -515,202 +515,176 @@ export function IdentityManager() {
                 <Switch id="gradientBottom" checked={form.gradientBottom} onCheckedChange={v => updateField("gradientBottom", v)} />
               </div>
 
-              {/* Logo */}
-              <div className="pt-4 border-t border-border space-y-4">
-                <div>
-                  <p className="text-sm font-medium text-foreground">Logo</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Ajusta tamaño y posición del logo por separado en escritorio y celular.</p>
-                </div>
-
-                <div className="space-y-4 pt-1">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Escritorio</p>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Tamaño</Label>
-                      <span className="text-xs text-muted-foreground">{form.logoSize}%</span>
+              {/* ── LOGO PRINCIPAL ──────────────────────────────── */}
+              <div className="pt-4 border-t border-border">
+                <div className="rounded-xl border border-blue-200/60 bg-blue-50/40 dark:border-blue-900/40 dark:bg-blue-950/20 overflow-hidden">
+                  <div className="flex items-center gap-2.5 px-4 py-3 bg-blue-100/60 dark:bg-blue-900/30 border-b border-blue-200/60 dark:border-blue-900/40">
+                    <span className="text-base">🔷</span>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Logo principal</p>
+                      <p className="text-[11px] text-muted-foreground">El logo de marca que aparece en la parte superior.</p>
                     </div>
-                    <Slider value={[form.logoSize]} min={50} max={160} step={2} onValueChange={v => updateField("logoSize", v[0])} />
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición horizontal</Label>
-                      <span className="text-xs text-muted-foreground">{form.logoOffsetX > 0 ? `${form.logoOffsetX}px derecha` : form.logoOffsetX < 0 ? `${Math.abs(form.logoOffsetX)}px izquierda` : "centrado"}</span>
+                  <div className="p-4 space-y-5">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-wide">
+                        <span>🖥️</span> Escritorio
+                      </div>
+                      <div className="pl-3 border-l-2 border-blue-300/60 dark:border-blue-700/60 space-y-3">
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>Tamaño</Label><span className="text-xs text-muted-foreground">{form.logoSize}%</span></div>
+                          <Slider value={[form.logoSize]} min={50} max={160} step={2} onValueChange={v => updateField("logoSize", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>← Horizontal →</Label><span className="text-xs text-muted-foreground">{form.logoOffsetX > 0 ? `${form.logoOffsetX}px →` : form.logoOffsetX < 0 ? `← ${Math.abs(form.logoOffsetX)}px` : "centrado"}</span></div>
+                          <Slider value={[form.logoOffsetX]} min={-100} max={100} step={2} onValueChange={v => updateField("logoOffsetX", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>↑ Vertical ↓</Label><span className="text-xs text-muted-foreground">{form.logoOffsetY > 0 ? `↓ ${form.logoOffsetY}px` : form.logoOffsetY < 0 ? `↑ ${Math.abs(form.logoOffsetY)}px` : "centrado"}</span></div>
+                          <Slider value={[form.logoOffsetY]} min={-100} max={100} step={2} onValueChange={v => updateField("logoOffsetY", v[0])} />
+                        </div>
+                      </div>
                     </div>
-                    <Slider value={[form.logoOffsetX]} min={-100} max={100} step={2} onValueChange={v => updateField("logoOffsetX", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición vertical</Label>
-                      <span className="text-xs text-muted-foreground">{form.logoOffsetY > 0 ? `${form.logoOffsetY}px abajo` : form.logoOffsetY < 0 ? `${Math.abs(form.logoOffsetY)}px arriba` : "centrado"}</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-wide">
+                        <span>📱</span> Celular
+                      </div>
+                      <div className="pl-3 border-l-2 border-blue-300/60 dark:border-blue-700/60 space-y-3">
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>Tamaño</Label><span className="text-xs text-muted-foreground">{form.logoSizeMobile}%</span></div>
+                          <Slider value={[form.logoSizeMobile]} min={50} max={160} step={2} onValueChange={v => updateField("logoSizeMobile", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>← Horizontal →</Label><span className="text-xs text-muted-foreground">{form.logoOffsetXMobile > 0 ? `${form.logoOffsetXMobile}px →` : form.logoOffsetXMobile < 0 ? `← ${Math.abs(form.logoOffsetXMobile)}px` : "centrado"}</span></div>
+                          <Slider value={[form.logoOffsetXMobile]} min={-80} max={80} step={2} onValueChange={v => updateField("logoOffsetXMobile", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>↑ Vertical ↓</Label><span className="text-xs text-muted-foreground">{form.logoOffsetYMobile > 0 ? `↓ ${form.logoOffsetYMobile}px` : form.logoOffsetYMobile < 0 ? `↑ ${Math.abs(form.logoOffsetYMobile)}px` : "centrado"}</span></div>
+                          <Slider value={[form.logoOffsetYMobile]} min={-80} max={80} step={2} onValueChange={v => updateField("logoOffsetYMobile", v[0])} />
+                        </div>
+                      </div>
                     </div>
-                    <Slider value={[form.logoOffsetY]} min={-100} max={100} step={2} onValueChange={v => updateField("logoOffsetY", v[0])} />
-                  </div>
-                </div>
-
-                <div className="space-y-4 pt-3 border-t border-border/60">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Celular</p>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Tamaño</Label>
-                      <span className="text-xs text-muted-foreground">{form.logoSizeMobile}%</span>
-                    </div>
-                    <Slider value={[form.logoSizeMobile]} min={50} max={160} step={2} onValueChange={v => updateField("logoSizeMobile", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición horizontal</Label>
-                      <span className="text-xs text-muted-foreground">{form.logoOffsetXMobile > 0 ? `${form.logoOffsetXMobile}px derecha` : form.logoOffsetXMobile < 0 ? `${Math.abs(form.logoOffsetXMobile)}px izquierda` : "centrado"}</span>
-                    </div>
-                    <Slider value={[form.logoOffsetXMobile]} min={-80} max={80} step={2} onValueChange={v => updateField("logoOffsetXMobile", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición vertical</Label>
-                      <span className="text-xs text-muted-foreground">{form.logoOffsetYMobile > 0 ? `${form.logoOffsetYMobile}px abajo` : form.logoOffsetYMobile < 0 ? `${Math.abs(form.logoOffsetYMobile)}px arriba` : "centrado"}</span>
-                    </div>
-                    <Slider value={[form.logoOffsetYMobile]} min={-80} max={80} step={2} onValueChange={v => updateField("logoOffsetYMobile", v[0])} />
                   </div>
                 </div>
               </div>
 
-              {/* Portrait / Foto persona */}
-              <div className="pt-4 border-t border-border space-y-4">
-                <div>
-                  <p className="text-sm font-medium text-foreground">Foto de persona (retrato)</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Se muestra abajo a la derecha en móvil y en la columna de foto en escritorio. Déjalo en blanco para ocultar.</p>
-                </div>
-                <div className="space-y-2">
-                  <Label>URL de la foto</Label>
-                  <Input
-                    value={form.portraitUrl}
-                    onChange={e => updateField("portraitUrl", e.target.value)}
-                    placeholder="https://..."
-                  />
-                </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <Label>Opacidad</Label>
-                    <span className="text-xs text-muted-foreground">{Math.round(form.portraitOpacity * 100)}%</span>
-                  </div>
-                  <Slider value={[form.portraitOpacity]} min={0.1} max={1} step={0.05} onValueChange={v => updateField("portraitOpacity", v[0])} />
-                  <p className="text-[11px] text-muted-foreground">Aplica tanto en escritorio como en móvil.</p>
-                </div>
-
-                <div className="space-y-4 pt-3 border-t border-border/60">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Escritorio</p>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Tamaño</Label>
-                      <span className="text-xs text-muted-foreground">{form.portraitSize}%</span>
+              {/* ── FOTO DE PERSONA ─────────────────────────────── */}
+              <div className="pt-4 border-t border-border">
+                <div className="rounded-xl border border-rose-200/60 bg-rose-50/40 dark:border-rose-900/40 dark:bg-rose-950/20 overflow-hidden">
+                  <div className="flex items-center gap-2.5 px-4 py-3 bg-rose-100/60 dark:bg-rose-900/30 border-b border-rose-200/60 dark:border-rose-900/40">
+                    <span className="text-base">🧍</span>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Foto de persona</p>
+                      <p className="text-[11px] text-muted-foreground">Retrato que aparece en la columna derecha (escritorio) y esquina inferior derecha (celular).</p>
                     </div>
-                    <Slider value={[form.portraitSize]} min={35} max={95} step={1} onValueChange={v => updateField("portraitSize", v[0])} />
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición horizontal</Label>
-                      <span className="text-xs text-muted-foreground">{form.portraitBlendLeft > 0 ? `${form.portraitBlendLeft}px derecha` : form.portraitBlendLeft < 0 ? `${Math.abs(form.portraitBlendLeft)}px izquierda` : "centrado"}</span>
+                  <div className="p-4 space-y-4">
+                    <div className="space-y-2">
+                      <Label>URL de la foto</Label>
+                      <Input value={form.portraitUrl} onChange={e => updateField("portraitUrl", e.target.value)} placeholder="https://..." />
+                      <p className="text-[11px] text-muted-foreground">Déjalo en blanco para ocultar la foto.</p>
                     </div>
-                    <Slider value={[form.portraitBlendLeft]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitBlendLeft", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición vertical</Label>
-                      <span className="text-xs text-muted-foreground">{form.portraitBlendTop > 0 ? `${form.portraitBlendTop}px abajo` : form.portraitBlendTop < 0 ? `${Math.abs(form.portraitBlendTop)}px arriba` : "centrado"}</span>
+                    <div className="space-y-2">
+                      <div className="flex justify-between"><Label>Opacidad</Label><span className="text-xs text-muted-foreground">{Math.round(form.portraitOpacity * 100)}%</span></div>
+                      <Slider value={[form.portraitOpacity]} min={0.1} max={1} step={0.05} onValueChange={v => updateField("portraitOpacity", v[0])} />
                     </div>
-                    <Slider value={[form.portraitBlendTop]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitBlendTop", v[0])} />
-                  </div>
-                </div>
-
-                <div className="space-y-4 pt-3 border-t border-border/60">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Celular</p>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Tamaño</Label>
-                      <span className="text-xs text-muted-foreground">{form.portraitSizeMobile}%</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wide">
+                        <span>🖥️</span> Escritorio
+                      </div>
+                      <div className="pl-3 border-l-2 border-rose-300/60 dark:border-rose-700/60 space-y-3">
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>Tamaño</Label><span className="text-xs text-muted-foreground">{form.portraitSize}%</span></div>
+                          <Slider value={[form.portraitSize]} min={35} max={95} step={1} onValueChange={v => updateField("portraitSize", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>← Horizontal →</Label><span className="text-xs text-muted-foreground">{form.portraitBlendLeft > 0 ? `${form.portraitBlendLeft}px →` : form.portraitBlendLeft < 0 ? `← ${Math.abs(form.portraitBlendLeft)}px` : "centrado"}</span></div>
+                          <Slider value={[form.portraitBlendLeft]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitBlendLeft", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>↑ Vertical ↓</Label><span className="text-xs text-muted-foreground">{form.portraitBlendTop > 0 ? `↓ ${form.portraitBlendTop}px` : form.portraitBlendTop < 0 ? `↑ ${Math.abs(form.portraitBlendTop)}px` : "centrado"}</span></div>
+                          <Slider value={[form.portraitBlendTop]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitBlendTop", v[0])} />
+                        </div>
+                      </div>
                     </div>
-                    <Slider value={[form.portraitSizeMobile]} min={10} max={55} step={1} onValueChange={v => updateField("portraitSizeMobile", v[0])} />
-                    <p className="text-[11px] text-muted-foreground">Altura de la foto respecto al bloque superior. Valores pequeños dan un tamaño más discreto.</p>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición horizontal</Label>
-                      <span className="text-xs text-muted-foreground">{form.portraitOffsetXMobile > 0 ? `${form.portraitOffsetXMobile}px derecha` : form.portraitOffsetXMobile < 0 ? `${Math.abs(form.portraitOffsetXMobile)}px izquierda` : "centrado"}</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wide">
+                        <span>📱</span> Celular
+                      </div>
+                      <div className="pl-3 border-l-2 border-rose-300/60 dark:border-rose-700/60 space-y-3">
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>Tamaño</Label><span className="text-xs text-muted-foreground">{form.portraitSizeMobile}%</span></div>
+                          <Slider value={[form.portraitSizeMobile]} min={10} max={55} step={1} onValueChange={v => updateField("portraitSizeMobile", v[0])} />
+                          <p className="text-[11px] text-muted-foreground">Altura de la foto respecto al bloque superior.</p>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>← Horizontal →</Label><span className="text-xs text-muted-foreground">{form.portraitOffsetXMobile > 0 ? `${form.portraitOffsetXMobile}px →` : form.portraitOffsetXMobile < 0 ? `← ${Math.abs(form.portraitOffsetXMobile)}px` : "centrado"}</span></div>
+                          <Slider value={[form.portraitOffsetXMobile]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitOffsetXMobile", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>↑ Vertical ↓</Label><span className="text-xs text-muted-foreground">{form.portraitOffsetYMobile > 0 ? `↓ ${form.portraitOffsetYMobile}px` : form.portraitOffsetYMobile < 0 ? `↑ ${Math.abs(form.portraitOffsetYMobile)}px` : "centrado"}</span></div>
+                          <Slider value={[form.portraitOffsetYMobile]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitOffsetYMobile", v[0])} />
+                        </div>
+                      </div>
                     </div>
-                    <Slider value={[form.portraitOffsetXMobile]} min={-100} max={100} step={2} onValueChange={v => updateField("portraitOffsetXMobile", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición vertical</Label>
-                      <span className="text-xs text-muted-foreground">{form.portraitOffsetYMobile > 0 ? `${form.portraitOffsetYMobile}px abajo` : form.portraitOffsetYMobile < 0 ? `${Math.abs(form.portraitOffsetYMobile)}px arriba` : "centrado"}</span>
-                    </div>
-                    <Slider value={[form.portraitOffsetYMobile]} min={-150} max={150} step={2} onValueChange={v => updateField("portraitOffsetYMobile", v[0])} />
                   </div>
                 </div>
               </div>
 
-              {/* Extra circular logo */}
-              <div className="pt-4 border-t border-border space-y-4">
-                <div>
-                  <p className="text-sm font-medium text-foreground">Logo extra (circular)</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">En escritorio aparece centrado entre la frase y el retrato. En celular aparece abajo a la izquierda (reemplaza el copyright).</p>
-                </div>
-                <div className="space-y-2">
-                  <Label>URL de la imagen (Cloudinary)</Label>
-                  <Input
-                    value={form.extraLogoUrl}
-                    onChange={e => updateField("extraLogoUrl", e.target.value)}
-                    placeholder="https://res.cloudinary.com/..."
-                  />
-                  <p className="text-[11px] text-muted-foreground">Déjalo en blanco para ocultar el logo extra.</p>
-                </div>
-
-                <div className="space-y-4 pt-3 border-t border-border/60">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Escritorio</p>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Tamaño</Label>
-                      <span className="text-xs text-muted-foreground">{form.extraLogoSize}px</span>
+              {/* ── LOGO EXTRA ──────────────────────────────────── */}
+              <div className="pt-4 border-t border-border">
+                <div className="rounded-xl border border-violet-200/60 bg-violet-50/40 dark:border-violet-900/40 dark:bg-violet-950/20 overflow-hidden">
+                  <div className="flex items-center gap-2.5 px-4 py-3 bg-violet-100/60 dark:bg-violet-900/30 border-b border-violet-200/60 dark:border-violet-900/40">
+                    <span className="text-base">✨</span>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Logo extra</p>
+                      <p className="text-[11px] text-muted-foreground">Escritorio: centrado sobre el fondo. Celular: esquina inferior izquierda.</p>
                     </div>
-                    <Slider value={[form.extraLogoSize]} min={40} max={300} step={5} onValueChange={v => updateField("extraLogoSize", v[0])} />
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición horizontal</Label>
-                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetX > 0 ? `${form.extraLogoOffsetX}px derecha` : form.extraLogoOffsetX < 0 ? `${Math.abs(form.extraLogoOffsetX)}px izquierda` : "centrado"}</span>
+                  <div className="p-4 space-y-4">
+                    <div className="space-y-2">
+                      <Label>URL de la imagen (PNG con transparencia)</Label>
+                      <Input value={form.extraLogoUrl} onChange={e => updateField("extraLogoUrl", e.target.value)} placeholder="https://res.cloudinary.com/..." />
+                      <p className="text-[11px] text-muted-foreground">Déjalo en blanco para ocultar el logo extra.</p>
                     </div>
-                    <Slider value={[form.extraLogoOffsetX]} min={-300} max={300} step={5} onValueChange={v => updateField("extraLogoOffsetX", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición vertical</Label>
-                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetY > 0 ? `${form.extraLogoOffsetY}px abajo` : form.extraLogoOffsetY < 0 ? `${Math.abs(form.extraLogoOffsetY)}px arriba` : "centrado"}</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-700 dark:text-violet-400 uppercase tracking-wide">
+                        <span>🖥️</span> Escritorio
+                      </div>
+                      <div className="pl-3 border-l-2 border-violet-300/60 dark:border-violet-700/60 space-y-3">
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>Tamaño</Label><span className="text-xs text-muted-foreground">{form.extraLogoSize}px</span></div>
+                          <Slider value={[form.extraLogoSize]} min={40} max={300} step={5} onValueChange={v => updateField("extraLogoSize", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>← Horizontal →</Label><span className="text-xs text-muted-foreground">{form.extraLogoOffsetX > 0 ? `${form.extraLogoOffsetX}px →` : form.extraLogoOffsetX < 0 ? `← ${Math.abs(form.extraLogoOffsetX)}px` : "centrado"}</span></div>
+                          <Slider value={[form.extraLogoOffsetX]} min={-300} max={300} step={5} onValueChange={v => updateField("extraLogoOffsetX", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>↑ Vertical ↓</Label><span className="text-xs text-muted-foreground">{form.extraLogoOffsetY > 0 ? `↓ ${form.extraLogoOffsetY}px` : form.extraLogoOffsetY < 0 ? `↑ ${Math.abs(form.extraLogoOffsetY)}px` : "centrado"}</span></div>
+                          <Slider value={[form.extraLogoOffsetY]} min={-300} max={300} step={5} onValueChange={v => updateField("extraLogoOffsetY", v[0])} />
+                        </div>
+                      </div>
                     </div>
-                    <Slider value={[form.extraLogoOffsetY]} min={-300} max={300} step={5} onValueChange={v => updateField("extraLogoOffsetY", v[0])} />
-                  </div>
-                </div>
-
-                <div className="space-y-4 pt-3 border-t border-border/60">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Celular</p>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Tamaño</Label>
-                      <span className="text-xs text-muted-foreground">{form.extraLogoSizeMobile}px</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-700 dark:text-violet-400 uppercase tracking-wide">
+                        <span>📱</span> Celular
+                      </div>
+                      <div className="pl-3 border-l-2 border-violet-300/60 dark:border-violet-700/60 space-y-3">
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>Tamaño</Label><span className="text-xs text-muted-foreground">{form.extraLogoSizeMobile}px</span></div>
+                          <Slider value={[form.extraLogoSizeMobile]} min={40} max={200} step={5} onValueChange={v => updateField("extraLogoSizeMobile", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>← Horizontal →</Label><span className="text-xs text-muted-foreground">{form.extraLogoOffsetXMobile > 0 ? `${form.extraLogoOffsetXMobile}px →` : form.extraLogoOffsetXMobile < 0 ? `← ${Math.abs(form.extraLogoOffsetXMobile)}px` : "centrado"}</span></div>
+                          <Slider value={[form.extraLogoOffsetXMobile]} min={-20} max={300} step={5} onValueChange={v => updateField("extraLogoOffsetXMobile", v[0])} />
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between"><Label>↑ Vertical ↓</Label><span className="text-xs text-muted-foreground">{form.extraLogoOffsetYMobile > 0 ? `↓ ${form.extraLogoOffsetYMobile}px` : form.extraLogoOffsetYMobile < 0 ? `↑ ${Math.abs(form.extraLogoOffsetYMobile)}px` : "centrado"}</span></div>
+                          <Slider value={[form.extraLogoOffsetYMobile]} min={-200} max={200} step={5} onValueChange={v => updateField("extraLogoOffsetYMobile", v[0])} />
+                        </div>
+                      </div>
                     </div>
-                    <Slider value={[form.extraLogoSizeMobile]} min={40} max={200} step={5} onValueChange={v => updateField("extraLogoSizeMobile", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición horizontal</Label>
-                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetXMobile > 0 ? `${form.extraLogoOffsetXMobile}px derecha` : form.extraLogoOffsetXMobile < 0 ? `${Math.abs(form.extraLogoOffsetXMobile)}px izquierda` : "centrado"}</span>
-                    </div>
-                    <Slider value={[form.extraLogoOffsetXMobile]} min={-200} max={200} step={5} onValueChange={v => updateField("extraLogoOffsetXMobile", v[0])} />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <Label>Posición vertical</Label>
-                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetYMobile > 0 ? `${form.extraLogoOffsetYMobile}px abajo` : form.extraLogoOffsetYMobile < 0 ? `${Math.abs(form.extraLogoOffsetYMobile)}px arriba` : "centrado"}</span>
-                    </div>
-                    <Slider value={[form.extraLogoOffsetYMobile]} min={-200} max={200} step={5} onValueChange={v => updateField("extraLogoOffsetYMobile", v[0])} />
                   </div>
                 </div>
               </div>

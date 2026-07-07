@@ -780,17 +780,18 @@ export default function PublicProfile() {
         )}
 
         {/* Footer (Mobile only) — extra logo bottom-left, no copyright */}
-        <footer className="lg:hidden w-full mt-auto flex items-center border-t border-primary/15 min-h-[72px] py-3">
+        <footer className="lg:hidden w-full mt-auto flex items-center border-t border-primary/15 min-h-[72px] py-3 overflow-visible">
           {vc.extraLogoUrl && (
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="ml-5 shrink-0"
+              className="shrink-0"
               style={{
                 width: vc.extraLogoSizeMobile ?? 80,
                 height: vc.extraLogoSizeMobile ?? 80,
-                transform: `translate(${vc.extraLogoOffsetXMobile ?? 0}px, ${vc.extraLogoOffsetYMobile ?? 0}px)`,
+                marginLeft: `${20 + (vc.extraLogoOffsetXMobile ?? 0)}px`,
+                transform: `translateY(${vc.extraLogoOffsetYMobile ?? 0}px)`,
               }}
             >
               <img src={vc.extraLogoUrl} alt="" className="w-full h-full object-contain" />
