@@ -58,6 +58,9 @@ interface VisualConfig {
   bgPhraseOpacity?: number;
   bgPhraseFont?: string;
   bgPhraseSize?: number;
+  bgPhraseColor?: string;
+  bgPhraseTop?: number;
+  bgPhraseRight?: number;
   stats?: { icon: string; value: string; label: string; enabled: boolean }[];
   statsEnabled?: boolean;
   closingPhrase?: string;
@@ -583,7 +586,8 @@ export default function PublicProfile() {
             initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="hidden lg:flex absolute top-4 right-8 flex-col items-end pointer-events-none z-10 max-w-[260px]"
+            className="hidden lg:flex absolute flex-col items-end pointer-events-none z-10 max-w-[260px]"
+            style={{ top: `${vc.bgPhraseTop ?? 16}px`, right: `${vc.bgPhraseRight ?? 32}px` }}
           >
             {/* Top accent line */}
             <div className="w-8 h-px mb-3" style={{ background: "linear-gradient(to left, rgba(201,161,92,0.9), transparent)" }} />
@@ -596,7 +600,7 @@ export default function PublicProfile() {
                 lineHeight: 1.5,
                 letterSpacing: "0.02em",
                 opacity: vc.bgPhraseOpacity ?? 0.9,
-                color: "#8C6FB0",
+                color: vc.bgPhraseColor ?? "#8C6FB0",
                 textAlign: "right",
               }}
             >

@@ -78,6 +78,9 @@ export function IdentityManager() {
     bgPhraseOpacity: 0.9,
     bgPhraseFont: "elegante",
     bgPhraseSize: 100,
+    bgPhraseColor: "#8C6FB0",
+    bgPhraseTop: 16,
+    bgPhraseRight: 32,
     extraLogoUrl: "",
     extraLogoSize: 100,
     extraLogoOffsetX: 0,
@@ -160,6 +163,9 @@ export function IdentityManager() {
         bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
         bgPhraseFont: normalizeFontKey(vc.bgPhraseFont ?? legacyFont),
         bgPhraseSize: vc.bgPhraseSize ?? 100,
+        bgPhraseColor: vc.bgPhraseColor ?? "#8C6FB0",
+        bgPhraseTop: vc.bgPhraseTop ?? 16,
+        bgPhraseRight: vc.bgPhraseRight ?? 32,
         extraLogoUrl: vc.extraLogoUrl ?? "",
         extraLogoSize: vc.extraLogoSize ?? 100,
         extraLogoOffsetX: vc.extraLogoOffsetX ?? 0,
@@ -245,6 +251,9 @@ export function IdentityManager() {
           bgPhraseOpacity: form.bgPhraseOpacity,
           bgPhraseFont: form.bgPhraseFont,
           bgPhraseSize: form.bgPhraseSize,
+          bgPhraseColor: form.bgPhraseColor,
+          bgPhraseTop: form.bgPhraseTop,
+          bgPhraseRight: form.bgPhraseRight,
           extraLogoUrl: form.extraLogoUrl,
           extraLogoSize: form.extraLogoSize,
           extraLogoOffsetX: form.extraLogoOffsetX,
@@ -725,7 +734,37 @@ export function IdentityManager() {
                         <span className="text-xs text-muted-foreground">{form.bgPhraseSize}%</span>
                       </div>
                       <Slider value={[form.bgPhraseSize]} min={55} max={150} step={5} onValueChange={v => updateField("bgPhraseSize", v[0])} />
-                      <p className="text-xs text-muted-foreground">100% = tamaño por defecto. Reduce para que ocupe menos espacio, aumenta para que sea más prominente.</p>
+                      <p className="text-xs text-muted-foreground">100% = tamaño por defecto.</p>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Color</Label>
+                      <div className="flex gap-2">
+                        <input
+                          type="color"
+                          value={form.bgPhraseColor}
+                          onChange={e => updateField("bgPhraseColor", e.target.value)}
+                          className="w-10 h-10 rounded cursor-pointer border border-primary/20"
+                        />
+                        <Input
+                          value={form.bgPhraseColor}
+                          onChange={e => updateField("bgPhraseColor", e.target.value)}
+                          className="flex-1 font-mono text-xs uppercase"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <Label>Posición vertical (desde arriba)</Label>
+                        <span className="text-xs text-muted-foreground">{form.bgPhraseTop}px</span>
+                      </div>
+                      <Slider value={[form.bgPhraseTop]} min={0} max={300} step={4} onValueChange={v => updateField("bgPhraseTop", v[0])} />
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <Label>Posición horizontal (desde la derecha)</Label>
+                        <span className="text-xs text-muted-foreground">{form.bgPhraseRight}px</span>
+                      </div>
+                      <Slider value={[form.bgPhraseRight]} min={0} max={300} step={4} onValueChange={v => updateField("bgPhraseRight", v[0])} />
                     </div>
                   </div>
                 )}

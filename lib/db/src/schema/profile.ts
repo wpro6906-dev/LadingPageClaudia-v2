@@ -33,6 +33,9 @@ export const DEFAULT_VISUAL_CONFIG = JSON.stringify({
   bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.",
   bgPhraseEnabled: true,
   bgPhraseOpacity: 0.9,
+  bgPhraseColor: "#8C6FB0",
+  bgPhraseTop: 16,
+  bgPhraseRight: 32,
   statsEnabled: true,
   stats: [
     { icon: "handheart", value: "", label: "Vivir bajo la luz", enabled: true },
