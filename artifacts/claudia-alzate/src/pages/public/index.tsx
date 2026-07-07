@@ -57,6 +57,7 @@ interface VisualConfig {
   bgPhraseEnabled?: boolean;
   bgPhraseOpacity?: number;
   bgPhraseFont?: string;
+  bgPhraseSize?: number;
   stats?: { icon: string; value: string; label: string; enabled: boolean }[];
   statsEnabled?: boolean;
   closingPhrase?: string;
@@ -66,6 +67,10 @@ interface VisualConfig {
   decorFloralColor?: string;
   decorFloralAccentColor?: string;
   decorFloralOpacity?: number;
+  extraLogoUrl?: string;
+  extraLogoSize?: number;
+  extraLogoOffsetY?: number;
+  extraLogoSizeMobile?: number;
   logoSize?: number;
   logoOffsetX?: number;
   logoOffsetY?: number;
@@ -92,10 +97,11 @@ function getVC(profile: any): Required<VisualConfig> {
     portraitUrl: "", portraitOpacity: 0.9, portraitSize: 68,
     portraitBlendLeft: 0, portraitBlendTop: 0,
     portraitSizeMobile: 30, portraitOffsetXMobile: 0, portraitOffsetYMobile: 0,
-    bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9, bgPhraseFont: "elegante",
+    bgPhrase: "Guío a mujeres a despertar su luz, conectar con su esencia y manifestar una vida plena y en expansión.", bgPhraseEnabled: true, bgPhraseOpacity: 0.9, bgPhraseFont: "elegante", bgPhraseSize: 100,
     closingPhrase: "Que cada paso te acerque más a tu luz interior.", closingPhraseEnabled: true,
     closingPhraseColor: "#8C6FB0", closingPhraseOpacity: 1,
     decorFloralColor: "#8B6BB8", decorFloralAccentColor: "#C9A15C", decorFloralOpacity: 1,
+    extraLogoUrl: "", extraLogoSize: 100, extraLogoOffsetY: 0, extraLogoSizeMobile: 80,
     logoSize: 100, logoOffsetX: 0, logoOffsetY: 0,
     logoSizeMobile: 100, logoOffsetXMobile: 0, logoOffsetYMobile: 0,
     statsEnabled: true,
@@ -488,12 +494,7 @@ export default function PublicProfile() {
           </motion.p>
         </div>
 
-        {/* Desktop bottom bar: copyright only (badge moved to right column) */}
-        <div className="hidden lg:flex absolute bottom-8 left-0 right-0 items-end justify-center z-10 px-8">
-          <p className="text-[10px] text-muted-foreground/70 font-sans tracking-widest uppercase">
-            © {new Date().getFullYear()} {vc.firstName} {vc.lastName}
-          </p>
-        </div>
+        
       </div>
 
       {/* Right Column / Mobile Links */}
@@ -578,14 +579,14 @@ export default function PublicProfile() {
             initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="hidden lg:flex absolute top-[14%] right-10 flex-col items-end pointer-events-none z-10 max-w-[260px]"
+            className="hidden lg:flex absolute top-4 right-8 flex-col items-end pointer-events-none z-10 max-w-[260px]"
           >
             {/* Top accent line */}
             <div className="w-8 h-px mb-3" style={{ background: "linear-gradient(to left, rgba(201,161,92,0.9), transparent)" }} />
             <p
               style={{
                 fontFamily: bgPhraseFontFamily,
-                fontSize: "clamp(1.1rem, 1.6vw, 1.5rem)",
+                fontSize: `calc(clamp(1.1rem, 1.6vw, 1.5rem) * ${(vc.bgPhraseSize ?? 100) / 100})`,
                 fontWeight: 300,
                 fontStyle: "italic",
                 lineHeight: 1.5,
@@ -599,6 +600,35 @@ export default function PublicProfile() {
             </p>
             {/* Bottom accent line */}
             <div className="w-5 h-px mt-3" style={{ background: "linear-gradient(to left, rgba(201,161,92,0.5), transparent)" }} />
+          </motion.div>
+        )}
+
+        {/* ── Extra circular logo — desktop only, centered between phrase and portrait ── */}
+        {vc.extraLogoUrl && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.7 }}
+            className="hidden lg:block absolute pointer-events-none z-10"
+            style={{
+              top: `calc(50% + ${vc.extraLogoOffsetY ?? 0}px)`,
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: vc.extraLogoSize ?? 100,
+              height: vc.extraLogoSize ?? 100,
+            }}
+          >
+            <div
+              className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_20px_rgba(201,161,92,0.18)] scale-[1.06]"
+              style={{ animationDuration: "3s" }}
+            />
+            <div className="w-full h-full rounded-full overflow-hidden border border-primary/25 bg-white/60 p-0.5 backdrop-blur-sm shadow-lg">
+              <img
+                src={vc.extraLogoUrl}
+                alt=""
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
           </motion.div>
         )}
 
@@ -751,12 +781,22 @@ export default function PublicProfile() {
           </motion.div>
         )}
 
-        {/* Footer (Mobile only, Desktop handles it in left col) */}
-        <footer className="lg:hidden py-10 text-center w-full mt-auto flex flex-col items-center border-t border-primary/15">
-          <div className="w-12 h-px bg-primary/40 mb-6" />
-          <p className="text-[10px] text-muted-foreground/60 font-sans tracking-wider uppercase">
-            © {new Date().getFullYear()} {vc.firstName} {vc.lastName}
-          </p>
+        {/* Footer (Mobile only) — extra logo bottom-left, no copyright */}
+        <footer className="lg:hidden w-full mt-auto flex items-center border-t border-primary/15 min-h-[72px] py-3">
+          {vc.extraLogoUrl && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="ml-5 shrink-0 rounded-full relative"
+              style={{ width: vc.extraLogoSizeMobile ?? 80, height: vc.extraLogoSizeMobile ?? 80 }}
+            >
+              <div className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_14px_rgba(201,161,92,0.15)] scale-[1.06]" />
+              <div className="w-full h-full rounded-full overflow-hidden border border-primary/25 bg-white/70 p-0.5 backdrop-blur-sm shadow-md relative z-10">
+                <img src={vc.extraLogoUrl} alt="" className="w-full h-full object-cover rounded-full" />
+              </div>
+            </motion.div>
+          )}
         </footer>
 
         {/* Mobile portrait — anchored to this column's own bottom-right corner, so it overlaps the last card like a signature photo without pushing the footer or links */}

@@ -77,6 +77,11 @@ export function IdentityManager() {
     bgPhraseEnabled: true,
     bgPhraseOpacity: 0.9,
     bgPhraseFont: "elegante",
+    bgPhraseSize: 100,
+    extraLogoUrl: "",
+    extraLogoSize: 100,
+    extraLogoOffsetY: 0,
+    extraLogoSizeMobile: 80,
     closingPhrase: "Que cada paso te acerque más a tu luz interior.",
     closingPhraseEnabled: true,
     closingPhraseColor: "#8C6FB0",
@@ -151,6 +156,11 @@ export function IdentityManager() {
         bgPhraseEnabled: vc.bgPhraseEnabled ?? true,
         bgPhraseOpacity: vc.bgPhraseOpacity ?? 0.9,
         bgPhraseFont: normalizeFontKey(vc.bgPhraseFont ?? legacyFont),
+        bgPhraseSize: vc.bgPhraseSize ?? 100,
+        extraLogoUrl: vc.extraLogoUrl ?? "",
+        extraLogoSize: vc.extraLogoSize ?? 100,
+        extraLogoOffsetY: vc.extraLogoOffsetY ?? 0,
+        extraLogoSizeMobile: vc.extraLogoSizeMobile ?? 80,
         closingPhrase: vc.closingPhrase ?? "Que cada paso te acerque más a tu luz interior.",
         closingPhraseEnabled: vc.closingPhraseEnabled ?? true,
         closingPhraseColor: vc.closingPhraseColor ?? "#8C6FB0",
@@ -228,6 +238,11 @@ export function IdentityManager() {
           bgPhraseEnabled: form.bgPhraseEnabled,
           bgPhraseOpacity: form.bgPhraseOpacity,
           bgPhraseFont: form.bgPhraseFont,
+          bgPhraseSize: form.bgPhraseSize,
+          extraLogoUrl: form.extraLogoUrl,
+          extraLogoSize: form.extraLogoSize,
+          extraLogoOffsetY: form.extraLogoOffsetY,
+          extraLogoSizeMobile: form.extraLogoSizeMobile,
           closingPhrase: form.closingPhrase,
           closingPhraseEnabled: form.closingPhraseEnabled,
           closingPhraseColor: form.closingPhraseColor,
@@ -623,6 +638,53 @@ export function IdentityManager() {
                   </div>
                 </div>
               </div>
+
+              {/* Extra circular logo */}
+              <div className="pt-4 border-t border-border space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Logo extra (circular)</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">En escritorio aparece centrado entre la frase y el retrato. En celular aparece abajo a la izquierda (reemplaza el copyright).</p>
+                </div>
+                <div className="space-y-2">
+                  <Label>URL de la imagen (Cloudinary)</Label>
+                  <Input
+                    value={form.extraLogoUrl}
+                    onChange={e => updateField("extraLogoUrl", e.target.value)}
+                    placeholder="https://res.cloudinary.com/..."
+                  />
+                  <p className="text-[11px] text-muted-foreground">Déjalo en blanco para ocultar el logo extra.</p>
+                </div>
+
+                <div className="space-y-4 pt-3 border-t border-border/60">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Escritorio</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Tamaño</Label>
+                      <span className="text-xs text-muted-foreground">{form.extraLogoSize}px</span>
+                    </div>
+                    <Slider value={[form.extraLogoSize]} min={40} max={200} step={5} onValueChange={v => updateField("extraLogoSize", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición vertical</Label>
+                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetY > 0 ? `${form.extraLogoOffsetY}px abajo` : form.extraLogoOffsetY < 0 ? `${Math.abs(form.extraLogoOffsetY)}px arriba` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.extraLogoOffsetY]} min={-200} max={200} step={5} onValueChange={v => updateField("extraLogoOffsetY", v[0])} />
+                    <p className="text-[11px] text-muted-foreground">Sube o baja el logo para que quede entre la frase y la persona.</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-3 border-t border-border/60">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Celular</p>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Tamaño</Label>
+                      <span className="text-xs text-muted-foreground">{form.extraLogoSizeMobile}px</span>
+                    </div>
+                    <Slider value={[form.extraLogoSizeMobile]} min={40} max={150} step={5} onValueChange={v => updateField("extraLogoSizeMobile", v[0])} />
+                  </div>
+                </div>
+              </div>
             </TabsContent>
             <TabsContent value="highlights" className="space-y-6">
               {/* Background phrase */}
@@ -653,6 +715,14 @@ export function IdentityManager() {
                       </div>
                       <Slider value={[form.bgPhraseOpacity]} min={0.3} max={1} step={0.05} onValueChange={v => updateField("bgPhraseOpacity", v[0])} />
                       <p className="text-xs text-muted-foreground">Valor recomendado: 80–95%</p>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <Label>Tamaño del texto</Label>
+                        <span className="text-xs text-muted-foreground">{form.bgPhraseSize}%</span>
+                      </div>
+                      <Slider value={[form.bgPhraseSize]} min={55} max={150} step={5} onValueChange={v => updateField("bgPhraseSize", v[0])} />
+                      <p className="text-xs text-muted-foreground">100% = tamaño por defecto. Reduce para que ocupe menos espacio, aumenta para que sea más prominente.</p>
                     </div>
                   </div>
                 )}
