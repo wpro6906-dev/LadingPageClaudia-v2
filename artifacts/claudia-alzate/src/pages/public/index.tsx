@@ -69,8 +69,11 @@ interface VisualConfig {
   decorFloralOpacity?: number;
   extraLogoUrl?: string;
   extraLogoSize?: number;
+  extraLogoOffsetX?: number;
   extraLogoOffsetY?: number;
   extraLogoSizeMobile?: number;
+  extraLogoOffsetXMobile?: number;
+  extraLogoOffsetYMobile?: number;
   logoSize?: number;
   logoOffsetX?: number;
   logoOffsetY?: number;
@@ -101,7 +104,8 @@ function getVC(profile: any): Required<VisualConfig> {
     closingPhrase: "Que cada paso te acerque más a tu luz interior.", closingPhraseEnabled: true,
     closingPhraseColor: "#8C6FB0", closingPhraseOpacity: 1,
     decorFloralColor: "#8B6BB8", decorFloralAccentColor: "#C9A15C", decorFloralOpacity: 1,
-    extraLogoUrl: "", extraLogoSize: 100, extraLogoOffsetY: 0, extraLogoSizeMobile: 80,
+    extraLogoUrl: "", extraLogoSize: 100, extraLogoOffsetX: 0, extraLogoOffsetY: 0,
+    extraLogoSizeMobile: 80, extraLogoOffsetXMobile: 0, extraLogoOffsetYMobile: 0,
     logoSize: 100, logoOffsetX: 0, logoOffsetY: 0,
     logoSizeMobile: 100, logoOffsetXMobile: 0, logoOffsetYMobile: 0,
     statsEnabled: true,
@@ -612,7 +616,7 @@ export default function PublicProfile() {
             className="hidden lg:block absolute pointer-events-none z-10"
             style={{
               top: `calc(50% + ${vc.extraLogoOffsetY ?? 0}px)`,
-              left: "50%",
+              left: `calc(50% + ${vc.extraLogoOffsetX ?? 0}px)`,
               transform: "translate(-50%, -50%)",
               width: vc.extraLogoSize ?? 100,
               height: vc.extraLogoSize ?? 100,
@@ -783,7 +787,11 @@ export default function PublicProfile() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="ml-5 shrink-0"
-              style={{ width: vc.extraLogoSizeMobile ?? 80, height: vc.extraLogoSizeMobile ?? 80 }}
+              style={{
+                width: vc.extraLogoSizeMobile ?? 80,
+                height: vc.extraLogoSizeMobile ?? 80,
+                transform: `translate(${vc.extraLogoOffsetXMobile ?? 0}px, ${vc.extraLogoOffsetYMobile ?? 0}px)`,
+              }}
             >
               <img src={vc.extraLogoUrl} alt="" className="w-full h-full object-contain" />
             </motion.div>

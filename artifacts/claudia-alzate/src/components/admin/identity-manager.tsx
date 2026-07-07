@@ -80,8 +80,11 @@ export function IdentityManager() {
     bgPhraseSize: 100,
     extraLogoUrl: "",
     extraLogoSize: 100,
+    extraLogoOffsetX: 0,
     extraLogoOffsetY: 0,
     extraLogoSizeMobile: 80,
+    extraLogoOffsetXMobile: 0,
+    extraLogoOffsetYMobile: 0,
     closingPhrase: "Que cada paso te acerque más a tu luz interior.",
     closingPhraseEnabled: true,
     closingPhraseColor: "#8C6FB0",
@@ -159,8 +162,11 @@ export function IdentityManager() {
         bgPhraseSize: vc.bgPhraseSize ?? 100,
         extraLogoUrl: vc.extraLogoUrl ?? "",
         extraLogoSize: vc.extraLogoSize ?? 100,
+        extraLogoOffsetX: vc.extraLogoOffsetX ?? 0,
         extraLogoOffsetY: vc.extraLogoOffsetY ?? 0,
         extraLogoSizeMobile: vc.extraLogoSizeMobile ?? 80,
+        extraLogoOffsetXMobile: vc.extraLogoOffsetXMobile ?? 0,
+        extraLogoOffsetYMobile: vc.extraLogoOffsetYMobile ?? 0,
         closingPhrase: vc.closingPhrase ?? "Que cada paso te acerque más a tu luz interior.",
         closingPhraseEnabled: vc.closingPhraseEnabled ?? true,
         closingPhraseColor: vc.closingPhraseColor ?? "#8C6FB0",
@@ -241,8 +247,11 @@ export function IdentityManager() {
           bgPhraseSize: form.bgPhraseSize,
           extraLogoUrl: form.extraLogoUrl,
           extraLogoSize: form.extraLogoSize,
+          extraLogoOffsetX: form.extraLogoOffsetX,
           extraLogoOffsetY: form.extraLogoOffsetY,
           extraLogoSizeMobile: form.extraLogoSizeMobile,
+          extraLogoOffsetXMobile: form.extraLogoOffsetXMobile,
+          extraLogoOffsetYMobile: form.extraLogoOffsetYMobile,
           closingPhrase: form.closingPhrase,
           closingPhraseEnabled: form.closingPhraseEnabled,
           closingPhraseColor: form.closingPhraseColor,
@@ -662,15 +671,21 @@ export function IdentityManager() {
                       <Label>Tamaño</Label>
                       <span className="text-xs text-muted-foreground">{form.extraLogoSize}px</span>
                     </div>
-                    <Slider value={[form.extraLogoSize]} min={40} max={200} step={5} onValueChange={v => updateField("extraLogoSize", v[0])} />
+                    <Slider value={[form.extraLogoSize]} min={40} max={300} step={5} onValueChange={v => updateField("extraLogoSize", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición horizontal</Label>
+                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetX > 0 ? `${form.extraLogoOffsetX}px derecha` : form.extraLogoOffsetX < 0 ? `${Math.abs(form.extraLogoOffsetX)}px izquierda` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.extraLogoOffsetX]} min={-300} max={300} step={5} onValueChange={v => updateField("extraLogoOffsetX", v[0])} />
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <Label>Posición vertical</Label>
                       <span className="text-xs text-muted-foreground">{form.extraLogoOffsetY > 0 ? `${form.extraLogoOffsetY}px abajo` : form.extraLogoOffsetY < 0 ? `${Math.abs(form.extraLogoOffsetY)}px arriba` : "centrado"}</span>
                     </div>
-                    <Slider value={[form.extraLogoOffsetY]} min={-200} max={200} step={5} onValueChange={v => updateField("extraLogoOffsetY", v[0])} />
-                    <p className="text-[11px] text-muted-foreground">Sube o baja el logo para que quede entre la frase y la persona.</p>
+                    <Slider value={[form.extraLogoOffsetY]} min={-300} max={300} step={5} onValueChange={v => updateField("extraLogoOffsetY", v[0])} />
                   </div>
                 </div>
 
@@ -681,7 +696,21 @@ export function IdentityManager() {
                       <Label>Tamaño</Label>
                       <span className="text-xs text-muted-foreground">{form.extraLogoSizeMobile}px</span>
                     </div>
-                    <Slider value={[form.extraLogoSizeMobile]} min={40} max={150} step={5} onValueChange={v => updateField("extraLogoSizeMobile", v[0])} />
+                    <Slider value={[form.extraLogoSizeMobile]} min={40} max={200} step={5} onValueChange={v => updateField("extraLogoSizeMobile", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición horizontal</Label>
+                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetXMobile > 0 ? `${form.extraLogoOffsetXMobile}px derecha` : form.extraLogoOffsetXMobile < 0 ? `${Math.abs(form.extraLogoOffsetXMobile)}px izquierda` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.extraLogoOffsetXMobile]} min={-200} max={200} step={5} onValueChange={v => updateField("extraLogoOffsetXMobile", v[0])} />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <Label>Posición vertical</Label>
+                      <span className="text-xs text-muted-foreground">{form.extraLogoOffsetYMobile > 0 ? `${form.extraLogoOffsetYMobile}px abajo` : form.extraLogoOffsetYMobile < 0 ? `${Math.abs(form.extraLogoOffsetYMobile)}px arriba` : "centrado"}</span>
+                    </div>
+                    <Slider value={[form.extraLogoOffsetYMobile]} min={-200} max={200} step={5} onValueChange={v => updateField("extraLogoOffsetYMobile", v[0])} />
                   </div>
                 </div>
               </div>
