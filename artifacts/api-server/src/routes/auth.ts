@@ -52,7 +52,7 @@ router.post("/auth/login", async (req, res) => {
 
   // Env / hardcoded fallback
   const envUser = process.env.ADMIN_USERNAME || "ClaudiaAlzate";
-  const envPass = process.env.ADMIN_PASSWORD || "Claudia123";
+  const envPass = process.env.ADMIN_PASSWORD || "Claudia321";
   if (username === envUser && password === envPass) {
     const token = createAdminSession({ adminId: 1, username });
     req.log.info({ username }, "Admin logged in via env fallback");

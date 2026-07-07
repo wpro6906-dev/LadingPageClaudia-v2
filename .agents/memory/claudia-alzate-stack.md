@@ -35,7 +35,9 @@ description: Key rules, gotchas, and decisions for the Claudia Alzate Realtor® 
 - **Por qué:** Drizzle mapea internamente sus propiedades JS → columnas SQL. Nunca construir el objeto `set()` con nombres de columna SQL.
 
 ## Admin credentials
-- username: `ClaudiaAlzate`, password `Clauda321`. Auth is JWT-based (stateless, HS256) and the password persists in the DB — `seedAdmin()` only creates the admin row if missing, it never resets an existing password on restart.
+- username: `ClaudiaAlzate`, password `Claudia321`. Auth is JWT-based (stateless, HS256).
+- `seedAdmin()` in `artifacts/api-server/src/index.ts` now ALWAYS syncs the password to the `ADMIN_PASSWORD` env var on every boot (creates row if missing, updates password if it exists). This means changing `ADMIN_PASSWORD` on Render takes effect on next deploy — no manual DB edits needed.
+- Both `ADMIN_USERNAME` and `ADMIN_PASSWORD` are read from env vars with defaults `ClaudiaAlzate` / `Claudia321`.
 
 ## Icon selection UX
 - All admin-dashboard icon fields (identity decorator/badge, stats, links) must use the shared click-based `IconPicker` + categorized catalogue in `artifacts/claudia-alzate/src/components/ui/icons.tsx` — never a free-text icon-name input.

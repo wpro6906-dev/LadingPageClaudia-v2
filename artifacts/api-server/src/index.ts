@@ -3,8 +3,8 @@ import { logger } from "./lib/logger";
 import { db, adminTable, profileTable, DEFAULT_VISUAL_CONFIG, ensureSchema } from "@workspace/db";
 import { eq } from "drizzle-orm";
 
-const ADMIN_USERNAME = "ClaudiaAlzate";
-const ADMIN_PASSWORD = "Claudia123";
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "ClaudiaAlzate";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Claudia321";
 
 async function seedAdmin() {
   try {
@@ -17,10 +17,13 @@ async function seedAdmin() {
       await db.insert(adminTable).values({ username: ADMIN_USERNAME, password: ADMIN_PASSWORD });
       logger.info({ username: ADMIN_USERNAME }, "Admin user created in DB");
     } else {
-      // Do not overwrite an existing password on every boot — the admin may
-      // have changed it via the dashboard. Only the first insert sets the
-      // default password.
-      logger.info({ username: ADMIN_USERNAME }, "Admin user already exists");
+      // Always sync the password to the env var so that changing ADMIN_PASSWORD
+      // on Render/Neon takes effect on the next deploy without manual DB edits.
+      await db
+        .update(adminTable)
+        .set({ password: ADMIN_PASSWORD })
+        .where(eq(adminTable.username, ADMIN_USERNAME));
+      logger.info({ username: ADMIN_USERNAME }, "Admin password synced from env");
     }
   } catch (err) {
     logger.error({ err }, "Failed to seed admin — will rely on env fallback");

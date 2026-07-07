@@ -2,14 +2,18 @@ services:
   - type: web
     name: claudia-alzate-api
     runtime: node
-    buildCommand: cd ../.. && npx pnpm@9 install && npx pnpm@9 --filter @workspace/api-server run build
+    buildCommand: cd ../.. && npx pnpm@10 install --frozen-lockfile && npx pnpm@10 --filter @workspace/api-server run build
     startCommand: node artifacts/api-server/dist/index.mjs
     envVars:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
         sync: false
-      - key: SESSION_SECRET
+      - key: JWT_SECRET
         generateValue: true
+      - key: ADMIN_USERNAME
+        value: ClaudiaAlzate
+      - key: ADMIN_PASSWORD
+        sync: false
       - key: ALLOWED_ORIGINS
         sync: false
