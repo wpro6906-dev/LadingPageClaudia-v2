@@ -292,6 +292,8 @@ export default function PublicProfile() {
                 src={profile.backgroundUrl}
                 alt=""
                 aria-hidden="true"
+                fetchPriority="high"
+                loading="eager"
                 style={{
                   position: "absolute",
                   inset: 0,
@@ -389,7 +391,7 @@ export default function PublicProfile() {
         >
           <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse shadow-[0_0_24px_rgba(201,161,92,0.20)] scale-[1.08]"></div>
           <div className="w-full h-full overflow-hidden rounded-full border border-primary/30 bg-white/70 p-1 backdrop-blur-sm relative z-10 shadow-lg">
-            <img src={profile?.logoUrl || logoPath} alt="Logo" className="w-full h-full object-cover rounded-full" />
+            <img src={profile?.logoUrl || logoPath} alt="Logo" fetchPriority="high" loading="eager" className="w-full h-full object-cover rounded-full" />
           </div>
         </motion.div>
 
@@ -567,6 +569,7 @@ export default function PublicProfile() {
             src={vc.portraitUrl}
             alt=""
             aria-hidden="true"
+            loading="lazy"
             className="hidden lg:block absolute bottom-0 right-0 pointer-events-none z-0"
             style={{
               height: `${vc.portraitSize ?? 68}%`,
@@ -688,12 +691,12 @@ export default function PublicProfile() {
                         <div className="bg-primary/10 rounded-xl p-3 shrink-0">
                           <Icon className="w-5 h-5 text-primary" />
                         </div>
-                        <div className="flex-1 overflow-hidden">
-                          <h3 className="font-sans font-semibold text-sm text-foreground group-hover:text-primary transition-colors duration-300 truncate">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-sans font-semibold text-sm text-foreground group-hover:text-primary transition-colors duration-300 break-words">
                             {link.title}
                           </h3>
                           {link.description && (
-                            <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                            <p className="text-xs text-muted-foreground mt-0.5 break-words">
                               {link.description}
                             </p>
                           )}
@@ -798,7 +801,7 @@ export default function PublicProfile() {
                 transform: `translateY(${vc.extraLogoOffsetYMobile ?? 0}px)`,
               }}
             >
-              <img src={vc.extraLogoUrl} alt="" className="w-full h-full object-contain" />
+              <img src={vc.extraLogoUrl} alt="" loading="lazy" className="w-full h-full object-contain" />
             </motion.div>
           )}
         </footer>
@@ -809,6 +812,7 @@ export default function PublicProfile() {
             src={vc.portraitUrl}
             alt=""
             aria-hidden="true"
+            loading="lazy"
             className="lg:hidden absolute bottom-0 right-0 z-30 pointer-events-none"
             style={{
               height: `${vc.portraitSizeMobile ?? 30}vh`,
