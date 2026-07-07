@@ -64,3 +64,11 @@ description: Key rules, gotchas, and decisions for the Claudia Alzate Realtor® 
 - After any OpenAPI spec change: `pnpm --filter @workspace/api-spec run codegen`
 - After any DB schema change: `pnpm --filter @workspace/db run push`
 - Both can run in parallel.
+
+## Deploy prep — Render + Neon + Vercel
+- `render.yaml` at REPO ROOT (not in artifacts/api-server) — Render's Blueprint feature only finds it at the root. Keep a copy in `artifacts/api-server/render.yaml` as reference. Both must use buildCommand WITHOUT `cd ../..` since Render's working dir is always the repo root.
+- `@assets` alias in `vite.config.ts` must point to `src/assets/` (inside the frontend), NOT to `../../attached_assets`. The logo image was copied to `artifacts/claudia-alzate/src/assets/`. This makes the frontend self-contained.
+- `lib/db/src/index.ts`: Pool needs `ssl: { rejectUnauthorized: false }` when `NODE_ENV=production` — required for Neon/Supabase SSL connections.
+- Vercel: Root Directory in UI = `artifacts/claudia-alzate`. `vercel.json` installCommand uses `cd ../.. && npm install -g pnpm@10 && pnpm install --frozen-lockfile` (cd back to monorepo root).
+- CORS: `*.vercel.app` is already auto-allowed in `app.ts`. For custom domains, add to `ALLOWED_ORIGINS` env var on Render.
+- `artifacts/claudia-alzate/.env.local.example` — created. Set `VITE_API_URL=https://your-render-url` in Vercel env vars.
