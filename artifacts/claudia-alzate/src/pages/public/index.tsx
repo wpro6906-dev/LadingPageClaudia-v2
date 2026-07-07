@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef, Fragment } from "react";
 import { API_BASE } from "@/lib/api-base";
 import { useGetProfile, getGetProfileQueryKey, useGetLinks, getGetLinksQueryKey } from "@workspace/api-client-react";
-import logoPath from "@assets/image_1781908878316.png";
+const logoPath = "https://res.cloudinary.com/keaiyuur/image/upload/v1783063865/ChatGPT_Image_3_jul_2026_02_27_03_dyh40z.png";
 import { getIconComponent, ChevronRight } from "@/components/ui/icons";
 import { getFontFamily } from "@/components/ui/fonts";
 import { Skeleton } from "@/components/ui/skeleton";
