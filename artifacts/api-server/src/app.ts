@@ -40,7 +40,14 @@ function isOriginAllowed(origin: string): boolean {
   if (origin.endsWith(".replit.app")) return true;
   if (origin.endsWith(".repl.co")) return true;
   if (extraOrigins.includes(origin)) return true;
-  if (!IS_PROD && origin.startsWith("http://localhost")) return true;
+  if (!IS_PROD) {
+    try {
+      const { hostname } = new URL(origin);
+      if (hostname === "localhost" || hostname === "127.0.0.1") return true;
+    } catch {
+      // invalid URL — deny
+    }
+  }
   return false;
 }
 
