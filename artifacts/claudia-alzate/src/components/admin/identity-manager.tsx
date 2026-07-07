@@ -321,7 +321,7 @@ export function IdentityManager() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Subtítulo (ej: REALTOR)</Label>
+                <Label>Subtítulo (ej: COACH ESPIRITUAL)</Label>
                 <Input value={form.subtitleText} onChange={e => updateField("subtitleText", e.target.value)} />
                 <FontPickerCompact value={form.subtitleFont} onChange={v => updateField("subtitleFont", v)} />
               </div>
