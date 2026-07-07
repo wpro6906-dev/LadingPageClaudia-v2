@@ -603,7 +603,7 @@ export default function PublicProfile() {
           </motion.div>
         )}
 
-        {/* ── Extra circular logo — desktop only, centered between phrase and portrait ── */}
+        {/* ── Extra logo — desktop only, centered between phrase and portrait ── */}
         {vc.extraLogoUrl && (
           <motion.div
             initial={{ opacity: 0, scale: 0.85 }}
@@ -618,17 +618,11 @@ export default function PublicProfile() {
               height: vc.extraLogoSize ?? 100,
             }}
           >
-            <div
-              className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_20px_rgba(201,161,92,0.18)] scale-[1.06]"
-              style={{ animationDuration: "3s" }}
+            <img
+              src={vc.extraLogoUrl}
+              alt=""
+              className="w-full h-full object-contain"
             />
-            <div className="w-full h-full rounded-full overflow-hidden border border-primary/25 bg-white/60 p-0.5 backdrop-blur-sm shadow-lg">
-              <img
-                src={vc.extraLogoUrl}
-                alt=""
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
           </motion.div>
         )}
 
@@ -788,13 +782,10 @@ export default function PublicProfile() {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="ml-5 shrink-0 rounded-full relative"
+              className="ml-5 shrink-0"
               style={{ width: vc.extraLogoSizeMobile ?? 80, height: vc.extraLogoSizeMobile ?? 80 }}
             >
-              <div className="absolute inset-0 rounded-full border border-primary/20 shadow-[0_0_14px_rgba(201,161,92,0.15)] scale-[1.06]" />
-              <div className="w-full h-full rounded-full overflow-hidden border border-primary/25 bg-white/70 p-0.5 backdrop-blur-sm shadow-md relative z-10">
-                <img src={vc.extraLogoUrl} alt="" className="w-full h-full object-cover rounded-full" />
-              </div>
+              <img src={vc.extraLogoUrl} alt="" className="w-full h-full object-contain" />
             </motion.div>
           )}
         </footer>
