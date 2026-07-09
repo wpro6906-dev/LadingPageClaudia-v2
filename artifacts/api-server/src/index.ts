@@ -6,6 +6,9 @@ import { eq } from "drizzle-orm";
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "ClaudiaAlzate";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Claudia321";
 
+const DEFAULT_LOGO_URL =
+  "https://res.cloudinary.com/keaiyuur/image/upload/v1783563398/83af74d2-cd4c-4a44-be21-bdf4d0ebf59d_ppjtfc.png";
+
 async function seedAdmin() {
   try {
     const [existing] = await db
@@ -42,9 +45,16 @@ async function seedProfile() {
         goldColor: "#D4B483",
         fontTitle: "Playfair Display",
         fontBody: "Montserrat",
+        logoUrl: DEFAULT_LOGO_URL,
         visualConfig: DEFAULT_VISUAL_CONFIG,
       });
       logger.info("Default profile created in DB");
+    } else if (!existing.logoUrl) {
+      await db
+        .update(profileTable)
+        .set({ logoUrl: DEFAULT_LOGO_URL })
+        .where(eq(profileTable.id, existing.id));
+      logger.info("Default logo URL synced to existing profile");
     }
   } catch (err) {
     logger.error({ err }, "Failed to seed profile");
