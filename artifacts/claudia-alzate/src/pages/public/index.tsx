@@ -1,7 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef, Fragment } from "react";
 import { API_BASE } from "@/lib/api-base";
 import { useGetProfile, getGetProfileQueryKey, useGetLinks, getGetLinksQueryKey } from "@workspace/api-client-react";
-const logoPath = "https://res.cloudinary.com/keaiyuur/image/upload/v1783063865/ChatGPT_Image_3_jul_2026_02_27_03_dyh40z.png";
 import { getIconComponent, ChevronRight } from "@/components/ui/icons";
 import { getFontFamily } from "@/components/ui/fonts";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -391,7 +390,7 @@ export default function PublicProfile() {
         >
           <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse shadow-[0_0_24px_rgba(201,161,92,0.20)] scale-[1.08]"></div>
           <div className="w-full h-full overflow-hidden rounded-full border border-primary/30 bg-white/70 p-1 backdrop-blur-sm relative z-10 shadow-lg">
-            <img src={profile?.logoUrl || logoPath} alt="Logo" fetchPriority="high" loading="eager" className="w-full h-full object-cover rounded-full" />
+            <img src={profile?.logoUrl ?? undefined} alt="Logo" fetchPriority="high" loading="eager" className="w-full h-full object-cover rounded-full" />
           </div>
         </motion.div>
 
@@ -409,7 +408,7 @@ export default function PublicProfile() {
         >
           <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse shadow-[0_0_24px_rgba(201,161,92,0.20)] scale-[1.08]"></div>
           <div className="w-full h-full overflow-hidden rounded-full border border-primary/30 bg-white/70 p-1 backdrop-blur-sm relative z-10 shadow-lg">
-            <img src={profile?.logoUrl || logoPath} alt="Logo" className="w-full h-full object-cover rounded-full" />
+            <img src={profile?.logoUrl ?? undefined} alt="Logo" className="w-full h-full object-cover rounded-full" />
           </div>
         </motion.div>
 
